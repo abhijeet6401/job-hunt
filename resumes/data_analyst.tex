@@ -1,0 +1,148 @@
+% ============================================================
+% Abhijeet Kumar — Data Analyst / Business Analyst Resume
+% Clean single-column ATS-friendly LaTeX
+% ============================================================
+
+\documentclass[10pt, a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage[
+  top=0.45in,
+  bottom=0.45in,
+  left=0.55in,
+  right=0.55in
+]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{fontawesome5}
+
+% ---------- Hyperlink styling ----------
+\hypersetup{
+  colorlinks=true,
+  urlcolor=black,
+  linkcolor=black
+}
+
+% ---------- No page numbers ----------
+\pagestyle{empty}
+
+% ---------- Section heading style ----------
+\titleformat{\section}
+  {\vspace{-4pt}\scshape\raggedright\large\bfseries}
+  {}{0em}{}
+  [\color{black}\titlerule \vspace{-3pt}]
+
+% ---------- Custom commands ----------
+\newcommand{\jobheader}[4]{
+  \vspace{-1pt}
+  \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & \textbf{\small #2} \\
+    \textit{\small #3} & \textit{\small #4}
+  \end{tabular*}
+  \vspace{1pt}
+}
+
+\newenvironment{achievelist}{
+  \begin{itemize}[leftmargin=1.2em, itemsep=1pt, parsep=0pt, topsep=1pt]
+    \small
+}{
+  \end{itemize}
+  \vspace{-3pt}
+}
+
+\newcommand{\achieve}[1]{\item #1}
+
+% ============================================================
+\begin{document}
+
+% ---------- Header ----------
+\begin{center}
+  {\LARGE \textbf{Abhijeet Kumar}} \\[4pt]
+  \small
+  \faGraduationCap\ IIT Kharagpur \quad
+  \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad
+  \faEnvelope\ \href{mailto:kumarabhiitkgp@gmail.com}{kumarabhiitkgp@gmail.com} \\[2pt]
+  \faGithub\ \href{https://github.com/abhijeet6401}{github.com/abhijeet6401}
+\end{center}
+
+\vspace{-2pt}
+
+% ---------- Summary ----------
+\noindent Quantitative and business analyst with hands-on experience in predictive modeling, macroeconomic time series, and business intelligence dashboards. Skilled in translating large multi-country datasets into actionable operational and revenue strategies using Python, SQL, and Power BI.
+
+\vspace{4pt}
+
+% ============================================================
+\section{Education}
+
+\jobheader{Indian Institute of Technology (IIT) Kharagpur}{2023 -- 2027}{B.S. (Hons.) in Economics (CGPA: 7.82 / 10)}{Kharagpur, WB}
+
+\vspace{4pt}
+
+% ============================================================
+\section{Experience}
+
+\jobheader{Frost and Sullivan}{May 2024 -- Jun 2025}{Growth Analytics Intern}{Mumbai, MH}
+\begin{achievelist}
+  \achieve{Delivered analytical insights and Power BI solutions supporting sales strategy, demand forecasting, and inventory optimization across US and international markets.}
+  \achieve{Executed predictive modeling using Moving Averages and Exponential Smoothing; deployed Power BI dashboards with DAX and SQL integrations.}
+  \achieve{Analyzed \.3+M of multi-country sales data by building interactive Power BI dashboards and automating CAGR tracking through multi-level drilldowns.}
+  \achieve{Estimated revenue across 3 market segments and identified 8.0\% product returns using time-series models; discovered Nov--Dec seasonality in demand cycles.}
+\end{achievelist}
+
+\vspace{2pt}
+
+\jobheader{Aequitas Investment Consultancy}{Jun 2025 -- Aug 2025}{Product and Technology Intern}{Mumbai, MH}
+\begin{achievelist}
+  \achieve{Decreased research analysts\' data extraction time by 50\% unifying 10+ news sources through a PERN + TypeScript platform with a MiniLM-based deduplication engine.}
+  \achieve{Built a custom CRM platform to manage 1000+ HNI clients for BD and onboarding teams, automating pipeline tracking and eliminating manual spreadsheet reporting.}
+  \achieve{Optimized internal communication and client response time by 30\% across research, BD, ops, and fund teams by replacing 5 fragmented tools.}
+\end{achievelist}
+
+\vspace{2pt}
+
+\jobheader{Felix Advisory}{Mar 2025 -- Apr 2025}{Research Intern}{Gurgaon, HR}
+\begin{achievelist}
+  \achieve{Built sectoral intelligence models using Excel, Crunchbase, and Tracxn data; profiled emerging startups and benchmarked key industry verticals.}
+  \achieve{Drafted 3 investment reports analyzing \+ in funding patterns and startup prototypes across Smart Manufacturing, Fintech, and Sports Tech.}
+  \achieve{Mapped 6+ white space opportunities, shortlisting 20 seed/pre-seed startups aligned with macroeconomic shifts and emerging technology trends.}
+\end{achievelist}
+
+\vspace{4pt}
+
+% ============================================================
+\section{Projects}
+
+\noindent\textbf{Monetary-Fiscal Policy Divergence and Term Premium Analysis} \hfill \textit{Dec 2025} \\
+\textit{Macroeconomic Modeling | Self Project}
+\begin{achievelist}
+  \achieve{Investigated fiscal-monetary policy divergence on long-term bond yields by building a VECM model on 25 years of RBI, MOSPI, and CCIL macroeconomic data.}
+  \achieve{Identified a 0.34 correlation between fiscal deficits >5\% GDP and 20 bps term premium rise; formulated barbell strategy across T-Bills and SDLs.}
+\end{achievelist}
+
+\vspace{2pt}
+
+\noindent\textbf{Equity Research Valuation Model | Hindustan Aeronautics Limited (HAL)} \hfill \textit{Mar 2025 -- Apr 2025} \\
+\textit{Valuation Analysis | Self Project}
+\begin{achievelist}
+  \achieve{Performed comprehensive valuation on HAL integrating DCF modeling, trading comps (EV/EBITDA 17.7x, P/E 27.2x), and DuPont framework (ROE 25.9\%).}
+  \achieve{Derived BUY recommendation with \textasciitilde 53\% upside (target price Rs 7,660) with sensitivity analysis across WACC (10.84\%) and growth assumptions.}
+\end{achievelist}
+
+\vspace{4pt}
+
+% ============================================================
+\section{Technical Skills}
+
+\noindent
+\textbf{Data Analysis \& Modeling:} Predictive Modeling, Moving Averages, Exponential Smoothing, VECM, Time-Series Analysis, Funnel \& Cohort Analysis, DCF Modeling \\[2pt]
+\textbf{Languages:} Python (Pandas, Scikit-learn, BeautifulSoup), SQL, R, TypeScript, JavaScript, HTML, C++ \\[2pt]
+\textbf{Dashboards \& BI:} Power BI, DAX, Streamlit, Advanced Excel, Jupyter Notebook, Stata \\[2pt]
+\textbf{Databases \& Tools:} PostgreSQL, MongoDB, Git, Figma, APIs, yfinance
+
+\end{document}

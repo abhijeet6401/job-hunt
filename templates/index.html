@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JobHunt Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<!-- Scroll-to-top -->
+<button id="scroll-top-btn" aria-label="Scroll to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"/>
+  </svg>
+</button>
+
+<!-- ══════════════════════════════════════════════════════
+     AUTH SCREEN
+══════════════════════════════════════════════════════ -->
+<div id="auth-screen" class="{{ 'hidden' if authenticated else '' }}">
+  <div class="auth-card">
+    <div class="auth-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="7" width="20" height="14" rx="2"/>
+        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+      </svg>
+    </div>
+    <h1 class="auth-title">JobHunt Agent</h1>
+    <p class="auth-sub">Enter your password to continue</p>
+    <form id="auth-form">
+      <input
+        type="password"
+        id="password-input"
+        class="auth-input"
+        placeholder="Password"
+        autocomplete="current-password"
+        required
+      />
+      <button type="submit" class="btn btn-primary" id="auth-btn" style="width:100%;justify-content:center;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        Unlock
+      </button>
+    </form>
+    <p id="auth-error" class="auth-error hidden">Incorrect password. Try again.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MAIN APP
+══════════════════════════════════════════════════════ -->
+<div id="app" class="{{ '' if authenticated else 'hidden' }}">
+
+  <!-- ── Sidebar ─────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-mark">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2"/>
+          <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">JobHunt</span>
+        <span class="brand-sub">Agent</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Tools</span>
+      <button class="nav-item active" data-tab="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        Find Jobs
+        <span class="nav-badge" id="nav-job-count" style="display:none"></span>
+      </button>
+      <button class="nav-item" data-tab="social">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        Founder Posts
+        <span class="nav-badge social-nav-badge" id="nav-social-count" style="display:none"></span>
+      </button>
+      <button class="nav-item" data-tab="pipeline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+        Pipeline
+        <span class="nav-badge pipeline-nav-badge" id="nav-pipeline-count" style="display:none"></span>
+      </button>
+      <button class="nav-item" data-tab="tailor">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        Tailor Resume
+      </button>
+      <button class="nav-item" data-tab="outreach">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        Draft Outreach
+      </button>
+      <button class="nav-item" data-tab="form">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Form Helper
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">
+        <svg id="theme-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg id="theme-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <span id="theme-label">Light Mode</span>
+      </button>
+      <button id="logout-btn" class="nav-item nav-logout">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- ── Mobile Bottom Nav ────────────────────────────── -->
+  <nav class="mobile-nav">
+    <button class="mobile-nav-item active" data-tab="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      Find
+    </button>
+    <button class="mobile-nav-item" data-tab="social">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      </svg>
+      Social
+    </button>
+    <button class="mobile-nav-item" data-tab="pipeline">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+      </svg>
+      Pipeline
+    </button>
+    <button class="mobile-nav-item" data-tab="tailor">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      Tailor
+    </button>
+    <button class="mobile-nav-item" data-tab="outreach">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      Outreach
+    </button>
+    <button class="mobile-nav-item" data-tab="form">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      Form
+    </button>
+  </nav>
+
+  <!-- ── Main Content ─────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- ─── Tab: Find Jobs ─────────────────────────────── -->
+    <section class="tab-panel active" id="tab-search">
+      <div class="panel-heading">
+        <h1 class="panel-title">Find Jobs</h1>
+        <p class="panel-desc">Discover startup roles across Wellfound, LinkedIn, WorkAtAStartup, YC + scan LinkedIn/X for founder hiring posts.</p>
+      </div>
+
+      <!-- Last Updated bar -->
+      <div id="last-updated-bar" class="last-updated-bar hidden">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span class="lub-text" id="last-updated-text">Last updated: —</span>
+        <span class="lub-count" id="saved-jobs-count"></span>
+        <button class="btn btn-danger btn-sm" onclick="clearAllJobs()" title="Wipe all saved jobs and start fresh">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+            <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+          </svg>
+          Clear All
+        </button>
+      </div>
+
+      <div class="search-bar">
+        <select id="role-filter" class="select" aria-label="Role filter">
+          <option value="all">All Roles</option>
+          <option value="product">Product</option>
+          <option value="founders_office">Founder's Office</option>
+          <option value="data_analyst">Data Analyst</option>
+          <option value="operations">Operations</option>
+        </select>
+        <div class="search-actions-row">
+          <button class="btn btn-primary" id="search-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.6"/>
+            </svg>
+            Refresh Jobs
+          </button>
+          <button class="btn btn-ghost" id="reload-btn" title="Reload results from last search" style="display:none" onclick="loadPastResults()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 .49-4.6"/>
+            </svg>
+            Reload
+          </button>
+        </div>
+      </div>
+
+      <div id="search-progress" class="progress-strip hidden">
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-msg">
+          <span class="pulse-dot"></span>
+          <span id="search-status">Starting search...</span>
+        </div>
+      </div>
+
+      <!-- View toggle: swipe deck vs grid -->
+      <div id="view-toggle-wrap" class="hidden">
+        <div class="view-toggle">
+          <button class="view-btn active" data-view="deck" onclick="setJobsView('deck')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="3" width="12" height="18" rx="2"/><path d="M3 7v10"/><path d="M21 7v10"/>
+            </svg>
+            Swipe
+          </button>
+          <button class="view-btn" data-view="grid" onclick="setJobsView('grid')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Grid
+          </button>
+        </div>
+        <span class="deck-progress-label" id="deck-progress-label"></span>
+      </div>
+
+      <!-- Swipe deck -->
+      <div id="deck-section" class="hidden">
+        <div class="deck-stage" id="deck-stage"></div>
+        <div class="deck-actions">
+          <button class="deck-btn deck-btn-reject" onclick="deckSwipe('left')" title="Reject (←)" aria-label="Reject">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+          <button class="deck-btn deck-btn-undo" onclick="deckUndo()" title="Undo (U)" aria-label="Undo last swipe">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+            </svg>
+          </button>
+          <button class="deck-btn deck-btn-shortlist" onclick="deckSwipe('right')" title="Shortlist (→)" aria-label="Shortlist">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6L9 17l-5-5"/>
+            </svg>
+          </button>
+        </div>
+        <p class="deck-hint">Swipe right or press → to shortlist · left to reject · U to undo</p>
+      </div>
+
+      <!-- Source toggle -->
+      <div id="source-toggle-wrap" class="hidden">
+        <div class="source-toggle">
+          <button class="source-btn active" data-source="all" onclick="applySourceFilter('all')">All</button>
+          <button class="source-btn" data-source="boards" onclick="applySourceFilter('boards')">Job Boards</button>
+          <button class="source-btn" data-source="social" onclick="applySourceFilter('social')">Social Posts</button>
+        </div>
+      </div>
+
+      <!-- Filter bar (applies within job board cards) -->
+      <div id="filter-bar" class="filter-bar hidden">
+        <button class="filter-btn" data-filter="all" onclick="applyFilter('all')">All Time</button>
+        <button class="filter-btn active" data-filter="fresh" onclick="applyFilter('fresh')">This Week</button>
+        <button class="filter-btn" data-filter="remote" onclick="applyFilter('remote')">Remote Only</button>
+        <button class="filter-btn" data-filter="bangalore" onclick="applyFilter('bangalore')">Bangalore</button>
+        <button class="filter-btn" data-filter="high" onclick="applyFilter('high')">High Match (70+)</button>
+        <button class="filter-btn" data-filter="applied" onclick="applyFilter('applied')">Applied</button>
+        <button class="filter-btn" data-filter="not_applied" onclick="applyFilter('not_applied')">Not Applied</button>
+        <button class="filter-btn low-match-toggle" id="low-match-toggle" onclick="toggleLowMatches()">Show Low Matches</button>
+      </div>
+
+      <!-- Job board results -->
+      <div id="job-board-section">
+        <div id="job-results" class="results-grid"></div>
+        <div id="no-results" class="empty-state hidden">
+          <div class="empty-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+          </div>
+          <p id="no-results-msg"><strong>No jobs found</strong><br/>Try a different role filter or search again.</p>
+        </div>
+      </div>
+
+      <!-- Social posts results (embedded in search tab, hidden until data arrives) -->
+      <div id="social-inline-section" class="hidden">
+        <div class="social-section-header">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--social-accent)">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span class="social-section-title">Founder &amp; Social Posts</span>
+          <span class="social-section-badge" id="social-count-badge"></span>
+          <span style="font-size:0.72rem;color:var(--text-3);margin-left:auto">sorted by recency → match</span>
+        </div>
+        <div id="social-results" class="results-grid"></div>
+      </div>
+    </section>
+
+    <!-- ─── Tab: Founder Posts (dedicated) ───────────────── -->
+    <section class="tab-panel hidden" id="tab-social">
+      <div class="panel-heading">
+        <h1 class="panel-title">Founder &amp; Social Posts</h1>
+        <p class="panel-desc">Roles posted directly by founders on LinkedIn and X — sorted by recency, then match score.</p>
+      </div>
+      <div id="social-tab-empty" class="empty-state">
+        <div class="empty-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+          </svg>
+        </div>
+        <p><strong>No social posts yet</strong><br/>Run a search from Find Jobs to scan LinkedIn &amp; X for founder posts.</p>
+      </div>
+      <div id="social-tab-results" class="results-grid"></div>
+    </section>
+
+    <!-- ─── Tab: Pipeline (shortlisted via right-swipe) ──── -->
+    <section class="tab-panel hidden" id="tab-pipeline">
+      <div class="panel-heading">
+        <h1 class="panel-title">Pipeline</h1>
+        <p class="panel-desc">Jobs you swiped right on. Work through them: open, tailor your resume, draft outreach, then mark applied.</p>
+      </div>
+      <div id="pipeline-empty" class="empty-state">
+        <div class="empty-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <p><strong>Nothing shortlisted yet</strong><br/>Swipe right on jobs in Find Jobs to build your pipeline.</p>
+      </div>
+      <div id="pipeline-shortlisted-wrap" class="hidden">
+        <div class="pipeline-group-header">
+          <span class="pipeline-group-title">To Apply</span>
+          <span class="pipeline-group-badge" id="pipeline-shortlisted-count"></span>
+        </div>
+        <div id="pipeline-shortlisted" class="pipeline-list"></div>
+      </div>
+      <div id="pipeline-applied-wrap" class="hidden">
+        <div class="pipeline-group-header">
+          <span class="pipeline-group-title">Applied</span>
+          <span class="pipeline-group-badge applied" id="pipeline-applied-count"></span>
+        </div>
+        <div id="pipeline-applied" class="pipeline-list"></div>
+      </div>
+    </section>
+
+    <!-- ─── Tab: Tailor Resume ─────────────────────────── -->
+    <section class="tab-panel hidden" id="tab-tailor">
+      <div class="panel-heading">
+        <h1 class="panel-title">Tailor Resume</h1>
+        <p class="panel-desc">Paste a JD and get a tailored PDF with AI-rewritten bullets in under 90 seconds.</p>
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="jd-input">Job Description</label>
+        <textarea id="jd-input" class="textarea" rows="9" placeholder="Paste the full job description here..."></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label class="label" for="role-type-select">Resume Type</label>
+          <select id="role-type-select" class="select">
+            <option value="auto">Auto-detect</option>
+            <option value="product">Product</option>
+            <option value="founders_office">Founder's Office</option>
+            <option value="data_analyst">Data Analyst</option>
+            <option value="operations">Operations</option>
+          </select>
+        </div>
+        <div class="form-group flex-1">
+          <label class="label" for="tailor-company">Company</label>
+          <input type="text" id="tailor-company" class="input" placeholder="e.g. Razorpay" />
+        </div>
+        <div class="form-group flex-1">
+          <label class="label" for="tailor-role-title">
+            Role Title <span class="optional">(optional)</span>
+          </label>
+          <input type="text" id="tailor-role-title" class="input" placeholder="e.g. Product Manager" />
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg" id="tailor-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+        Generate Tailored Resume
+      </button>
+
+      <div id="tailor-loading" class="loading-block hidden">
+        <div class="spinner"></div>
+        <div>
+          <p>Analyzing JD and rewriting bullets with AI...</p>
+          <p style="margin-top:0.2rem;color:var(--text-3);font-size:0.76rem;">PDF compilation takes up to 90 seconds on first run (cold start).</p>
+        </div>
+      </div>
+
+      <div id="tailor-error" class="error-block hidden">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.1rem;">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span></span>
+      </div>
+
+      <div id="tailor-result" class="hidden">
+        <div class="result-section">
+          <div class="result-section-header">
+            <span class="result-section-title">Keywords Matched</span>
+          </div>
+          <div id="tailor-keywords" class="keywords-row"></div>
+        </div>
+
+        <div class="result-section">
+          <div class="result-section-header">
+            <span class="result-section-title">Bullet Changes</span>
+            <button class="btn btn-primary btn-sm" id="download-pdf-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download PDF
+            </button>
+          </div>
+          <div id="diff-container"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Tab: Draft Outreach ────────────────────────── -->
+    <section class="tab-panel hidden" id="tab-outreach">
+      <div class="panel-heading">
+        <h1 class="panel-title">Draft Outreach</h1>
+        <p class="panel-desc">Generate two versions of a cold email — direct and warmer — in under 10 seconds.</p>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label class="label" for="email-company">Company</label>
+          <input type="text" id="email-company" class="input" placeholder="e.g. Razorpay" />
+        </div>
+        <div class="form-group flex-1">
+          <label class="label" for="email-role">Role</label>
+          <input type="text" id="email-role" class="input" placeholder="e.g. Product Manager" />
+        </div>
+        <div class="form-group flex-1">
+          <label class="label" for="email-contact">Contact Name <span class="optional">(optional)</span></label>
+          <input type="text" id="email-contact" class="input" placeholder="e.g. Harshil Mathur" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="email-description">Company One-liner</label>
+        <input type="text" id="email-description" class="input" placeholder="What does this company do?" />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="email-observation">
+          Specific Observation <span class="optional">(optional — makes it better)</span>
+        </label>
+        <input
+          type="text"
+          id="email-observation"
+          class="input"
+          placeholder="Something specific about their product, growth, or a recent launch"
+        />
+      </div>
+
+      <button class="btn btn-primary btn-lg" id="email-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        Generate Email Drafts
+      </button>
+
+      <div id="email-loading" class="loading-block hidden">
+        <div class="spinner"></div>
+        <p>Drafting two email versions...</p>
+      </div>
+
+      <div id="email-error" class="error-block hidden">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.1rem;">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span></span>
+      </div>
+
+      <div id="email-result" class="hidden">
+        <div class="drafts-grid">
+          <div class="draft-card">
+            <div class="draft-card-header">
+              <span class="draft-card-label">Draft 1 — Direct</span>
+              <button class="btn btn-ghost btn-sm copy-btn" data-target="draft-1-text" aria-label="Copy draft 1">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <div id="draft-1-text" class="draft-body" contenteditable="true"></div>
+          </div>
+          <div class="draft-card">
+            <div class="draft-card-header">
+              <span class="draft-card-label">Draft 2 — Warmer</span>
+              <button class="btn btn-ghost btn-sm copy-btn" data-target="draft-2-text" aria-label="Copy draft 2">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <div id="draft-2-text" class="draft-body" contenteditable="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Tab: Form Helper ───────────────────────────── -->
+    <section class="tab-panel hidden" id="tab-form">
+      <div class="panel-heading">
+        <h1 class="panel-title">Form Helper</h1>
+        <p class="panel-desc">Generate specific, metric-backed answers to application questions in seconds.</p>
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="form-company">Company <span class="optional">(optional)</span></label>
+        <input type="text" id="form-company" class="input" placeholder="e.g. Razorpay" />
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="form-question">Form Question</label>
+        <textarea id="form-question" class="textarea" rows="4" placeholder="Paste the application question here..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="label" for="form-context">Extra Context <span class="optional">(optional)</span></label>
+        <textarea
+          id="form-context"
+          class="textarea"
+          rows="3"
+          placeholder="e.g. Series B fintech, 50-person team, focused on SMB lending"
+        ></textarea>
+      </div>
+
+      <button class="btn btn-primary btn-lg" id="form-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        Generate Answer
+      </button>
+
+      <div id="form-loading" class="loading-block hidden">
+        <div class="spinner"></div>
+        <p>Generating a specific, metric-backed answer...</p>
+      </div>
+
+      <div id="form-error" class="error-block hidden">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:0.1rem;">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span></span>
+      </div>
+
+      <div id="form-result" class="hidden">
+        <div class="answer-card">
+          <div class="answer-card-header">
+            <span class="draft-card-label">Generated Answer</span>
+            <button class="btn btn-ghost btn-sm" id="form-copy-btn" aria-label="Copy answer">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              Copy
+            </button>
+          </div>
+          <div id="form-answer" class="answer-body" contenteditable="true"></div>
+          <div class="answer-meta">
+            <span id="form-word-count" class="word-count"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /.main-content -->
+</div><!-- /#app -->
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════ */
+let currentPdfFilename = null;
+window._lastJobs        = [];
+window._lastSocialPosts = [];
+
+/* ═══════════════════════════════════════════════════════
+   LOAD SAVED JOBS FROM SHEETS  (on page load / post-login)
+═══════════════════════════════════════════════════════ */
+async function loadJobsFromSheets() {
+  const resultsEl  = document.getElementById('job-results');
+  const socialEl   = document.getElementById('social-results');
+  const statusEl   = document.getElementById('search-status');
+  const progressEl = document.getElementById('search-progress');
+  const noResults  = document.getElementById('no-results');
+
+  resultsEl.innerHTML = '';
+  socialEl.innerHTML  = '';
+  noResults.classList.add('hidden');
+  statusEl.textContent = 'Loading your saved jobs...';
+  progressEl.classList.remove('hidden');
+
+  try {
+    const res  = await fetch('/api/jobs');
+    const data = await res.json();
+    progressEl.classList.add('hidden');
+
+    if (data.error) {
+      // Non-fatal — user can still run a fresh search
+      console.warn('Could not load saved jobs:', data.error);
+      return;
+    }
+
+    const jobs        = data.jobs        || [];
+    const socialPosts = data.social_posts || [];
+
+    if (data.last_updated) _showLastUpdated(data.last_updated, jobs.length + socialPosts.length);
+
+    if (jobs.length || socialPosts.length) {
+      renderJobs(jobs, resultsEl, noResults);
+      renderSocialPosts(socialPosts);
+    }
+  } catch (err) {
+    progressEl.classList.add('hidden');
+    console.warn('Failed to load saved jobs:', err);
+  }
+}
+
+function _showLastUpdated(dateStr, count) {
+  const bar  = document.getElementById('last-updated-bar');
+  const txt  = document.getElementById('last-updated-text');
+  const cnt  = document.getElementById('saved-jobs-count');
+  const d    = new Date(dateStr);
+  const fmt  = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+  txt.textContent  = `Last updated: ${fmt}`;
+  cnt.textContent  = `${count} saved`;
+  cnt.style.display = count ? '' : 'none';
+  bar.classList.remove('hidden');
+}
+
+async function clearAllJobs() {
+  if (!confirm('This will permanently delete all saved jobs from Google Sheets. Continue?')) return;
+
+  const btn = document.querySelector('#last-updated-bar .btn-danger');
+  if (btn) { btn.disabled = true; btn.textContent = 'Clearing...'; }
+
+  try {
+    const res  = await fetch('/api/jobs/clear', { method: 'POST' });
+    const data = await res.json();
+    if (data.ok) {
+      // Reset UI
+      document.getElementById('job-results').innerHTML    = '';
+      document.getElementById('social-results').innerHTML = '';
+      document.getElementById('social-tab-results').innerHTML = '';
+      document.getElementById('social-tab-empty').style.display = '';
+      hide('last-updated-bar');
+      hide('filter-bar');
+      hide('source-toggle-wrap');
+      hide('social-inline-section');
+      hide('no-results');
+      window._lastJobs        = [];
+      window._lastSocialPosts = [];
+      // Reset nav badges
+      document.getElementById('nav-job-count').style.display    = 'none';
+      document.getElementById('nav-social-count').style.display = 'none';
+      showToast('All saved jobs cleared.');
+    } else {
+      showToast('Clear failed: ' + (data.error || 'unknown error'));
+    }
+  } catch (err) {
+    showToast('Clear failed: ' + err.message);
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg> Clear All`; }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   THEME
+═══════════════════════════════════════════════════════ */
+(function initTheme() {
+  const saved = localStorage.getItem('jh_theme');
+  if (saved === 'light') {
+    document.body.classList.add('light-mode');
+    _applyThemeIcons(true);
+  }
+})();
+
+function toggleTheme() {
+  const isLight = document.body.classList.toggle('light-mode');
+  localStorage.setItem('jh_theme', isLight ? 'light' : 'dark');
+  _applyThemeIcons(isLight);
+}
+
+function _applyThemeIcons(isLight) {
+  document.getElementById('theme-icon-moon').style.display = isLight ? 'none' : '';
+  document.getElementById('theme-icon-sun').style.display  = isLight ? '' : 'none';
+  document.getElementById('theme-label').textContent = isLight ? 'Dark Mode' : 'Light Mode';
+}
+
+/* ═══════════════════════════════════════════════════════
+   AUTH
+═══════════════════════════════════════════════════════ */
+document.getElementById('auth-form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn    = document.getElementById('auth-btn');
+  const errEl  = document.getElementById('auth-error');
+  const pw     = document.getElementById('password-input').value;
+
+  btn.disabled    = true;
+  btn.textContent = 'Checking...';
+  errEl.classList.add('hidden');
+
+  const fd = new FormData();
+  fd.append('password', pw);
+
+  const res  = await fetch('/auth/login', { method: 'POST', body: fd });
+  const data = await res.json();
+
+  if (data.ok) {
+    document.getElementById('auth-screen').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    loadJobsFromSheets();
+  } else {
+    errEl.classList.remove('hidden');
+    btn.disabled    = false;
+    btn.innerHTML   = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Unlock`;
+  }
+});
+
+document.getElementById('logout-btn')?.addEventListener('click', async () => {
+  await fetch('/auth/logout', { method: 'POST' });
+  location.reload();
+});
+
+/* ═══════════════════════════════════════════════════════
+   TAB NAVIGATION
+═══════════════════════════════════════════════════════ */
+function switchTab(tabName) {
+  document.querySelectorAll('.nav-item[data-tab]').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.mobile-nav-item[data-tab]').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+  document.querySelectorAll(`[data-tab="${tabName}"]`).forEach(b => b.classList.add('active'));
+  const panel = document.getElementById(`tab-${tabName}`);
+  if (panel) panel.classList.remove('hidden');
+}
+
+document.querySelectorAll('.nav-item[data-tab], .mobile-nav-item[data-tab]').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+/* ═══════════════════════════════════════════════════════
+   SCROLL TO TOP
+═══════════════════════════════════════════════════════ */
+const _scrollBtn = document.getElementById('scroll-top-btn');
+window.addEventListener('scroll', () => {
+  _scrollBtn.classList.toggle('visible', window.scrollY > 320);
+}, { passive: true });
+
+// Trigger Sheets load on page load when already authenticated
+if ({{ 'true' if authenticated else 'false' }}) {
+  loadJobsFromSheets();
+}
+
+/* ═══════════════════════════════════════════════════════
+   JOB SEARCH  (SSE — Refresh: runs Tavily + deduplicates)
+═══════════════════════════════════════════════════════ */
+const _refreshBtnHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.6"/></svg> Refresh Jobs`;
+
+document.getElementById('search-btn')?.addEventListener('click', () => {
+  const btn        = document.getElementById('search-btn');
+  const role       = document.getElementById('role-filter').value;
+  const resultsEl  = document.getElementById('job-results');
+  const socialEl   = document.getElementById('social-results');
+  const statusEl   = document.getElementById('search-status');
+  const progressEl = document.getElementById('search-progress');
+  const noResults  = document.getElementById('no-results');
+
+  btn.disabled = true;
+  btn.innerHTML = `<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div> Scanning...`;
+  resultsEl.innerHTML  = '';
+  socialEl.innerHTML   = '';
+  noResults.classList.add('hidden');
+  progressEl.classList.remove('hidden');
+  statusEl.textContent = 'Checking for new jobs...';
+  hide('source-toggle-wrap');
+  hide('filter-bar');
+  hide('social-inline-section');
+
+  const evtSource = new EventSource(`/api/search?role=${encodeURIComponent(role)}`);
+
+  evtSource.onmessage = (e) => {
+    try {
+      const data = JSON.parse(e.data);
+      if (data.type === 'progress') {
+        statusEl.textContent = data.message;
+      } else if (data.type === 'tier1_result') {
+        // High-signal results arrive first — render immediately, keep connection open
+        const tier1Jobs = data.jobs || [];
+        if (tier1Jobs.length) {
+          renderJobs(tier1Jobs, resultsEl, noResults, /* isRefresh */ true);
+          statusEl.textContent = `${tier1Jobs.length} high-signal results shown. Scanning more sources...`;
+        }
+      } else if (data.type === 'result') {
+        evtSource.close();
+        const jobs        = data.jobs        || [];
+        const socialPosts = data.social_posts || [];
+
+        _saveToLocalStorage(jobs, socialPosts, role);
+        renderJobs(jobs, resultsEl, noResults, /* isRefresh */ true);
+        renderSocialPosts(socialPosts);
+
+        // Update last-updated bar to today
+        _showLastUpdated(new Date().toISOString().slice(0, 10),
+                         jobs.length + socialPosts.length);
+
+        progressEl.classList.add('hidden');
+        resetBtn(btn, _refreshBtnHTML);
+
+        if (!jobs.length && !socialPosts.length) {
+          showToast('No new jobs found — everything is already up to date.');
+        } else {
+          showToast(`${jobs.length + socialPosts.length} new results added.`);
+        }
+      } else if (data.type === 'error') {
+        evtSource.close();
+        statusEl.textContent = `Error: ${data.message}`;
+        progressEl.classList.add('hidden');
+        resetBtn(btn, _refreshBtnHTML);
+      }
+    } catch (_) {}
+  };
+
+  evtSource.onerror = () => {
+    evtSource.close();
+    statusEl.textContent = 'Connection error. Try again.';
+    progressEl.classList.add('hidden');
+    resetBtn(btn, _refreshBtnHTML);
+  };
+});
+
+/* ─── Reload Past Results ──────────────────────────────── */
+function _saveToLocalStorage(jobs, socialPosts, role) {
+  try {
+    localStorage.setItem('jh_last_jobs',   JSON.stringify(jobs));
+    localStorage.setItem('jh_last_social', JSON.stringify(socialPosts));
+    localStorage.setItem('jh_last_role',   role);
+    localStorage.setItem('jh_last_time',   new Date().toISOString());
+    document.getElementById('reload-btn').style.display = '';
+    _updateReloadLabel();
+  } catch (_) {}
+}
+
+function _updateReloadLabel() {
+  const t = localStorage.getItem('jh_last_time');
+  if (!t) return;
+  const d    = new Date(t);
+  const role = localStorage.getItem('jh_last_role') || '';
+  const label = `${d.toLocaleDateString()} ${d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}${role ? ' · ' + role : ''}`;
+  document.getElementById('reload-btn').title = `Reload results from ${label}`;
+}
+
+function loadPastResults() {
+  try {
+    const jobs        = JSON.parse(localStorage.getItem('jh_last_jobs')   || '[]');
+    const socialPosts = JSON.parse(localStorage.getItem('jh_last_social') || '[]');
+    if (!jobs.length && !socialPosts.length) { showToast('No past results saved.'); return; }
+
+    const resultsEl = document.getElementById('job-results');
+    const noResults = document.getElementById('no-results');
+    resultsEl.innerHTML = '';
+    document.getElementById('social-results').innerHTML = '';
+    noResults.classList.add('hidden');
+
+    renderJobs(jobs, resultsEl, noResults);
+    renderSocialPosts(socialPosts);
+    showToast(`Loaded ${jobs.length} jobs + ${socialPosts.length} social posts from last search.`);
+  } catch (_) {
+    showToast('Could not load past results.');
+  }
+}
+
+// Show reload button on load if past results exist
+(function checkPastResults() {
+  if (localStorage.getItem('jh_last_jobs')) {
+    document.getElementById('reload-btn').style.display = '';
+    _updateReloadLabel();
+  }
+})();
+
+/* ═══════════════════════════════════════════════════════
+   SOURCE FILTER (All / Job Boards / Social Posts)
+═══════════════════════════════════════════════════════ */
+function applySourceFilter(source) {
+  document.querySelectorAll('.source-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.source === source);
+  });
+  const boards = document.getElementById('job-board-section');
+  const social = document.getElementById('social-inline-section');
+  if (source === 'all')    { boards.style.display = ''; social.style.display = ''; }
+  if (source === 'boards') { boards.style.display = ''; social.style.display = 'none'; }
+  if (source === 'social') { boards.style.display = 'none'; social.style.display = ''; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   JOB BOARD FILTER BAR
+═══════════════════════════════════════════════════════ */
+function scoreBadgeClass(score) {
+  if (score >= 70) return 'score-green';
+  if (score >= 50) return 'score-yellow';
+  return 'score-red';
+}
+
+function _isFresh(datePosted) {
+  if (!datePosted || datePosted === 'Unknown') return true;
+  try {
+    const posted = new Date(datePosted);
+    const now = new Date();
+    const diffDays = (now - posted) / (1000 * 60 * 60 * 24);
+    return diffDays <= 7;
+  } catch (_) { return true; }
+}
+
+function applyFilter(filter) {
+  window._activeFilter = filter;
+  document.querySelectorAll('.filter-btn[data-filter]').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === filter);
+  });
+  document.querySelectorAll('.job-card').forEach(card => {
+    const loc      = (card.dataset.location || '').toLowerCase();
+    const score    = parseInt(card.dataset.score  || '0', 10);
+    const posted   = card.dataset.posted || 'Unknown';
+    const url      = card.dataset.url    || '';
+    const isLow    = card.classList.contains('low-match');
+
+    // Low-match cards are always hidden unless the user explicitly showed them
+    if (isLow && !window._showLowMatches) {
+      card.style.display = 'none';
+      return;
+    }
+
+    let show = true;
+    if (filter === 'fresh')        show = _isFresh(posted);
+    else if (filter === 'remote')       show = loc.includes('remote') || loc.includes('wfh') || loc.includes('work from home');
+    else if (filter === 'bangalore')    show = loc.includes('bangalore') || loc.includes('bengaluru');
+    else if (filter === 'high')         show = score >= 70;
+    else if (filter === 'applied')      show = isApplied(url);
+    else if (filter === 'not_applied')  show = !isApplied(url);
+    card.style.display = show ? '' : 'none';
+  });
+}
+
+function toggleLowMatches() {
+  window._showLowMatches = !window._showLowMatches;
+  const btn = document.getElementById('low-match-toggle');
+  if (btn) {
+    btn.textContent = window._showLowMatches ? 'Hide Low Matches' : 'Show Low Matches';
+    btn.classList.toggle('active', window._showLowMatches);
+  }
+  applyFilter(window._activeFilter || 'fresh');
+}
+
+/* ═══════════════════════════════════════════════════════
+   APPLIED CHECKBOX (localStorage)
+═══════════════════════════════════════════════════════ */
+function isApplied(url) {
+  return localStorage.getItem('jh_applied_' + url) === '1';
+}
+
+function toggleApplied(url, checked) {
+  if (checked) {
+    localStorage.setItem('jh_applied_' + url, '1');
+  } else {
+    localStorage.removeItem('jh_applied_' + url);
+  }
+  // Update label colour on all matching cards
+  document.querySelectorAll(`.applied-label[data-url="${CSS.escape(url)}"]`).forEach(lbl => {
+    lbl.classList.toggle('is-applied', checked);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   RENDER JOB BOARD CARDS
+═══════════════════════════════════════════════════════ */
+function renderJobs(jobs, container, noResultsEl, isRefresh) {
+  window._lastJobs = jobs || [];
+  // Keep rejected jobs in state (so undo works) but never render them in the grid.
+  const visible = window._lastJobs
+    .map((job, idx) => ({ job, idx }))
+    .filter(({ job }) => job.status !== 'Rejected');
+  if (!visible.length) {
+    const msg = document.getElementById('no-results-msg');
+    if (msg) msg.innerHTML = isRefresh
+      ? '<strong>No new jobs found</strong><br/>All recent results are already saved. Try again tomorrow.'
+      : '<strong>No jobs found</strong><br/>Try a different role filter or search again.';
+    noResultsEl.classList.remove('hidden');
+    refreshJobsUI();
+    return;
+  }
+  show('filter-bar');
+  show('source-toggle-wrap');
+  window._activeFilter = 'fresh';
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === 'fresh'));
+
+  // Update nav badge
+  const navBadge = document.getElementById('nav-job-count');
+  navBadge.textContent = visible.length;
+  navBadge.style.display = '';
+
+  container.innerHTML = visible.map(({ job, idx: i }) => {
+    const score   = job.match_score || 0;
+    const loc     = job.location || '';
+    const posted  = job.date_posted || 'Unknown';
+    const url     = job.url || '';
+    const applied = isApplied(url);
+    const lowMatch = score > 0 && score < 30;
+    return `
+    <div class="job-card${lowMatch ? ' low-match' : ''}" data-score="${score}" data-location="${esc(loc)}" data-posted="${esc(posted)}" data-url="${esc(url)}">
+      <div class="job-top">
+        <div>
+          <h3 class="job-company">${esc(job.company)}</h3>
+          <p class="job-role">${esc(job.role)}</p>
+          ${posted !== 'Unknown' ? `<p class="job-date">${esc(posted)}</p>` : ''}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <span class="badge ${sourceBadgeClass(job.source)}">${esc(job.source || 'Web')}</span>
+          ${score ? `<span class="score-badge ${scoreBadgeClass(score)}">${score}</span>` : ''}
+          ${job.status && job.status !== 'New' ? `<span class="status-pill status-${esc(job.status.toLowerCase())}">${esc(job.status)}</span>` : ''}
+          ${job.score_reason ? `<p class="score-reason">${esc(job.score_reason)}</p>` : ''}
+        </div>
+      </div>
+      <p class="job-summary">${esc(job.summary)}</p>
+      <div class="job-meta">
+        ${job.salary && job.salary !== 'Not mentioned' ? `<span class="meta-pill">${esc(job.salary)}</span>` : ''}
+        ${job.location ? `<span class="meta-pill">${esc(job.location)}</span>` : ''}
+      </div>
+      ${job.recruiter_email ? `
+      <div class="recruiter-email-row">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--gold);">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        <span class="recruiter-email-text">${esc(job.recruiter_email)}</span>
+        <button class="btn-copy-email" onclick="copyEmail(event,'${esc(job.recruiter_email)}')" title="Copy email">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+        </button>
+      </div>` : ''}
+      <div class="job-actions">
+        <a href="${esc(url)}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          View
+        </a>
+        <button class="btn btn-secondary btn-sm" onclick="prefillTailor(${i})">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+          </svg>
+          Tailor
+        </button>
+        <button class="btn btn-secondary btn-sm" onclick="prefillOutreach(${i})">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          Outreach
+        </button>
+        <label class="applied-label ${applied ? 'is-applied' : ''}" data-url="${esc(url)}">
+          <input type="checkbox" ${applied ? 'checked' : ''} onchange="toggleApplied('${esc(url)}',this.checked)">
+          Applied
+        </label>
+      </div>
+    </div>
+  `; }).join('');
+  applyFilter('fresh');
+  refreshJobsUI();
+}
+
+/* ═══════════════════════════════════════════════════════
+   RENDER SOCIAL POST CARDS
+═══════════════════════════════════════════════════════ */
+function renderSocialPosts(posts) {
+  window._lastSocialPosts = posts || [];
+  // Keep rejected posts in state (so undo works) but never render them.
+  const visible = window._lastSocialPosts
+    .map((post, idx) => ({ post, idx }))
+    .filter(({ post }) => post.status !== 'Rejected');
+
+  const inlineSection = document.getElementById('social-inline-section');
+  const socialResults = document.getElementById('social-results');
+  const socialTabEmpty   = document.getElementById('social-tab-empty');
+  const socialTabResults = document.getElementById('social-tab-results');
+
+  // Update source toggle visibility
+  show('source-toggle-wrap');
+
+  if (!visible.length) {
+    inlineSection.classList.add('hidden');
+    socialTabEmpty.style.display   = '';
+    socialTabResults.innerHTML     = '';
+    refreshJobsUI();
+    return;
+  }
+
+  // Update count badges
+  const countBadge = document.getElementById('social-count-badge');
+  countBadge.textContent = `${visible.length} posts`;
+  const navBadge = document.getElementById('nav-social-count');
+  navBadge.textContent = visible.length;
+  navBadge.style.display = '';
+
+  socialTabEmpty.style.display = 'none';
+  inlineSection.classList.remove('hidden');
+
+  const html = visible.map(({ post, idx }) => _socialCardHTML(post, idx)).join('');
+  socialResults.innerHTML    = html;
+  socialTabResults.innerHTML = visible.map(({ post, idx }) => _socialCardHTML(post, idx, 'tab')).join('');
+  refreshJobsUI();
+}
+
+function _socialCardHTML(post, i, suffix) {
+  const score      = post.match_score  || 0;
+  const posted     = post.post_date    || 'Unknown';
+  const url        = post.url          || '#';
+  const contact    = post.contact_method || 'Unknown';
+  const isFounder  = post.is_founder_post;
+  const idSuffix   = suffix ? `-${suffix}` : '';
+
+  return `
+  <div class="social-card" data-score="${score}" data-posted="${esc(posted)}" data-url="${esc(url)}">
+    <div class="job-top">
+      <div>
+        <div class="social-poster-row">
+          <span class="social-poster-name">${esc(post.poster_name || 'Unknown')}</span>
+          <span class="social-poster-role">${esc(post.poster_role || 'Unknown')}</span>
+          ${isFounder ? '<span class="founder-badge">Founder</span>' : ''}
+        </div>
+        <p class="job-role" style="margin-top:0.3rem">${esc(post.company || 'Unknown')} · hiring <strong>${esc(post.role_hiring || '?')}</strong></p>
+        ${posted !== 'Unknown' ? `<p class="job-date">${esc(posted)}</p>` : ''}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+        <span class="badge ${sourceBadgeClass(post.source)}">${esc(post.source || 'Social')}</span>
+        ${score ? `<span class="score-badge ${scoreBadgeClass(score)}" title="${esc(post.score_reason || '')}">${score}</span>` : ''}
+      </div>
+    </div>
+    ${post.post_snippet ? `<p class="job-summary">${esc(post.post_snippet)}</p>` : ''}
+    ${contact && contact !== 'Unknown' ? `
+    <div class="contact-method-row">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--social-accent)">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.61 1.31h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21.73 15c.05.17.07.34.07.51l.13 1.41z"/>
+      </svg>
+      <span class="contact-method-text" title="${esc(contact)}">${esc(contact)}</span>
+      <button class="btn-copy-email" onclick="navigator.clipboard.writeText('${esc(contact)}')" title="Copy contact">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+      </button>
+    </div>` : ''}
+    <div class="job-actions">
+      <a href="${esc(url)}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        View Post
+      </a>
+      <button class="btn btn-secondary btn-sm" onclick="prefillOutreachFromPost(${i},'${idSuffix ? 'tab' : ''}')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        Draft Outreach
+      </button>
+      <label class="applied-label ${isApplied(url) ? 'is-applied' : ''}" data-url="${esc(url)}">
+        <input type="checkbox" ${isApplied(url) ? 'checked' : ''} onchange="toggleApplied('${esc(url)}',this.checked)">
+        Applied
+      </label>
+    </div>
+  </div>`;
+}
+
+function copyEmail(e, email) {
+  e.stopPropagation();
+  const btn = e.currentTarget;
+  navigator.clipboard.writeText(email).then(() => {
+    btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    btn.style.color = 'var(--green)';
+    setTimeout(() => {
+      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+      btn.style.color = '';
+    }, 1600);
+  });
+}
+
+function sourceBadgeClass(source) {
+  const s = (source || '').toLowerCase();
+  if (s.includes('linkedin'))                      return 'badge-linkedin';
+  if (s.includes('wellfound') || s.includes('angel')) return 'badge-wellfound';
+  if (s.includes('workatastartup') || s.includes('yc')) return 'badge-yc';
+  if (s.includes('twitter') || s.includes('x.com') || s === 'x') return 'badge-twitter';
+  return 'badge-default';
+}
+
+function prefillTailor(i) {
+  const job = window._lastJobs[i];
+  document.getElementById('tailor-company').value    = job.company || '';
+  document.getElementById('tailor-role-title').value = job.role    || '';
+  switchTab('tailor');
+  document.getElementById('jd-input').focus();
+}
+
+function prefillOutreach(i) {
+  const job = window._lastJobs[i];
+  document.getElementById('email-company').value     = job.company || '';
+  document.getElementById('email-role').value        = job.role    || '';
+  document.getElementById('email-description').value = job.summary || '';
+  switchTab('outreach');
+}
+
+function prefillOutreachFromPost(i, src) {
+  const post = window._lastSocialPosts[i];
+  if (!post) return;
+  document.getElementById('email-company').value     = post.company    || '';
+  document.getElementById('email-role').value        = post.role_hiring || '';
+  document.getElementById('email-contact').value     = post.poster_name || '';
+  document.getElementById('email-description').value = post.post_snippet || '';
+  switchTab('outreach');
+}
+
+/* ═══════════════════════════════════════════════════════
+   TAILOR RESUME
+═══════════════════════════════════════════════════════ */
+document.getElementById('tailor-btn')?.addEventListener('click', async () => {
+  const btn       = document.getElementById('tailor-btn');
+  const jd        = document.getElementById('jd-input').value.trim();
+  const roleType  = document.getElementById('role-type-select').value;
+  const company   = document.getElementById('tailor-company').value.trim() || 'Unknown';
+  const roleTitle = document.getElementById('tailor-role-title').value.trim();
+
+  if (!jd) { showToast('Paste a job description first.'); return; }
+
+  btn.disabled  = true;
+  btn.innerHTML = `<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div> Generating...`;
+  show('tailor-loading'); hide('tailor-result'); hide('tailor-error');
+
+  const fd = new FormData();
+  fd.append('jd_text', jd);
+  fd.append('role_type', roleType);
+  fd.append('company_name', company);
+  fd.append('role_title', roleTitle);
+
+  try {
+    const res  = await fetch('/api/tailor', { method: 'POST', body: fd });
+    const data = await res.json();
+
+    hide('tailor-loading');
+    resetBtn(btn, `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Generate Tailored Resume`);
+
+    if (data.error) { showError('tailor-error', data.error); return; }
+
+    currentPdfFilename = data.pdf_filename;
+
+    const kwEl = document.getElementById('tailor-keywords');
+    kwEl.innerHTML = (data.keywords || []).map(k => `<span class="keyword-chip">${esc(k)}</span>`).join('');
+
+    const diffEl = document.getElementById('diff-container');
+    if (data.diff && data.diff.length) {
+      diffEl.innerHTML = data.diff.map(d => `
+        <div class="diff-block">
+          <div class="diff-row before">
+            <span class="diff-label">Before</span>
+            <p>${esc(d.before)}</p>
+          </div>
+          <div class="diff-row after">
+            <span class="diff-label">After</span>
+            <p>${esc(d.after)}</p>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      diffEl.innerHTML = '<p style="color:var(--text-2);font-size:0.82rem;">No diff available — check the PDF directly.</p>';
+    }
+
+    show('tailor-result');
+  } catch (err) {
+    hide('tailor-loading');
+    showError('tailor-error', `Request failed: ${err.message}`);
+    resetBtn(btn, `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Generate Tailored Resume`);
+  }
+});
+
+document.getElementById('download-pdf-btn')?.addEventListener('click', () => {
+  if (!currentPdfFilename) return;
+  window.location.href = `/api/tailor/pdf/${encodeURIComponent(currentPdfFilename)}`;
+});
+
+/* ═══════════════════════════════════════════════════════
+   EMAIL DRAFTS
+═══════════════════════════════════════════════════════ */
+document.getElementById('email-btn')?.addEventListener('click', async () => {
+  const btn         = document.getElementById('email-btn');
+  const company     = document.getElementById('email-company').value.trim();
+  const role        = document.getElementById('email-role').value.trim();
+  const contact     = document.getElementById('email-contact').value.trim();
+  const description = document.getElementById('email-description').value.trim();
+  const observation = document.getElementById('email-observation').value.trim();
+
+  if (!company || !role || !description) {
+    showToast('Company, role, and description are required.');
+    return;
+  }
+
+  btn.disabled  = true;
+  btn.innerHTML = `<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div> Drafting...`;
+  show('email-loading'); hide('email-result'); hide('email-error');
+
+  const fd = new FormData();
+  fd.append('company_name', company);
+  fd.append('role', role);
+  fd.append('contact_name', contact);
+  fd.append('company_description', description);
+  fd.append('observation', observation);
+
+  try {
+    const res  = await fetch('/api/email', { method: 'POST', body: fd });
+    const data = await res.json();
+
+    hide('email-loading');
+    resetBtn(btn, `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Generate Email Drafts`);
+
+    if (data.error) { showError('email-error', data.error); return; }
+
+    document.getElementById('draft-1-text').textContent = data.draft_1;
+    document.getElementById('draft-2-text').textContent = data.draft_2;
+    show('email-result');
+    document.getElementById('email-result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  } catch (err) {
+    hide('email-loading');
+    showError('email-error', `Request failed: ${err.message}`);
+    resetBtn(btn, `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Generate Email Drafts`);
+  }
+});
+
+/* ═══════════════════════════════════════════════════════
+   FORM HELPER
+═══════════════════════════════════════════════════════ */
+document.getElementById('form-btn')?.addEventListener('click', async () => {
+  const btn      = document.getElementById('form-btn');
+  const question = document.getElementById('form-question').value.trim();
+  const context  = document.getElementById('form-context').value.trim();
+  const company  = document.getElementById('form-company').value.trim();
+
+  if (!question) { showToast('Paste a form question first.'); return; }
+
+  btn.disabled  = true;
+  btn.innerHTML = `<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div> Generating...`;
+  show('form-loading'); hide('form-result'); hide('form-error');
+
+  const fd = new FormData();
+  fd.append('question', question);
+  fd.append('role_context', context);
+  fd.append('company_name', company);
+
+  try {
+    const res  = await fetch('/api/form', { method: 'POST', body: fd });
+    const data = await res.json();
+
+    hide('form-loading');
+    resetBtn(btn, `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Generate Answer`);
+
+    if (data.error) { showError('form-error', data.error); return; }
+
+    document.getElementById('form-answer').textContent     = data.answer;
+    document.getElementById('form-word-count').textContent = `${data.word_count} words`;
+    show('form-result');
+  } catch (err) {
+    hide('form-loading');
+    showError('form-error', `Request failed: ${err.message}`);
+    resetBtn(btn, `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Generate Answer`);
+  }
+});
+
+document.getElementById('form-copy-btn')?.addEventListener('click', (e) => {
+  const text = document.getElementById('form-answer').textContent;
+  copyToClipboard(text, e.currentTarget);
+});
+
+/* ═══════════════════════════════════════════════════════
+   COPY BUTTONS (delegated)
+═══════════════════════════════════════════════════════ */
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.copy-btn');
+  if (!btn) return;
+  const text = document.getElementById(btn.dataset.target)?.textContent || '';
+  copyToClipboard(text, btn);
+});
+
+/* ═══════════════════════════════════════════════════════
+   SWIPE DECK  (right = shortlist, left = reject)
+═══════════════════════════════════════════════════════ */
+window._deckItems   = [];
+window._undoStack   = [];
+window._enrichCache = {};
+window._jobsView    = localStorage.getItem('jh_jobs_view') || 'deck';
+
+function _normalizeItem(raw, kind) {
+  if (kind === 'social') {
+    return {
+      kind, raw,
+      url:     raw.url || '',
+      company: raw.company || 'Unknown',
+      role:    raw.role_hiring || 'Unknown role',
+      score:   raw.match_score || 0,
+      reason:  raw.score_reason || '',
+      summary: raw.post_snippet || '',
+      location: '', salary: '',
+      source:  raw.source || 'Social',
+      posted:  raw.post_date || 'Unknown',
+      contact: raw.contact_method || '',
+      poster:  raw.poster_name && raw.poster_name !== 'Unknown' ? raw.poster_name : '',
+      status:  raw.status || 'New',
+    };
+  }
+  return {
+    kind, raw,
+    url:     raw.url || '',
+    company: raw.company || 'Unknown',
+    role:    raw.role || 'Unknown role',
+    score:   raw.match_score || 0,
+    reason:  raw.score_reason || '',
+    summary: raw.summary || '',
+    location: raw.location || '',
+    salary:  raw.salary && raw.salary !== 'Not mentioned' ? raw.salary : '',
+    source:  raw.source || 'Web',
+    posted:  raw.date_posted || 'Unknown',
+    contact: raw.recruiter_email || '',
+    poster:  '',
+    status:  raw.status || 'New',
+  };
+}
+
+function _allItems() {
+  return [
+    ...(window._lastJobs || []).map(j => _normalizeItem(j, 'job')),
+    ...(window._lastSocialPosts || []).map(p => _normalizeItem(p, 'social')),
+  ];
+}
+
+function rebuildDeck() {
+  window._deckItems = _allItems()
+    .filter(it => it.url && it.url !== 'Unknown' && it.url !== '#'
+                  && (it.status === 'New' || it.status === 'Saved'))
+    .sort((a, b) => b.score - a.score);
+  // After an undo, keep the restored card on top instead of its score position.
+  if (window._deckPinFront) {
+    const i = window._deckItems.findIndex(it => it.url === window._deckPinFront);
+    if (i > 0) window._deckItems.unshift(window._deckItems.splice(i, 1)[0]);
+  }
+  renderDeck();
+}
+
+function refreshJobsUI() {
+  rebuildDeck();
+  renderPipeline();
+  if ((window._lastJobs || []).length || (window._lastSocialPosts || []).length) {
+    show('view-toggle-wrap');
+  }
+  setJobsView(window._jobsView);
+}
+
+function setJobsView(view) {
+  window._jobsView = view;
+  try { localStorage.setItem('jh_jobs_view', view); } catch (_) {}
+  document.querySelectorAll('.view-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.view === view));
+
+  const hasJobs   = (window._lastJobs || []).length > 0;
+  const hasSocial = (window._lastSocialPosts || []).length > 0;
+  const gridIds   = ['source-toggle-wrap', 'filter-bar', 'job-board-section', 'social-inline-section'];
+
+  if (view === 'deck') {
+    gridIds.forEach(hide);
+    show('deck-section');
+  } else {
+    hide('deck-section');
+    show('job-board-section');
+    if (hasJobs) { show('filter-bar'); show('source-toggle-wrap'); }
+    if (hasSocial) show('social-inline-section');
+  }
+}
+
+function _deckProgressText() {
+  const total = window._deckItems.length;
+  const shortlisted = _allItems().filter(it => it.status === 'Shortlisted').length;
+  return total
+    ? `${total} to review${shortlisted ? ` · ${shortlisted} shortlisted` : ''}`
+    : (shortlisted ? `${shortlisted} shortlisted` : '');
+}
+
+function renderDeck() {
+  const stage = document.getElementById('deck-stage');
+  if (!stage) return;
+  const label = document.getElementById('deck-progress-label');
+  if (label) label.textContent = _deckProgressText();
+
+  const items = window._deckItems;
+  if (!items.length) {
+    stage.innerHTML = `
+      <div class="deck-empty">
+        <div class="deck-empty-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+        </div>
+        <p><strong>All caught up</strong><br/>No more jobs to review. Refresh to find new ones, or work your pipeline.</p>
+        <button class="btn btn-secondary btn-sm" onclick="switchTab('pipeline')">Go to Pipeline</button>
+      </div>`;
+    return;
+  }
+
+  stage.innerHTML = items.slice(0, 3).map((it, i) => _deckCardHTML(it, i)).join('');
+  const top = stage.querySelector('.deck-card[data-pos="0"]');
+  if (top) _attachSwipe(top);
+  prefetchEnrich();
+}
+
+function _deckCardHTML(it, pos) {
+  const scoreClass = scoreBadgeClass(it.score);
+  const cached = window._enrichCache[it.url];
+  return `
+  <div class="deck-card" data-pos="${pos}" data-url="${esc(it.url)}">
+    ${pos === 0 ? `
+    <span class="deck-stamp stamp-like">SHORTLIST</span>
+    <span class="deck-stamp stamp-nope">REJECT</span>` : ''}
+    <div class="deck-card-scroll">
+      <div class="deck-card-top">
+        <div>
+          <h3 class="deck-company">${esc(it.company)}</h3>
+          <p class="deck-role">${esc(it.role)}</p>
+          ${it.poster ? `<p class="deck-poster">via ${esc(it.poster)} (founder post)</p>` : ''}
+        </div>
+        <div class="deck-score-col">
+          <div class="deck-score-ring ${scoreClass}">
+            <span>${it.score}</span>
+          </div>
+          <span class="badge ${sourceBadgeClass(it.source)}">${esc(it.source)}</span>
+        </div>
+      </div>
+      ${it.reason ? `<p class="deck-reason">${esc(it.reason)}</p>` : ''}
+      <div class="job-meta" style="margin:0.5rem 0;">
+        ${it.salary ? `<span class="meta-pill">${esc(it.salary)}</span>` : ''}
+        ${it.location ? `<span class="meta-pill">${esc(it.location)}</span>` : ''}
+        ${it.posted !== 'Unknown' ? `<span class="meta-pill">${esc(it.posted)}</span>` : ''}
+      </div>
+      ${it.summary ? `<p class="deck-summary">${esc(it.summary)}</p>` : ''}
+      ${it.contact ? `<p class="deck-contact">Contact: <strong>${esc(it.contact)}</strong></p>` : ''}
+      <div class="deck-enrich" data-url="${esc(it.url)}">
+        ${cached ? _enrichHTML(cached) : `
+        <div class="enrich-loading">
+          <div class="spinner" style="width:12px;height:12px;border-width:2px;"></div>
+          Fetching company intel &amp; full JD...
+        </div>`}
+      </div>
+      <a href="${esc(it.url)}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm deck-view-link" onpointerdown="event.stopPropagation()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        View original
+      </a>
+    </div>
+  </div>`;
+}
+
+/* ── Drag physics ─────────────────────────────────────── */
+function _attachSwipe(card) {
+  let startX = 0, startY = 0, dx = 0, dy = 0, dragging = false;
+
+  card.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('a, button')) return;
+    dragging = true; dx = 0; dy = 0;
+    startX = e.clientX; startY = e.clientY;
+    card.setPointerCapture(e.pointerId);
+    card.classList.add('dragging');
+  });
+
+  card.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    dx = e.clientX - startX;
+    dy = e.clientY - startY;
+    card.style.transform = `translate(${dx}px, ${dy * 0.35}px) rotate(${dx * 0.055}deg)`;
+    const like = card.querySelector('.stamp-like');
+    const nope = card.querySelector('.stamp-nope');
+    if (like) like.style.opacity = Math.min(1, Math.max(0, dx / 90));
+    if (nope) nope.style.opacity = Math.min(1, Math.max(0, -dx / 90));
+  });
+
+  const release = () => {
+    if (!dragging) return;
+    dragging = false;
+    card.classList.remove('dragging');
+    const threshold = Math.min(130, card.offsetWidth * 0.35);
+    if (Math.abs(dx) > threshold) {
+      _flyOff(card, dx > 0 ? 'right' : 'left');
+    } else {
+      card.style.transform = '';
+      const like = card.querySelector('.stamp-like');
+      const nope = card.querySelector('.stamp-nope');
+      if (like) like.style.opacity = 0;
+      if (nope) nope.style.opacity = 0;
+    }
+  };
+  card.addEventListener('pointerup', release);
+  card.addEventListener('pointercancel', release);
+}
+
+function _flyOff(card, dir) {
+  const x = (dir === 'right' ? 1 : -1) * (window.innerWidth * 0.8);
+  card.classList.add('flying');
+  card.style.transform = `translate(${x}px, -40px) rotate(${dir === 'right' ? 24 : -24}deg)`;
+  card.style.opacity = '0';
+  const stamp = card.querySelector(dir === 'right' ? '.stamp-like' : '.stamp-nope');
+  if (stamp) stamp.style.opacity = 1;
+  setTimeout(() => _commitDecision(dir), 240);
+}
+
+function deckSwipe(dir) {
+  const top = document.querySelector('#deck-stage .deck-card[data-pos="0"]');
+  if (!top || top.classList.contains('flying')) return;
+  _flyOff(top, dir);
+}
+
+function _commitDecision(dir) {
+  const item = window._deckItems.shift();
+  if (!item) { renderDeck(); return; }
+  if (window._deckPinFront === item.url) window._deckPinFront = null;
+  const status = dir === 'right' ? 'Shortlisted' : 'Rejected';
+  const prev   = item.status;
+  item.status = status;
+  item.raw.status = status;
+  window._undoStack.push({ item, prev });
+  if (window._undoStack.length > 20) window._undoStack.shift();
+
+  _postDecision(item.url, status);
+  renderDeck();
+  renderPipeline();
+  _rerenderGrid();
+  showToast(dir === 'right'
+    ? `Shortlisted ${item.company} — added to Pipeline.`
+    : `Rejected ${item.company} — won't show again.`);
+}
+
+function deckUndo() {
+  const last = window._undoStack.pop();
+  if (!last) { showToast('Nothing to undo.'); return; }
+  last.item.status = last.prev;
+  last.item.raw.status = last.prev;
+  _postDecision(last.item.url, last.prev || 'New');
+  window._deckPinFront = last.item.url;
+  window._deckItems.unshift(last.item);
+  renderDeck();
+  renderPipeline();
+  _rerenderGrid();
+  showToast(`Brought back ${last.item.company}.`);
+}
+
+async function _postDecision(url, status) {
+  try {
+    const fd = new FormData();
+    fd.append('url', url);
+    fd.append('status', status);
+    const res  = await fetch('/api/jobs/decision', { method: 'POST', body: fd });
+    const data = await res.json();
+    if (data.error) showToast('Could not save decision: ' + data.error);
+  } catch (err) {
+    showToast('Could not save decision (offline?). It will be lost on reload.');
+  }
+}
+
+function _rerenderGrid() {
+  // Re-render grid + social cards so status pills / hidden rejected cards stay in sync.
+  if (_rerenderGrid._busy) return;
+  _rerenderGrid._busy = true;
+  if ((window._lastJobs || []).length) {
+    renderJobs(window._lastJobs, document.getElementById('job-results'),
+               document.getElementById('no-results'));
+  }
+  renderSocialPosts(window._lastSocialPosts || []);
+  _rerenderGrid._busy = false;
+}
+
+/* ── Keyboard shortcuts ───────────────────────────────── */
+document.addEventListener('keydown', (e) => {
+  const deckVisible = !document.getElementById('deck-section')?.classList.contains('hidden')
+    && !document.getElementById('tab-search')?.classList.contains('hidden');
+  if (!deckVisible) return;
+  const t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (e.key === 'ArrowRight')      { e.preventDefault(); deckSwipe('right'); }
+  else if (e.key === 'ArrowLeft')  { e.preventDefault(); deckSwipe('left'); }
+  else if (e.key === 'u' || e.key === 'U') { e.preventDefault(); deckUndo(); }
+});
+
+/* ═══════════════════════════════════════════════════════
+   CARD ENRICHMENT  (lazy, front of deck)
+═══════════════════════════════════════════════════════ */
+function prefetchEnrich() {
+  window._deckItems.slice(0, 3).forEach(it => {
+    if (!it.url) return;
+    const cached = window._enrichCache[it.url];
+    if (cached) { _renderEnrichInto(it.url, cached); return; }
+    if (it._enriching) return;
+    it._enriching = true;
+    const params = new URLSearchParams({ url: it.url, company: it.company, role: it.role });
+    fetch('/api/enrich?' + params.toString())
+      .then(r => r.json())
+      .then(data => {
+        it._enriching = false;
+        if (!data.ok) return;
+        window._enrichCache[it.url] = data;
+        _renderEnrichInto(it.url, data);
+      })
+      .catch(() => { it._enriching = false; });
+  });
+}
+
+function _renderEnrichInto(url, data) {
+  document.querySelectorAll(`.deck-enrich[data-url="${CSS.escape(url)}"]`).forEach(el => {
+    el.innerHTML = _enrichHTML(data);
+  });
+}
+
+function _enrichHTML(data) {
+  const snap = data.company_snapshot || {};
+  const dig  = data.jd_digest || {};
+  const facts = [
+    snap.funding   && snap.funding   !== 'Unknown' ? { label: 'Funding', val: snap.funding } : null,
+    snap.team_size && snap.team_size !== 'Unknown' ? { label: 'Team',    val: snap.team_size } : null,
+    snap.founders  && snap.founders  !== 'Unknown' ? { label: 'Founders', val: snap.founders } : null,
+  ].filter(Boolean);
+
+  const list = (title, items, cls) => (items && items.length) ? `
+    <div class="enrich-list ${cls || ''}">
+      <span class="enrich-list-title">${title}</span>
+      <ul>${items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
+    </div>` : '';
+
+  const hasAnything = facts.length || snap.what_they_do || snap.recent_news || data.fit_note
+    || (dig.responsibilities || []).length || (dig.requirements || []).length || (dig.red_flags || []).length;
+  if (!hasAnything) {
+    return `<p class="enrich-none">No extra intel found for this one.</p>`;
+  }
+
+  return `
+    ${snap.what_they_do ? `<p class="enrich-about">${esc(snap.what_they_do)}</p>` : ''}
+    ${facts.length ? `<div class="enrich-facts">${facts.map(f =>
+      `<span class="enrich-fact"><strong>${f.label}</strong> ${esc(f.val)}</span>`).join('')}</div>` : ''}
+    ${snap.recent_news ? `<p class="enrich-news">📰 ${esc(snap.recent_news)}</p>` : ''}
+    ${list("What you'd do", dig.responsibilities)}
+    ${list('They want', dig.requirements)}
+    ${list('Red flags', dig.red_flags, 'enrich-red')}
+    ${data.fit_note ? `<p class="enrich-fit">${esc(data.fit_note)}</p>` : ''}
+  `;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PIPELINE TAB
+═══════════════════════════════════════════════════════ */
+function renderPipeline() {
+  const items = _allItems();
+  const shortlisted = items.filter(it => it.status === 'Shortlisted');
+  const applied     = items.filter(it => it.status === 'Applied');
+  window._pipelineItems = shortlisted.concat(applied);
+
+  const navBadge = document.getElementById('nav-pipeline-count');
+  if (navBadge) {
+    navBadge.textContent = shortlisted.length;
+    navBadge.style.display = shortlisted.length ? '' : 'none';
+  }
+
+  const emptyEl = document.getElementById('pipeline-empty');
+  if (!shortlisted.length && !applied.length) {
+    emptyEl?.classList.remove('hidden');
+    hide('pipeline-shortlisted-wrap');
+    hide('pipeline-applied-wrap');
+    return;
+  }
+  emptyEl?.classList.add('hidden');
+
+  const renderGroup = (list, wrapId, listId, countId, offset) => {
+    const wrap = document.getElementById(wrapId);
+    if (!list.length) { wrap?.classList.add('hidden'); return; }
+    wrap?.classList.remove('hidden');
+    document.getElementById(countId).textContent = list.length;
+    document.getElementById(listId).innerHTML = list.map((it, i) =>
+      _pipelineRowHTML(it, offset + i)).join('');
+  };
+  renderGroup(shortlisted, 'pipeline-shortlisted-wrap', 'pipeline-shortlisted', 'pipeline-shortlisted-count', 0);
+  renderGroup(applied, 'pipeline-applied-wrap', 'pipeline-applied', 'pipeline-applied-count', shortlisted.length);
+}
+
+function _pipelineRowHTML(it, idx) {
+  const isApplied = it.status === 'Applied';
+  return `
+  <div class="pipeline-row${isApplied ? ' is-applied-row' : ''}">
+    <div class="pipeline-row-main">
+      <span class="score-badge ${scoreBadgeClass(it.score)}">${it.score}</span>
+      <div class="pipeline-row-text">
+        <span class="pipeline-company">${esc(it.company)}</span>
+        <span class="pipeline-role">${esc(it.role)}${it.poster ? ` · via ${esc(it.poster)}` : ''}</span>
+        ${it.contact ? `<span class="pipeline-contact">${esc(it.contact)}</span>` : ''}
+      </div>
+    </div>
+    <div class="pipeline-row-actions">
+      <a class="btn btn-ghost btn-sm" href="${esc(it.url)}" target="_blank" rel="noopener noreferrer">Open</a>
+      <button class="btn btn-secondary btn-sm" onclick="pipelineTailor(${idx})">Tailor</button>
+      <button class="btn btn-secondary btn-sm" onclick="pipelineOutreach(${idx})">Outreach</button>
+      ${isApplied
+        ? `<button class="btn btn-ghost btn-sm" onclick="pipelineSetStatus(${idx}, 'Shortlisted')">Un-apply</button>`
+        : `<button class="btn btn-primary btn-sm" onclick="pipelineSetStatus(${idx}, 'Applied')">Mark Applied</button>
+           <button class="btn btn-ghost btn-sm pipeline-remove" onclick="pipelineSetStatus(${idx}, 'Rejected')" title="Remove from pipeline">✕</button>`}
+    </div>
+  </div>`;
+}
+
+function pipelineSetStatus(idx, status) {
+  const it = (window._pipelineItems || [])[idx];
+  if (!it) return;
+  it.status = status;
+  it.raw.status = status;
+  _postDecision(it.url, status);
+  renderPipeline();
+  rebuildDeck();
+  _rerenderGrid();
+  if (status === 'Applied') showToast(`Marked ${it.company} as applied. 🎯`);
+}
+
+function pipelineTailor(idx) {
+  const it = (window._pipelineItems || [])[idx];
+  if (!it) return;
+  document.getElementById('tailor-company').value    = it.company || '';
+  document.getElementById('tailor-role-title').value = it.role || '';
+  const cached = window._enrichCache[it.url];
+  if (cached) {
+    const dig = cached.jd_digest || {};
+    const jdParts = []
+      .concat(dig.responsibilities || [], dig.requirements || [], dig.nice_to_have || []);
+    if (jdParts.length && !document.getElementById('jd-input').value.trim()) {
+      document.getElementById('jd-input').value =
+        `${it.role} at ${it.company}\n\nResponsibilities:\n- ` +
+        (dig.responsibilities || []).join('\n- ') +
+        `\n\nRequirements:\n- ` + (dig.requirements || []).join('\n- ');
+    }
+  }
+  switchTab('tailor');
+  document.getElementById('jd-input').focus();
+}
+
+function pipelineOutreach(idx) {
+  const it = (window._pipelineItems || [])[idx];
+  if (!it) return;
+  document.getElementById('email-company').value     = it.company || '';
+  document.getElementById('email-role').value        = it.role || '';
+  document.getElementById('email-contact').value     = it.poster || '';
+  const cached = window._enrichCache[it.url];
+  document.getElementById('email-description').value =
+    (cached && cached.company_snapshot && cached.company_snapshot.what_they_do) || it.summary || '';
+  if (cached && cached.company_snapshot && cached.company_snapshot.recent_news) {
+    document.getElementById('email-observation').value = cached.company_snapshot.recent_news;
+  }
+  switchTab('outreach');
+}
+
+/* ═══════════════════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════════════════ */
+function show(id) { document.getElementById(id)?.classList.remove('hidden'); }
+function hide(id) { document.getElementById(id)?.classList.add('hidden'); }
+
+function resetBtn(btn, html) {
+  btn.disabled  = false;
+  btn.innerHTML = html;
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.querySelector('span').textContent = msg;
+  el.classList.remove('hidden');
+}
+
+function copyToClipboard(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied`;
+    setTimeout(() => { btn.innerHTML = orig; }, 1600);
+  });
+}
+
+function showToast(msg) {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = msg;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('toast-out');
+    toast.addEventListener('animationend', () => toast.remove());
+  }, 2800);
+}
+
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+</script>
+</body>
+</html>

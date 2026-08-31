@@ -1,0 +1,138 @@
+% ============================================================
+% Abhijeet Kumar — Product Role Resume
+% Clean single-column ATS-friendly LaTeX
+% ============================================================
+
+\documentclass[10pt, a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage[
+  top=0.45in,
+  bottom=0.45in,
+  left=0.55in,
+  right=0.55in
+]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{fontawesome5}
+
+% ---------- Hyperlink styling ----------
+\hypersetup{
+  colorlinks=true,
+  urlcolor=black,
+  linkcolor=black
+}
+
+% ---------- No page numbers ----------
+\pagestyle{empty}
+
+% ---------- Section heading style ----------
+\titleformat{\section}
+  {\vspace{-4pt}\scshape\raggedright\large\bfseries}
+  {}{0em}{}
+  [\color{black}\titlerule \vspace{-3pt}]
+
+% ---------- Custom commands ----------
+\newcommand{\jobheader}[4]{
+  \vspace{-1pt}
+  \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & \textbf{\small #2} \\
+    \textit{\small #3} & \textit{\small #4}
+  \end{tabular*}
+  \vspace{1pt}
+}
+
+\newenvironment{achievelist}{
+  \begin{itemize}[leftmargin=1.2em, itemsep=1pt, parsep=0pt, topsep=1pt]
+    \small
+}{
+  \end{itemize}
+  \vspace{-3pt}
+}
+
+\newcommand{\achieve}[1]{\item #1}
+
+% ============================================================
+\begin{document}
+
+% ---------- Header ----------
+\begin{center}
+  {\LARGE \textbf{Abhijeet Kumar}} \\[4pt]
+  \small
+  \faGraduationCap\ IIT Kharagpur \quad
+  \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad
+  \faEnvelope\ \href{mailto:kumarabhiitkgp@gmail.com}{kumarabhiitkgp@gmail.com} \\[2pt]
+  \faGithub\ \href{https://github.com/abhijeet6401}{github.com/abhijeet6401}
+\end{center}
+
+\vspace{-2pt}
+
+% ---------- Summary ----------
+\noindent Product builder with hands-on technical execution experience across fintech platforms, internal tooling, and B2B2C products. Winner of the IIT Kharagpur General Championship in Product Management. Proven at translating complex stakeholder requirements into clear PRDs, wireframes, and production software that scales.
+
+\vspace{4pt}
+
+% ============================================================
+\section{Education}
+
+\jobheader{Indian Institute of Technology (IIT) Kharagpur}{2023 -- 2027}{B.S. (Hons.) in Economics (CGPA: 7.82 / 10)}{Kharagpur, WB}
+
+\vspace{4pt}
+
+% ============================================================
+\section{Experience}
+
+\jobheader{Aequitas Investment Consultancy}{Jun 2025 -- Aug 2025}{Product and Technology Intern}{Mumbai, MH}
+\begin{achievelist}
+  \achieve{Drove platform development at a \ AUM fund to streamline Research, Business Development, and Onboarding workflows using modern web technologies.}
+  \achieve{Decreased analyst research time by 50\% unifying 10+ news sources through a PERN + TypeScript platform with a MiniLM-based deduplication engine.}
+  \achieve{Built and shipped a custom CRM platform managing 1000+ HNI clients, replacing Salesforce and automating pipeline and deal tracking.}
+  \achieve{Unified 4+ internal teams and decommissioned 5 legacy tools, optimizing internal communication and client response time by 30\%.}
+\end{achievelist}
+
+\vspace{2pt}
+
+\jobheader{Frost and Sullivan}{May 2024 -- Jun 2025}{Growth Analytics Intern}{Mumbai, MH}
+\begin{achievelist}
+  \achieve{Delivered product and sales analytics across US and international markets; created self-serve Power BI dashboards for executive decision making.}
+  \achieve{Analyzed \.3+M in multi-market transactions to uncover customer dropoff and seasonality patterns across 3 key product segments.}
+  \achieve{Partnered with cross-functional leadership to define core tracking metrics and automate CAGR analysis through multi-level drilldowns.}
+\end{achievelist}
+
+\vspace{4pt}
+
+% ============================================================
+\section{Product Competitions \& Leadership}
+
+\jobheader{General Championship IIT Kharagpur}{Apr 2025}{Winner — Product Management}{Kharagpur, WB}
+\begin{achievelist}
+  \achieve{Pioneered the end-to-end design of an insurance super-app integrating telemedicine, gig worker protection, and family management across B2B2C channels.}
+  \achieve{Defined scalable product roadmap forecasted to onboard 10M+ users and drive INR 120 Cr in premium growth with a 30\% retention lift from fintech partnerships.}
+  \achieve{Designed 4 core product modules that reduced claims processing costs by 35\% and enhanced user experience via real-time AI-driven claims tracking.}
+\end{achievelist}
+
+\vspace{2pt}
+
+\jobheader{Career Development Centre | IIT Kharagpur}{Sep 2025 -- Present}{Departmental Representative}{Kharagpur, WB}
+\begin{achievelist}
+  \achieve{Selected by faculty from a cohort of 350+ as one of a 56-member core team orchestrating campus recruitment operations for 6000+ students.}
+  \achieve{Managed end-to-end recruiter communication, productized process tracking, and handled operational workflows for 3000+ candidate interview cycles.}
+\end{achievelist}
+
+\vspace{4pt}
+
+% ============================================================
+\section{Skills \& Methodologies}
+
+\noindent
+\textbf{Product Management:} PRD Writing, Product Roadmapping, User Story Mapping, Wireframing, User Research, GTM Strategy, Prioritization Frameworks (RICE, Kano) \\[2pt]
+\textbf{Design \& Prototyping:} Figma, Canva, User Journey Mapping, Information Architecture \\[2pt]
+\textbf{Technical Stack:} React, TypeScript, Node.js, Python, SQL, PostgreSQL, REST APIs, Git \\[2pt]
+\textbf{Analytics \& Metrics:} Power BI, DAX, Retention \& Funnel Analysis, Cohort Analysis, Advanced Excel
+
+\end{document}

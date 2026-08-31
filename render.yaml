@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: jobhunt-agent
+    env: docker
+    envVars:
+      - key: PASSWORD
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: GOOGLE_SHEETS_ID
+        sync: false
+      - key: GOOGLE_SERVICE_ACCOUNT_JSON
+        sync: false
