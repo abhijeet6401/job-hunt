@@ -1,16 +1,15 @@
 % ============================================================
-% Abhijeet Kumar — Data Analyst / Business Analyst Resume
-% Clean single-column ATS-friendly LaTeX
+% Abhijeet Kumar — Data Analyst / Business Analytics Resume (1-Page)
+% Indian Institute of Technology (IIT) Kharagpur
 % ============================================================
 
 \documentclass[10pt, a4paper]{article}
 
-% ---------- Packages ----------
 \usepackage[
-  top=0.45in,
-  bottom=0.45in,
-  left=0.55in,
-  right=0.55in
+  top=0.38in,
+  bottom=0.38in,
+  left=0.5in,
+  right=0.5in
 ]{geometry}
 \usepackage{hyperref}
 \usepackage{enumitem}
@@ -21,128 +20,130 @@
 \usepackage{parskip}
 \usepackage{fontawesome5}
 
-% ---------- Hyperlink styling ----------
 \hypersetup{
   colorlinks=true,
   urlcolor=black,
   linkcolor=black
 }
 
-% ---------- No page numbers ----------
 \pagestyle{empty}
 
-% ---------- Section heading style ----------
 \titleformat{\section}
   {\vspace{-4pt}\scshape\raggedright\large\bfseries}
   {}{0em}{}
   [\color{black}\titlerule \vspace{-3pt}]
 
-% ---------- Custom commands ----------
 \newcommand{\jobheader}[4]{
   \vspace{-1pt}
   \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
-    \textbf{#1} & \textbf{\small #2} \\
-    \textit{\small #3} & \textit{\small #4}
+    \textbf{#1} \quad | \quad #3 & \textbf{\small #4} \\
+    \textit{\small #2} & \\
   \end{tabular*}
-  \vspace{1pt}
+  \vspace{-2pt}
 }
 
 \newenvironment{achievelist}{
-  \begin{itemize}[leftmargin=1.2em, itemsep=1pt, parsep=0pt, topsep=1pt]
+  \begin{itemize}[leftmargin=1.2em, itemsep=0.5pt, parsep=0pt, topsep=1pt]
     \small
 }{
   \end{itemize}
-  \vspace{-3pt}
+  \vspace{-2pt}
 }
 
 \newcommand{\achieve}[1]{\item #1}
 
-% ============================================================
 \begin{document}
 
 % ---------- Header ----------
 \begin{center}
-  {\LARGE \textbf{Abhijeet Kumar}} \\[4pt]
+  {\LARGE \textbf{ABHIJEET KUMAR}} \quad | \quad \textbf{23HS10002} \\[3pt]
+  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 7.89 / 10) \\[2pt]
+  \small \textbf{Minor:} Mathematics \& Computing \quad | \quad \textbf{Micro Spl.:} Artificial Intelligence and Applications \\[3pt]
   \small
-  \faGraduationCap\ IIT Kharagpur \quad
-  \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad
-  \faEnvelope\ \href{mailto:kumarabhiitkgp@gmail.com}{kumarabhiitkgp@gmail.com} \\[2pt]
+  \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad | \quad
+  \faEnvelope\ \href{mailto:kumarabhiitkgp@gmail.com}{kumarabhiitkgp@gmail.com} \quad | \quad
+  \faLinkedin\ \href{https://linkedin.com/in/abhijeetkgp}{linkedin.com/in/abhijeetkgp} \quad | \quad
   \faGithub\ \href{https://github.com/abhijeet6401}{github.com/abhijeet6401}
 \end{center}
 
+\vspace{-4pt}
+
+% ---------- Internships ----------
+\section{Analytics \& Quantitative Internships}
+
+\jobheader{Snabbit}{Drove data-backed decisions across procurement, retention and warehouse operations to scale category 5x}{Business Analyst Intern | Bengaluru}{May'26 -- Sep'26}
+\begin{achievelist}
+  \achieve{Queried Snabbit's database via SQL and built cost-to-revenue models in Excel, cutting product cost from 40\% to 20\% of services revenue.}
+  \achieve{Built reorder-point and SKU-level tracking for 100+ SKUs across 2 warehouses, cutting stock-outs 70\% and limiting capital lock-up to Rs 30L.}
+  \achieve{Tracked RQSP metrics via SQL queries and dashboards, sustaining 99\% fulfillment \& a 4.87 average rating as daily orders scaled from 50 to 250.}
+\end{achievelist}
+
+\jobheader{Frost and Sullivan}{Delivered analytical insights and interactive solutions to support sales strategy and inventory optimization}{Business Analytics Intern | Mumbai}{May'25 -- Jun'25}
+\begin{achievelist}
+  \achieve{Executed predictive modeling using Moving Averages and Exponential Smoothing, incorporated into Power BI Dashboards with DAX and SQL.}
+  \achieve{Analyzed \$23M+ in multi-country sales data by building interactive Power BI dashboards and automating CAGR tracking via multi-level drilldowns.}
+  \achieve{Estimated revenue across 3 segments, identifying 8.0\% product returns and Nov--Dec seasonality in demand cycles through time-series models.}
+\end{achievelist}
+
+\jobheader{Aequitas Investments}{Drove digital transformation at a \$1Bn AUM fund to streamline Research, BD and Client workflows}{AI Analytics Intern | Mumbai}{Jun'25 -- Aug'25}
+\begin{achievelist}
+  \achieve{Cut analyst research time by 50\% by unifying 10+ news sources into a PERN + TypeScript platform with MiniLM-based deduplication.}
+  \achieve{Consolidated 5+ legacy tools into a unified platform, optimizing data tracking and client response time by 30\%.}
+\end{achievelist}
+
 \vspace{-2pt}
 
-% ---------- Summary ----------
-\noindent Quantitative and business analyst with hands-on experience in predictive modeling, macroeconomic time series, and business intelligence dashboards. Skilled in translating large multi-country datasets into actionable operational and revenue strategies using Python, SQL, and Power BI.
+% ---------- Projects ----------
+\section{Data Science \& Econometric Projects}
 
-\vspace{4pt}
-
-% ============================================================
-\section{Education}
-
-\jobheader{Indian Institute of Technology (IIT) Kharagpur}{2023 -- 2027}{B.S. (Hons.) in Economics (CGPA: 7.82 / 10)}{Kharagpur, WB}
-
-\vspace{4pt}
-
-% ============================================================
-\section{Experience}
-
-\jobheader{Frost and Sullivan}{May 2024 -- Jun 2025}{Growth Analytics Intern}{Mumbai, MH}
+\textbf{Bronze | FRAMMER AI | Data Analytics General Championship | IIT Kharagpur} \hfill \textbf{\small Feb'26 -- Mar'26} \\
+\textit{\small Full-stack Python/FastAPI and Next.js platform orchestrating 4 GenAI engines via LangGraph for data analytics and KPI generation}
 \begin{achievelist}
-  \achieve{Delivered analytical insights and Power BI solutions supporting sales strategy, demand forecasting, and inventory optimization across US and international markets.}
-  \achieve{Executed predictive modeling using Moving Averages and Exponential Smoothing; deployed Power BI dashboards with DAX and SQL integrations.}
-  \achieve{Analyzed \.3+M of multi-country sales data by building interactive Power BI dashboards and automating CAGR tracking through multi-level drilldowns.}
-  \achieve{Estimated revenue across 3 market segments and identified 8.0\% product returns using time-series models; discovered Nov--Dec seasonality in demand cycles.}
+  \achieve{Built a self-healing SQL pipeline that checks and rewrites failed queries, achieving a 98\% execution success rate and 88.2\% healing efficiency.}
+  \achieve{Designed a G-Eval evaluation framework with execution-aware scoring, raising weighted evaluation from 60.4\% to 80.1\% across 4 metrics.}
 \end{achievelist}
 
-\vspace{2pt}
-
-\jobheader{Aequitas Investment Consultancy}{Jun 2025 -- Aug 2025}{Product and Technology Intern}{Mumbai, MH}
+\textbf{Predictive Modelling of Airline Passenger Data | Course Project | IIT Kharagpur} \hfill \textbf{\small Jan'26 -- Feb'26} \\
+\textit{\small Modelled airline passenger demand as seasonal time series layering GARCH(1,1) on SARIMA residuals for volatility forecast bands}
 \begin{achievelist}
-  \achieve{Decreased research analysts\' data extraction time by 50\% unifying 10+ news sources through a PERN + TypeScript platform with a MiniLM-based deduplication engine.}
-  \achieve{Built a custom CRM platform to manage 1000+ HNI clients for BD and onboarding teams, automating pipeline tracking and eliminating manual spreadsheet reporting.}
-  \achieve{Optimized internal communication and client response time by 30\% across research, BD, ops, and fund teams by replacing 5 fragmented tools.}
+  \achieve{Forecasted airline demand via SARIMA(1,1,1)(1,1,1)12, achieving $R^2$ of 0.96 and 2.3\% MAPE by selecting orders on ADF, ACF/PACF, and AIC.}
+  \achieve{Diagnosed heteroskedasticity via ARCH-LM tests; layered GARCH(1,1) to produce volatility-adjusted forecast bands, cutting 2-yr MAPE to 9.5\%.}
 \end{achievelist}
 
-\vspace{2pt}
-
-\jobheader{Felix Advisory}{Mar 2025 -- Apr 2025}{Research Intern}{Gurgaon, HR}
+\textbf{Personalised Credit Card Offer Recommendation System | Amex Decision Science Track} \hfill \textbf{\small Jul'25} \\
+\textit{\small Ranking system to optimize credit card offer relevance leveraging customer behaviors and transaction history}
 \begin{achievelist}
-  \achieve{Built sectoral intelligence models using Excel, Crunchbase, and Tracxn data; profiled emerging startups and benchmarked key industry verticals.}
-  \achieve{Drafted 3 investment reports analyzing \+ in funding patterns and startup prototypes across Smart Manufacturing, Fintech, and Sports Tech.}
-  \achieve{Mapped 6+ white space opportunities, shortlisting 20 seed/pre-seed startups aligned with macroeconomic shifts and emerging technology trends.}
+  \achieve{Built Ensemble of Experts and Rankers (E2R) model with XGBoost and LightGBM, achieving MAP@7 of 0.652, a 22.9\% lift over baseline.}
+  \achieve{Engineered features by NMF, UMAP, and HDBSCAN and tuned via Optuna Bayesian search, improving AUC-PR >20\% and NDCG@7 by 18\%.}
 \end{achievelist}
 
-\vspace{4pt}
-
-% ============================================================
-\section{Projects}
-
-\noindent\textbf{Monetary-Fiscal Policy Divergence and Term Premium Analysis} \hfill \textit{Dec 2025} \\
-\textit{Macroeconomic Modeling | Self Project}
+\textbf{Monetary-Fiscal Policy Divergence and Term Premium Analysis | IIT Kharagpur} \hfill \textbf{\small May'25} \\
+\textit{\small Investigated fiscal-monetary policy divergence on long-term bond yields using economic time-series econometric modeling}
 \begin{achievelist}
-  \achieve{Investigated fiscal-monetary policy divergence on long-term bond yields by building a VECM model on 25 years of RBI, MOSPI, and CCIL macroeconomic data.}
-  \achieve{Identified a 0.34 correlation between fiscal deficits >5\% GDP and 20 bps term premium rise; formulated barbell strategy across T-Bills and SDLs.}
+  \achieve{Built a VECM model on 25 years of RBI, MOSPI, and CCIL data, identifying a 20 bps term premium rise when fiscal deficits exceed 5\% of GDP.}
 \end{achievelist}
 
-\vspace{2pt}
+\vspace{-2pt}
 
-\noindent\textbf{Equity Research Valuation Model | Hindustan Aeronautics Limited (HAL)} \hfill \textit{Mar 2025 -- Apr 2025} \\
-\textit{Valuation Analysis | Self Project}
-\begin{achievelist}
-  \achieve{Performed comprehensive valuation on HAL integrating DCF modeling, trading comps (EV/EBITDA 17.7x, P/E 27.2x), and DuPont framework (ROE 25.9\%).}
-  \achieve{Derived BUY recommendation with \textasciitilde 53\% upside (target price Rs 7,660) with sensitivity analysis across WACC (10.84\%) and growth assumptions.}
-\end{achievelist}
+% ---------- Extra Curricular & POR ----------
+\section{Leadership \& Extra Curricular Activities}
 
-\vspace{4pt}
+\begin{itemize}[leftmargin=1.2em, itemsep=0.5pt, parsep=0pt, topsep=1pt]
+  \small
+  \item \textbf{Career Development Centre (CDC):} Departmental Representative at IIT Kharagpur facilitating placement operations for 6000+ students.
+  \item \textbf{UN Millennium Fellow:} Selected as one of 5,000 students worldwide to lead social impact projects aligned with UN SDGs.
+  \item \textbf{National Quizzing:} Gold in India Quiz at Inter-IIT Cult Meet; Bronze at InterIIT-IIM Nihilanth Quiz (IIMC/IIML), Silver at IITM (2026).
+  \item \textbf{Scholarships:} 14th rank in Uttarakhand for NTSE Scholarship; All India Rank 1487 in KVPY SA (2021--22).
+\end{itemize}
 
-% ============================================================
-\section{Technical Skills}
+\vspace{-2pt}
+
+% ---------- Skills & Expertise ----------
+\section{Technical Skills \& Tools}
 
 \noindent
-\textbf{Data Analysis \& Modeling:} Predictive Modeling, Moving Averages, Exponential Smoothing, VECM, Time-Series Analysis, Funnel \& Cohort Analysis, DCF Modeling \\[2pt]
-\textbf{Languages:} Python (Pandas, Scikit-learn, BeautifulSoup), SQL, R, TypeScript, JavaScript, HTML, C++ \\[2pt]
-\textbf{Dashboards \& BI:} Power BI, DAX, Streamlit, Advanced Excel, Jupyter Notebook, Stata \\[2pt]
-\textbf{Databases \& Tools:} PostgreSQL, MongoDB, Git, Figma, APIs, yfinance
+\textbf{Programming Languages:} SQL (Advanced), Python (Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, Keras), R, C++, TypeScript, HTML/CSS \\[2pt]
+\textbf{Analytics \& BI:} Power BI, DAX, PostgreSQL, R Studio, Jupyter, Streamlit, Advanced Excel (financial modeling, VBA), Optuna, LangGraph \\[2pt]
+\textbf{Quantitative Domains:} Econometrics, Time-Series Forecasting (SARIMA, GARCH, VECM), Machine Learning (XGBoost, LightGBM, Clustering)
 
 \end{document}

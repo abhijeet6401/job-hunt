@@ -1,0 +1,165 @@
+% ============================================================
+% Abhijeet Kumar — Finance & Investment Analysis Resume (1-Page)
+% Indian Institute of Technology (IIT) Kharagpur
+% ============================================================
+
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[
+  top=0.38in,
+  bottom=0.38in,
+  left=0.5in,
+  right=0.5in
+]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{fontawesome5}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=black,
+  linkcolor=black
+}
+
+\pagestyle{empty}
+
+\titleformat{\section}
+  {\vspace{-4pt}\scshape\raggedright\large\bfseries}
+  {}{0em}{}
+  [\color{black}\titlerule \vspace{-3pt}]
+
+\newcommand{\jobheader}[4]{
+  \vspace{-1pt}
+  \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} \quad | \quad #3 & \textbf{\small #4} \\
+    \textit{\small #2} & \\
+  \end{tabular*}
+  \vspace{-2pt}
+}
+
+\newenvironment{achievelist}{
+  \begin{itemize}[leftmargin=1.2em, itemsep=0.5pt, parsep=0pt, topsep=1pt]
+    \small
+}{
+  \end{itemize}
+  \vspace{-2pt}
+}
+
+\newcommand{\achieve}[1]{\item #1}
+
+\begin{document}
+
+% ---------- Header ----------
+\begin{center}
+  {\LARGE \textbf{ABHIJEET KUMAR}} \quad | \quad \textbf{23HS10002} \\[3pt]
+  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 7.89 / 10) \\[2pt]
+  \small \textbf{Minor:} Mathematics \& Computing \quad | \quad \textbf{Micro Spl.:} Artificial Intelligence and Applications \\[3pt]
+  \small
+  \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad | \quad
+  \faEnvelope\ \href{mailto:kumarabhiitkgp@gmail.com}{kumarabhiitkgp@gmail.com} \quad | \quad
+  \faLinkedin\ \href{https://linkedin.com/in/abhijeetkgp}{linkedin.com/in/abhijeetkgp} \quad | \quad
+  \faGithub\ \href{https://github.com/abhijeet6401}{github.com/abhijeet6401}
+\end{center}
+
+\vspace{-4pt}
+
+% ---------- Certifications ----------
+\section{Certifications}
+\begin{itemize}[leftmargin=1.2em, itemsep=0.5pt, parsep=0pt, topsep=1pt]
+  \small
+  \item \textbf{Chartered Financial Analyst (CFA) L1 Candidate (Feb 2027):} Derivatives, Quant Methods, Economics, Fixed Income, Financial Statements.
+  \item \textbf{Bloomberg Market Concepts (Dec 2025):} Fixed Income, Currencies, Economic Indicators, Commodity, Equity Options, Portfolio Management.
+\end{itemize}
+
+\vspace{-2pt}
+
+% ---------- Internships ----------
+\section{Finance, VC \& Investment Internships}
+
+\jobheader{Aequitas Investments}{Digital transformation and tech strategy at a \$1Bn AUM boutique investment fund}{Finance and AI Strategy Intern | Mumbai}{Jun'25 -- Aug'25}
+\begin{achievelist}
+  \achieve{Cut analyst research time by 50\% by unifying 10+ news sources into a PERN + TypeScript research platform with MiniLM-based deduplication.}
+  \achieve{Replaced Salesforce with a custom CRM serving 1,000+ HNI clients, automating lead tracking and deal pipelines for BD and fund teams.}
+\end{achievelist}
+
+\jobheader{3one4 Capital}{Assisted early-stage VC portfolio companies with tailored financing strategies, growth optimization, and capital efficiency}{Portfolio Management and Strategy Intern | Bengaluru}{Dec'24 -- Feb'25}
+\begin{achievelist}
+  \achieve{Created debt financing playbooks comparing venture debt, NCDs, and RBF, analyzing costs (9--22\%) across 5 instruments and startup stages.}
+  \achieve{Developed 4 briefs on bridge loans, asset financing, and convertible notes, helping founders extend runway up to 6 months while preserving equity.}
+  \achieve{Supported 3 consumer \& fintech startups (Seed-IPO) ex-CheQ on scaling decisions via analyzing unit economics, LTV/CAC, and growth patterns.}
+\end{achievelist}
+
+\jobheader{India Accelerator}{Conducted investment due diligence on early-stage startups, evaluating business models and financial metrics}{Investment Analyst Intern | Gurgaon}{Aug'24 -- Oct'24}
+\begin{achievelist}
+  \achieve{Recommended a Pass (Execution Risk) post due diligence, applying TAM/SAM/SOM, ROI, and unit economics of 2 startups for VC deal filtering.}
+  \achieve{Benchmarked 15+ competitors and mapped a \$130B market by analyzing Grest and ValueShoppe on pricing, GTM strategy, and user journeys.}
+\end{achievelist}
+
+\jobheader{Felix Advisory}{Evaluated early-stage startup ecosystems by analyzing whitespace gaps, funding patterns, and sectoral tailwinds}{Research Intern | Gurgaon}{Mar'25 -- Apr'25}
+\begin{achievelist}
+  \achieve{Built sectoral intelligence models using Excel, Crunchbase, and Tracxn data; drafted 3 investment reports analyzing \$1B+ funding patterns.}
+\end{achievelist}
+
+\vspace{-2pt}
+
+% ---------- Projects & Competitions ----------
+\section{Financial Modeling, Projects \& Competitions}
+
+\textbf{Equity Research Reports | HAL - ACE | Self Project} \hfill \textbf{\small Jan'26} \\
+\textit{\small Built LONG investment theses on HAL and ACE using DCF valuation, regression modeling, and risk-adjusted return benchmarking}
+\begin{achievelist}
+  \achieve{Built full equity report on HAL with DCF at Rs 7,660/share (\textasciitilde 53\% upside), comps of EV/EBITDA 17.7x, P/E 27.2x, and DuPont ROE 25.9\%.}
+  \achieve{Projected 15\% CAGR in ACE revenue via regression with govt capex (adj $R^2$ 0.86, DCF at 14.56\% WACC, 0.935 Sharpe, 33.39\% Jensen's Alpha).}
+\end{achievelist}
+
+\textbf{Monetary-Fiscal Policy Divergence and Term Premium Analysis | IIT Kharagpur} \hfill \textbf{\small May'25} \\
+\textit{\small Investigated fiscal-monetary policy divergence on long-term bond yields using macroeconomic time series modeling}
+\begin{achievelist}
+  \achieve{Built a VECM model on 25 years of RBI, MOSPI, and CCIL data, identifying a 20 bps term premium rise when fiscal deficits exceed 5\% of GDP.}
+  \achieve{Recommended barbell strategy of 50\% 91-day T-Bills and 50\% 15-year SDLs based on scenario analysis of RBI tightening cycles.}
+\end{achievelist}
+
+\textbf{Runner up | Indian Case Challenge (ICC) | IIT Kharagpur} \hfill \textbf{\small Jan'25} \\
+\textit{\small Bikaji global expansion case competition, winning INR 50K prize, only undergraduate team on podium among 2000+ teams}
+\begin{achievelist}
+  \achieve{Evaluated 5+ M\&A targets, recommending Loyka for acquisition at an Rs 156 Cr valuation with a 28\% IRR on strategic and financial fitness.}
+\end{achievelist}
+
+\vspace{-2pt}
+
+% ---------- Positions of Responsibility ----------
+\section{Positions of Responsibility}
+
+\textbf{International Finance Student Association (IFSA) | Financial Analyst | IIT Kharagpur} \hfill \textbf{\small Aug'24 -- Apr'25}
+\begin{achievelist}
+  \achieve{Coordinated with IFSA Network team to secure banking/sponsorship for 20+ chapters across LATAM, NA, EMEA, APAC.}
+  \achieve{Designed personalised finance portfolios using Monte Carlo \& ARIMA across 5+ asset classes; 1st in intra-soc M\&A competition.}
+\end{achievelist}
+
+\vspace{-2pt}
+
+% ---------- Extra Curricular Activities ----------
+\section{Extra Curricular Activities}
+
+\begin{itemize}[leftmargin=1.2em, itemsep=0.5pt, parsep=0pt, topsep=1pt]
+  \small
+  \item \textbf{UN Millennium Fellow:} Selected as one of 5,000 students worldwide to lead social impact projects aligned with UN SDGs.
+  \item \textbf{Inter-IIT Quizzing:} Gold in India Quiz at Inter-IIT Cult Meet; Bronze at InterIIT-IIM Nihilanth Quiz (IIMC/IIML), Silver at IITM (2026).
+  \item \textbf{Scholarships:} 14th rank in Uttarakhand for NTSE Scholarship; All India Rank 1487 in KVPY SA (2021--22).
+\end{itemize}
+
+\vspace{-2pt}
+
+% ---------- Skills & Expertise ----------
+\section{Finance Skills \& Tools}
+
+\noindent
+\textbf{Financial Valuation \& Strategy:} DCF Modeling, Trading Comps, DuPont Analysis, M\&A Due Diligence, Venture Debt, NCDs, RBF, TAM/SAM/SOM \\[2pt]
+\textbf{Quantitative \& Tools:} Advanced Excel (DCF, sensitivity tables), Bloomberg Terminal, Python, SQL, Power BI, DAX, Time-Series (SARIMA, VECM)
+
+\end{document}

@@ -1,16 +1,15 @@
 % ============================================================
-% Abhijeet Kumar — Operations / Program Manager Resume
-% Clean single-column ATS-friendly LaTeX
+% Abhijeet Kumar — Operations / Program Manager Resume (1-Page)
+% Indian Institute of Technology (IIT) Kharagpur
 % ============================================================
 
 \documentclass[10pt, a4paper]{article}
 
-% ---------- Packages ----------
 \usepackage[
-  top=0.45in,
-  bottom=0.45in,
-  left=0.55in,
-  right=0.55in
+  top=0.38in,
+  bottom=0.38in,
+  left=0.5in,
+  right=0.5in
 ]{geometry}
 \usepackage{hyperref}
 \usepackage{enumitem}
@@ -21,116 +20,116 @@
 \usepackage{parskip}
 \usepackage{fontawesome5}
 
-% ---------- Hyperlink styling ----------
 \hypersetup{
   colorlinks=true,
   urlcolor=black,
   linkcolor=black
 }
 
-% ---------- No page numbers ----------
 \pagestyle{empty}
 
-% ---------- Section heading style ----------
 \titleformat{\section}
   {\vspace{-4pt}\scshape\raggedright\large\bfseries}
   {}{0em}{}
   [\color{black}\titlerule \vspace{-3pt}]
 
-% ---------- Custom commands ----------
 \newcommand{\jobheader}[4]{
   \vspace{-1pt}
   \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
-    \textbf{#1} & \textbf{\small #2} \\
-    \textit{\small #3} & \textit{\small #4}
+    \textbf{#1} \quad | \quad #3 & \textbf{\small #4} \\
+    \textit{\small #2} & \\
   \end{tabular*}
-  \vspace{1pt}
+  \vspace{-2pt}
 }
 
 \newenvironment{achievelist}{
-  \begin{itemize}[leftmargin=1.2em, itemsep=1pt, parsep=0pt, topsep=1pt]
+  \begin{itemize}[leftmargin=1.2em, itemsep=0.5pt, parsep=0pt, topsep=1pt]
     \small
 }{
   \end{itemize}
-  \vspace{-3pt}
+  \vspace{-2pt}
 }
 
 \newcommand{\achieve}[1]{\item #1}
 
-% ============================================================
 \begin{document}
 
 % ---------- Header ----------
 \begin{center}
-  {\LARGE \textbf{Abhijeet Kumar}} \\[4pt]
+  {\LARGE \textbf{ABHIJEET KUMAR}} \quad | \quad \textbf{23HS10002} \\[3pt]
+  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 7.89 / 10) \\[2pt]
+  \small \textbf{Minor:} Mathematics \& Computing \quad | \quad \textbf{Micro Spl.:} Artificial Intelligence and Applications \\[3pt]
   \small
-  \faGraduationCap\ IIT Kharagpur \quad
-  \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad
-  \faEnvelope\ \href{mailto:kumarabhiitkgp@gmail.com}{kumarabhiitkgp@gmail.com} \\[2pt]
+  \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad | \quad
+  \faEnvelope\ \href{mailto:kumarabhiitkgp@gmail.com}{kumarabhiitkgp@gmail.com} \quad | \quad
+  \faLinkedin\ \href{https://linkedin.com/in/abhijeetkgp}{linkedin.com/in/abhijeetkgp} \quad | \quad
   \faGithub\ \href{https://github.com/abhijeet6401}{github.com/abhijeet6401}
 \end{center}
 
+\vspace{-4pt}
+
+% ---------- Operations Experience ----------
+\section{Operations \& Program Management Experience}
+
+\jobheader{Snabbit}{Owned product, sourcing, vendor negotiations and unit cost economics to scale service line nationally}{Business Strategy \& Sourcing Intern | Bengaluru}{May'26 -- Sep'26}
+\begin{achievelist}
+  \achieve{Saved Rs 50L/month by renegotiating per-unit vendor pricing and consolidating volumes, cutting product cost from initial 40\% to 20\% of GOV.}
+  \achieve{Negotiated a Rs 2Cr production order speaking to 20+ manufacturers in India, screening 7 in person to secure quality at target prices at scale.}
+  \achieve{Owned Rs 30L in inventory working capital, implementing WMS, reorder points, and bin designs reducing stock-out frequency by roughly 70\%.}
+  \achieve{Managed RQSP performance across daily operations, sustaining 99\% fulfillment and 4.87 rating as daily orders scaled from 50 to 250.}
+\end{achievelist}
+
+\jobheader{Aequitas Investments}{Drove workflow optimization and platform consolidation across 4+ business divisions}{Finance and Operations Intern | Mumbai}{Jun'25 -- Aug'25}
+\begin{achievelist}
+  \achieve{Consolidated 5+ legacy tools into a unified platform, optimizing communications and cutting client inquiry response time by 30\%.}
+  \achieve{Cut research analyst processing time by 50\% unifying 10+ research feeds into an automated PERN pipeline with MiniLM deduplication.}
+  \achieve{Built and deployed central CRM for 1000+ HNI clients, displacing Salesforce and automating deal pipelines for BD and onboarding teams.}
+\end{achievelist}
+
+\jobheader{Frost and Sullivan}{Supported demand planning and inventory optimization across US and international markets}{Growth Operations Intern | Mumbai}{May'25 -- Jun'25}
+\begin{achievelist}
+  \achieve{Supported inventory optimization and demand forecasting through predictive Moving Average and Exponential Smoothing models in Power BI.}
+  \achieve{Diagnosed operational return patterns across 3 market segments, identifying an 8.0\% return rate and Q4 demand surge bottlenecks.}
+\end{achievelist}
+
 \vspace{-2pt}
 
-% ---------- Summary ----------
-\noindent Operations and process improvement leader with expertise in workflow automation, supply chain optimization, and large-scale operational program management. Proven at eliminating bottlenecks, driving cross-functional alignment, and applying quantitative modeling to streamline end-to-end execution.
+% ---------- Scale Operations & Case Competitions ----------
+\section{Scale Operations \& Quantitative Cases}
 
-\vspace{4pt}
-
-% ============================================================
-\section{Education}
-
-\jobheader{Indian Institute of Technology (IIT) Kharagpur}{2023 -- 2027}{B.S. (Hons.) in Economics (CGPA: 7.82 / 10)}{Kharagpur, WB}
-
-\vspace{4pt}
-
-% ============================================================
-\section{Operations \& Program Experience}
-
-\jobheader{Career Development Centre | IIT Kharagpur}{Sep 2025 -- Present}{Departmental Representative (Operations)}{Kharagpur, WB}
+\textbf{Career Development Centre | Departmental Representative | IIT Kharagpur} \hfill \textbf{\small Sep'25 -- May'26}
 \begin{achievelist}
-  \achieve{Orchestrated campus recruitment operations and interview scheduling across 6000+ students as part of a 56-member core execution committee.}
-  \achieve{Served as the primary liaison between corporate recruiters and student cohorts, coordinating PPTs, tests, GDs, and interview logistics for 3000+ candidates.}
-  \achieve{Streamlined real-time placement tracking and incident resolution processes, reducing scheduling conflicts and communication turnaround.}
+  \achieve{Orchestrated campus recruitment operations and interview scheduling across 6000+ students as part of 56-member core execution committee.}
+  \achieve{Served as primary liaison between corporate recruiters and students, coordinating PPTs, tests, GDs, and interviews for 3000+ candidates.}
+  \achieve{Streamlined real-time placement tracking and incident resolution, contributing to the fastest 1,800+ job offers across all IITs.}
 \end{achievelist}
 
-\vspace{2pt}
-
-\jobheader{Aequitas Investment Consultancy}{Jun 2025 -- Aug 2025}{Product and Technology Intern}{Mumbai, MH}
+\textbf{Runner up | Indian Case Challenge (ICC) | IIT Kharagpur} \hfill \textbf{\small Jan'25} \\
+\textit{\small Bikaji global expansion case competition, winning INR 50K prize, only undergraduate team on podium among 2000+ teams}
 \begin{achievelist}
-  \achieve{Streamlined operational and client onboarding workflows across research, BD, and fund teams at a boutique \ AUM investment firm.}
-  \achieve{Replaced 5 fragmented legacy software tools with a single unified platform, decreasing client response and inquiry handling time by 30\%.}
-  \achieve{Built an automated workflow pipeline consolidating 10+ research feeds, eliminating duplicate manual tasks and halving research turnaround time.}
+  \achieve{Improved supply chain efficiency by 15\% and cut stockouts by 40\% via ML-based Industry 5.0 demand forecasting and network flow models.}
+  \achieve{Evaluated operational synergies and post-merger integration for an Rs 156 Cr acquisition target (28\% projected IRR).}
 \end{achievelist}
 
-\vspace{2pt}
+\vspace{-2pt}
 
-\jobheader{Frost and Sullivan}{May 2024 -- Jun 2025}{Growth Analytics Intern}{Mumbai, MH}
-\begin{achievelist}
-  \achieve{Supported inventory optimization and demand planning across international markets through predictive Moving Average and Exponential Smoothing models.}
-  \achieve{Diagnosed operational return patterns across 3 key market segments, identifying an 8.0\% return rate and cyclical bottlenecks during Q4 demand surges.}
-  \achieve{Created automated operational monitoring dashboards with DAX and SQL integrations for executive visibility and SLA tracking.}
-\end{achievelist}
+% ---------- Extra Curricular Activities ----------
+\section{Leadership \& Extra Curricular Activities}
 
-\vspace{4pt}
+\begin{itemize}[leftmargin=1.2em, itemsep=0.5pt, parsep=0pt, topsep=1pt]
+  \small
+  \item \textbf{UN Millennium Fellow:} Selected as one of 5,000 students worldwide to lead social impact projects aligned with UN SDGs.
+  \item \textbf{NSS Unit Leader:} Led education programmes for 200+ underprivileged students and organized 5+ donation drives impacting 500+ people.
+  \item \textbf{National Quizzing:} Gold in India Quiz at Inter-IIT Cult Meet; Bronze at InterIIT-IIM Nihilanth Quiz (IIMC/IIML), Silver at IITM (2026).
+\end{itemize}
 
-% ============================================================
-\section{Case Competitions \& Quantitative Projects}
+\vspace{-2pt}
 
-\jobheader{Indian Case Challenge (ICC) | IIT Kharagpur}{Jan 2025}{Runners up — Supply Chain \& M\&A Case}{Kharagpur, WB}
-\begin{achievelist}
-  \achieve{Improved supply chain efficiency by 15\% and reduced warehouse stockouts by 40\% using an ML-based Industry 5.0 demand forecasting and network flow model.}
-  \achieve{Evaluated operational synergies and post-merger integration risks for an INR 156 Cr acquisition target, placing 2nd among 2000+ global teams.}
-\end{achievelist}
-
-\vspace{4pt}
-
-% ============================================================
-\section{Operations \& Technical Skills}
+% ---------- Skills & Expertise ----------
+\section{Operations Skills \& Systems}
 
 \noindent
-\textbf{Operations Management:} Process Mapping \& Optimization, Supply Chain Analysis, SLA Management, Large-scale Event Operations, Resource Allocation \\[2pt]
-\textbf{Quantitative Methods:} Operations Research, Linear Programming, Time Series Forecasting, Inventory Optimization, Statistical Analysis \\[2pt]
-\textbf{Software \& Systems:} Advanced Excel, Power BI, SQL, Python, Stata, ERP/CRM Systems, Project Tracking (Notion, Jira), Git
+\textbf{Operations Management:} Sourcing \& Vendor Negotiations, WMS, Inventory Optimization, SLA Management, Reorder Planning, RQSP Metrics \\[2pt]
+\textbf{Software \& Systems:} Advanced Excel (VBA, Models), Power BI, DAX, SQL, Python, PostgreSQL, ERP/CRM Systems, Project Tracking (Notion, Jira)
 
 \end{document}

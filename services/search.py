@@ -34,16 +34,19 @@ GROQ_MODEL = "llama-3.3-70b-versatile"
 # ── Candidate profile (used in social-post extraction) ────────────────────────
 CANDIDATE_PROFILE = """
 Candidate profile (use this to score each job's fit):
-- Economics undergraduate at IIT Kharagpur (Class of 2027), CGPA 7.82/10.
-- Product & Tech Intern at Aequitas ($650M AUM fund): built PERN + TypeScript news deduplication engine & CRM for 1000+ HNIs.
-- Growth Analytics Intern at Frost & Sullivan: time series predictive modeling, $2.3M+ sales data analysis, Power BI, DAX, SQL.
-- Winner, Product Management (General Championship IIT Kharagpur): full-stack insurance super-app for 10M+ users.
-- Runners-up, Indian Case Challenge (ICC Bikaji): M&A strategy & ML-based supply chain demand forecasting.
-- Research Intern at Felix Advisory & Investment Analyst Intern at India Accelerator ($1B+ funding patterns, $130B market mapping).
-- Departmental Representative at Career Development Centre (CDC), IIT Kharagpur.
-- Skills: Product Management, Data Analytics, Python, SQL, Power BI, DAX, React, TypeScript, Node.js, Financial Modeling, DCF, Econometrics.
-- Targeting: Product Manager, APM, Founder's Office, Chief of Staff, Data Analyst, Operations roles.
-- Company stage preference: early-stage to growth-stage startups and tech firms.
+- Economics undergraduate at IIT Kharagpur (Class of 2027), CGPA 7.89/10, Minor in Mathematics & Computing, Micro-Spl in AI.
+- UN Millennium Fellow (selected among 5,000 students globally for UN SDG leadership).
+- Snabbit (PM & Strategy Intern): Scaled retention GOV 20% to 50% with Blush Prive, saved Rs 50L/mo in vendor negotiations, managed 100+ SKUs.
+- Aequitas Investments (AI Product & Finance Intern, $1Bn AUM): Built PERN + TypeScript research deduplication platform & custom CRM.
+- 3one4 Capital (Portfolio Strategy Intern): Formulated venture debt & financing playbooks, supported 3 consumer/fintech startups on unit economics.
+- Felix Advisory & India Accelerator: VC due diligence, evaluated early-stage startups on TAM/SAM/SOM, benchmarked $130B market.
+- Frost & Sullivan (Analytics Intern): Predictive time-series modeling on $23M+ sales data in Power BI with DAX & SQL.
+- JobHunt Agent (AI Automation Self-Project): Full-stack FastAPI AI assistant aggregating 100+ listings via Tavily API and xAI LLM.
+- Competitions: Winner Product Management General Championship IIT KGP, Bronze FRAMMER AI Data Analytics GC, Runners-up ICC Bikaji M&A case.
+- CDC Departmental Representative at IIT Kharagpur (placement operations for 6000+ students).
+- Skills: Product Management, Data Analytics, Python, SQL, Power BI, DAX, React, TypeScript, Financial Modeling, DCF, Econometrics.
+- Targeting: Product Manager, APM, Founder's Office, Chief of Staff, Venture Capital / Strategy, Data Analyst, Operations roles.
+- Company stage preference: early-stage to growth-stage startups and high-growth tech firms.
 - Open to: Remote, Bangalore, Mumbai, Gurgaon, and Delhi NCR roles.
 - NOT a fit for: senior roles requiring >5 years experience.
 """
@@ -51,16 +54,16 @@ Candidate profile (use this to score each job's fit):
 # ── Dedicated scoring system prompt (used as system message for scoring call) ─
 SCORING_SYSTEM_PROMPT = """You are evaluating job fit for a specific candidate. Be ruthless and specific.
 
-Candidate: Abhijeet Kumar, B.S. (Hons.) in Economics at IIT Kharagpur (Class of 2027).
-Background: Product & Tech Intern at Aequitas Investment Consultancy ($650M AUM fund, built PERN platform & CRM), Growth Analytics at Frost & Sullivan (predictive modeling, Power BI, DAX, SQL), Research Intern at Felix Advisory, Investment Analyst at India Accelerator. Winner PM General Championship IIT Kharagpur, Runners up Indian Case Challenge (Bikaji M&A). CDC Departmental Representative. NTSE Scholar, KVPY SA AIR 1487.
+Candidate: Abhijeet Kumar, B.S. (Hons.) in Economics at IIT Kharagpur (Class of 2027, CGPA 7.89/10, Minor in Maths & Computing, Micro-Spl in AI).
+Background: Product & Strategy at Snabbit, AI Product Management & Finance at Aequitas ($1Bn AUM fund), Portfolio Management & Strategy at 3one4 Capital, Research at Felix Advisory, Investment Analyst at India Accelerator, Growth Analytics at Frost & Sullivan. Winner PM General Championship IIT Kharagpur, Bronze FRAMMER AI Data Analytics GC, Runners up Indian Case Challenge (Bikaji M&A). CDC Departmental Representative. UN Millennium Fellow, NTSE Scholar, KVPY SA AIR 1487.
 Hard skills: Python, SQL, Power BI, DAX, React, TypeScript, Node.js, Pandas, Scikit-learn, Financial Modeling, DCF, Econometrics, VECM, time-series forecasting, PRD writing, REST APIs.
-Soft strengths: High agency, cross-functional execution across product, data, and finance; leadership at CDC; strong analytical and problem-solving pedigree from IIT Kharagpur.
-Targeting: APM, Product Manager, Founder's Office, Chief of Staff, Biz Ops, Data Analyst, Business Analyst, Operations roles at high-growth startups and tech companies. Open to remote, Bangalore, Mumbai, Gurgaon.
+Soft strengths: High agency, cross-functional execution across product, strategy, data, and finance; leadership at CDC; strong analytical and mathematical pedigree from IIT Kharagpur.
+Targeting: APM, Product Manager, Founder's Office, Chief of Staff, Venture Capital, Strategy, Biz Ops, Data Analyst, Business Analyst, Operations roles at high-growth startups and tech companies. Open to remote, Bangalore, Mumbai, Gurgaon.
 
 Apply these rules to score each job 0-100 on match likelihood:
 - Subtract 30 points if it requires 3+ years of experience explicitly stated
 - Subtract 20 points if it is at a company with 500+ employees
-- Add 20 points if it mentions product management, data analytics, SQL/Python, or financial modeling
+- Add 20 points if it mentions product management, data analytics, SQL/Python, venture capital, or financial modeling
 - Add 15 points if it is at a seed to Series B company
 - Add 10 points if it is remote or based in Bangalore/Mumbai/Gurgaon
 - Add 15 points if it explicitly welcomes strong analytical, product, or generalist backgrounds
@@ -70,10 +73,11 @@ Apply these rules to score each job 0-100 on match likelihood:
 # Role filter → search keyword fragment used to template per-source queries.
 ROLE_KEYWORDS = {
     "product":         '"product manager" OR "APM" OR "associate product manager"',
-    "founders_office": '"founder\'s office" OR "chief of staff" OR "founders office" OR generalist',
-    "data_analyst":    '"data analyst" OR "business analyst" OR "product analyst"',
+    "founders_office": '"founder\'s office" OR "chief of staff" OR "founders office" OR generalist OR "venture capital"',
+    "data_analyst":    '"data analyst" OR "business analyst" OR "product analyst" OR "data scientist"',
     "operations":      '"operations" OR "biz ops" OR "business operations" OR "growth ops"',
-    "all":             'product OR "APM" OR "founder office" OR "chief of staff" OR "data analyst" OR "biz ops"',
+    "finance":         '"investment analyst" OR "venture capital" OR "equity research" OR "financial analyst"',
+    "all":             'product OR "APM" OR "founder office" OR "chief of staff" OR "data analyst" OR "investment analyst" OR "biz ops"',
 }
 
 # Tier 1: one high-signal query per job source, templated with the role keywords.

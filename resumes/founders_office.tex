@@ -1,16 +1,15 @@
 % ============================================================
-% Abhijeet Kumar — Founder's Office / Chief of Staff Resume
-% Clean single-column ATS-friendly LaTeX
+% Abhijeet Kumar — Founder's Office / Strategy / VC Resume (1-Page)
+% Indian Institute of Technology (IIT) Kharagpur
 % ============================================================
 
 \documentclass[10pt, a4paper]{article}
 
-% ---------- Packages ----------
 \usepackage[
-  top=0.45in,
-  bottom=0.45in,
-  left=0.55in,
-  right=0.55in
+  top=0.38in,
+  bottom=0.38in,
+  left=0.5in,
+  right=0.5in
 ]{geometry}
 \usepackage{hyperref}
 \usepackage{enumitem}
@@ -21,125 +20,137 @@
 \usepackage{parskip}
 \usepackage{fontawesome5}
 
-% ---------- Hyperlink styling ----------
 \hypersetup{
   colorlinks=true,
   urlcolor=black,
   linkcolor=black
 }
 
-% ---------- No page numbers ----------
 \pagestyle{empty}
 
-% ---------- Section heading style ----------
 \titleformat{\section}
   {\vspace{-4pt}\scshape\raggedright\large\bfseries}
   {}{0em}{}
   [\color{black}\titlerule \vspace{-3pt}]
 
-% ---------- Custom commands ----------
 \newcommand{\jobheader}[4]{
   \vspace{-1pt}
   \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
-    \textbf{#1} & \textbf{\small #2} \\
-    \textit{\small #3} & \textit{\small #4}
+    \textbf{#1} \quad | \quad #3 & \textbf{\small #4} \\
+    \textit{\small #2} & \\
   \end{tabular*}
-  \vspace{1pt}
+  \vspace{-2pt}
 }
 
 \newenvironment{achievelist}{
-  \begin{itemize}[leftmargin=1.2em, itemsep=1pt, parsep=0pt, topsep=1pt]
+  \begin{itemize}[leftmargin=1.2em, itemsep=0.5pt, parsep=0pt, topsep=1pt]
     \small
 }{
   \end{itemize}
-  \vspace{-3pt}
+  \vspace{-2pt}
 }
 
 \newcommand{\achieve}[1]{\item #1}
 
-% ============================================================
 \begin{document}
 
 % ---------- Header ----------
 \begin{center}
-  {\LARGE \textbf{Abhijeet Kumar}} \\[4pt]
+  {\LARGE \textbf{ABHIJEET KUMAR}} \quad | \quad \textbf{23HS10002} \\[3pt]
+  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 7.89 / 10) \\[2pt]
+  \small \textbf{Minor:} Mathematics \& Computing \quad | \quad \textbf{Micro Spl.:} Artificial Intelligence and Applications \\[3pt]
   \small
-  \faGraduationCap\ IIT Kharagpur \quad
-  \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad
-  \faEnvelope\ \href{mailto:kumarabhiitkgp@gmail.com}{kumarabhiitkgp@gmail.com} \\[2pt]
+  \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad | \quad
+  \faEnvelope\ \href{mailto:kumarabhiitkgp@gmail.com}{kumarabhiitkgp@gmail.com} \quad | \quad
+  \faLinkedin\ \href{https://linkedin.com/in/abhijeetkgp}{linkedin.com/in/abhijeetkgp} \quad | \quad
   \faGithub\ \href{https://github.com/abhijeet6401}{github.com/abhijeet6401}
 \end{center}
 
+\vspace{-4pt}
+
+% ---------- Internships ----------
+\section{Founder's Office, Strategy \& VC Internships}
+
+\jobheader{Snabbit}{Owned product, sourcing, vendor negotiations and unit cost economics to scale service line nationally}{Business Strategy Intern | Bengaluru}{May'26 -- Sep'26}
+\begin{achievelist}
+  \achieve{Saved Rs 50L/month by renegotiating per-unit vendor pricing and consolidating volumes, cutting product cost from 40\% to 20\% of GOV.}
+  \achieve{Negotiated a Rs 2Cr production order speaking to 20+ manufacturers in India, screening 7 in person to secure target prices at scale.}
+  \achieve{Owned Rs 30L in inventory working capital, implementing WMS and reorder points reducing stock-out frequency by roughly 70\%.}
+\end{achievelist}
+
+\jobheader{3one4 Capital}{Assisted early-stage VC portfolio companies with financing strategies and capital efficiency with Principal of Finance}{Portfolio Management and Strategy Intern | Bengaluru}{Dec'24 -- Feb'25}
+\begin{achievelist}
+  \achieve{Created debt financing playbooks comparing venture debt, NCDs, and RBF, analyzing costs (9--22\%) across 5 instruments and startup stages.}
+  \achieve{Developed 4 briefs on bridge loans, asset financing, and convertible notes, helping founders extend runway up to 6 months while preserving equity.}
+  \achieve{Supported 3 consumer \& fintech startups (Seed-IPO) ex-CheQ on scaling decisions via analyzing unit economics, LTV/CAC, and growth patterns.}
+\end{achievelist}
+
+\jobheader{Felix Advisory}{Evaluated early-stage startup ecosystems by analyzing whitespace gaps, funding patterns, and sectoral tailwinds}{Research Intern | Gurgaon}{Mar'25 -- Apr'25}
+\begin{achievelist}
+  \achieve{Built sectoral intelligence models using Excel, Crunchbase, and Tracxn data; profiled startups and benchmarked verticals for investor decks.}
+  \achieve{Drafted 3 investment reports analyzing \$1B+ funding patterns across Smart Manufacturing, Fintech, and Sports Tech.}
+  \achieve{Mapped 6+ white space opportunities; shortlisted 20 seed/pre-seed startups aligned with macro shifts and emerging tech for deal sourcing.}
+\end{achievelist}
+
+\jobheader{India Accelerator}{Conducted investment due diligence on early-stage startups, evaluating business models and financial metrics}{Investment Analyst Intern | Gurgaon}{Aug'24 -- Oct'24}
+\begin{achievelist}
+  \achieve{Recommended a Pass (Execution Risk) post due diligence, applying TAM/SAM/SOM, ROI, and unit economics of 2 startups for VC deal filtering.}
+  \achieve{Benchmarked 15+ competitors and mapped a \$130B market by analyzing Grest and ValueShoppe on pricing, GTM strategy, and user journeys.}
+\end{achievelist}
+
 \vspace{-2pt}
 
-% ---------- Summary ----------
-\noindent High-agency operator and generalist with background spanning product management, venture due diligence, and financial strategy. Experienced driving zero-to-one platform initiatives, unblocking cross-functional teams, and conducting in-depth market research for leadership at high-growth organizations.
+% ---------- Projects & Competitions ----------
+\section{Strategic Case Competitions \& Projects}
 
-\vspace{4pt}
-
-% ============================================================
-\section{Education}
-
-\jobheader{Indian Institute of Technology (IIT) Kharagpur}{2023 -- 2027}{B.S. (Hons.) in Economics (CGPA: 7.82 / 10)}{Kharagpur, WB}
-
-\vspace{4pt}
-
-% ============================================================
-\section{Experience}
-
-\jobheader{Aequitas Investment Consultancy}{Jun 2025 -- Aug 2025}{Product and Technology Intern}{Mumbai, MH}
+\textbf{Runner up | Indian Case Challenge (ICC) | IIT Kharagpur} \hfill \textbf{\small Jan'25} \\
+\textit{\small Bikaji global expansion case competition, winning INR 50K prize, only undergraduate team on podium among 2000+ teams}
 \begin{achievelist}
-  \achieve{Partnered directly with fund leadership at a \ AUM firm to streamline Research, BD, and Onboarding workflows via custom tooling.}
-  \achieve{Built and deployed a central CRM managing 1000+ HNI clients, displacing Salesforce and cutting client turnaround time by 30\%.}
-  \achieve{Architected a unified news extraction and deduplication system across 10+ sources, reducing research turnaround time by 50\%.}
-  \achieve{Aligned 4 cross-functional business units (research, BD, operations, and fund management) by deprecating 5 fragmented software tools.}
+  \achieve{Evaluated 5+ M\&A targets, recommending Loyka for acquisition at an Rs 156 Cr valuation with a 28\% IRR on strategic and financial fitness.}
+  \achieve{Improved supply chain efficiency by 15\% and cut stockouts by 40\% via ML-based Industry 5.0 demand forecasting and network flow models.}
 \end{achievelist}
 
-\vspace{2pt}
-
-\jobheader{Felix Advisory}{Mar 2025 -- Apr 2025}{Research Intern}{Gurgaon, HR}
+\textbf{JobHunt Agent | AI Automation | Self Project} \hfill \textbf{\small Jun'26} \\
+\textit{\small Built a full-stack AI job discovery assistant that finds relevant openings, auto-generates tailored resumes, and automates applications}
 \begin{achievelist}
-  \achieve{Evaluated early-stage startup ecosystems by analyzing whitespace gaps, funding patterns, and sectoral tailwinds to inform investment strategy.}
-  \achieve{Drafted 3 investment reports covering \+ in funding patterns across Smart Manufacturing, Fintech, and Sports Tech verticals.}
-  \achieve{Mapped 6+ white space opportunities and shortlisted 20 early-stage ventures aligned with macro tech shifts for client deal sourcing.}
+  \achieve{Aggregated 100+ live listings via Tavily API; generated cold outreach emails and tracked 30+ applications in Google Sheets via service account.}
 \end{achievelist}
 
-\vspace{2pt}
-
-\jobheader{India Accelerator}{Aug 2024 -- Oct 2024}{Investment Analyst Intern}{Gurgaon, HR}
+\textbf{Equity Research Reports | HAL - ACE | Self Project} \hfill \textbf{\small Jan'26} \\
+\textit{\small Built LONG investment theses on HAL and ACE using DCF valuation, regression modeling, and risk-adjusted return benchmarking}
 \begin{achievelist}
-  \achieve{Conducted rigorous investment due diligence on early-stage startups; analyzed unit economics, TAM/SAM/SOM, and competitive moats.}
-  \achieve{Benchmarked 15+ competitors to map a \ addressable market across refurbished tech and B2B marketplace sectors.}
-  \achieve{Synthesized insights from 20+ financial data sources into concise executive memos for VC investment committee reviews.}
+  \achieve{Built full equity report on HAL with DCF at Rs 7,660/share (\textasciitilde 53\% upside), comps of EV/EBITDA 17.7x, P/E 27.2x, and DuPont ROE 25.9\%.}
 \end{achievelist}
 
-\vspace{4pt}
+\vspace{-2pt}
 
-% ============================================================
-\section{Strategic Case Competitions \& Leadership}
+% ---------- Positions of Responsibility ----------
+\section{Positions of Responsibility}
 
-\jobheader{Indian Case Challenge (ICC) | IIT Kharagpur}{Jan 2025}{Runners up — Global M\&A Competition}{Kharagpur, WB}
+\textbf{Career Development Centre | Departmental Representative | IIT Kharagpur} \hfill \textbf{\small Sep'25 -- May'26}
 \begin{achievelist}
-  \achieve{Ranked 2nd out of 2,000+ global teams as the only undergraduate podium finisher in an M\&A strategy case sponsored by Bikaji.}
-  \achieve{Evaluated 5+ M\&A targets and recommended Loyka at an INR 156 Cr valuation with a 28\% projected IRR based on strategic synergies.}
+  \achieve{Nominated from cohort of 350+ to 56-member core team managing campus recruitment for 6000+ students (fastest 1,800+ offers in all IITs).}
 \end{achievelist}
 
-\vspace{2pt}
+\vspace{-2pt}
 
-\jobheader{Career Development Centre | IIT Kharagpur}{Sep 2025 -- Present}{Departmental Representative}{Kharagpur, WB}
-\begin{achievelist}
-  \achieve{Facilitated full-cycle recruitment operations for 6000+ students and managed communications with 100+ premier hiring partners.}
-  \achieve{Coordinated recruitment drives, GDs, tests, and interviews for 3000+ candidates as part of a 56-member core execution committee.}
-\end{achievelist}
+% ---------- Extra Curricular Activities ----------
+\section{Extra Curricular Activities \& Honors}
 
-\vspace{4pt}
+\begin{itemize}[leftmargin=1.2em, itemsep=0.5pt, parsep=0pt, topsep=1pt]
+  \small
+  \item \textbf{UN Millennium Fellow:} Selected as one of 5,000 students worldwide to lead social impact projects aligned with UN SDGs.
+  \item \textbf{Inter-IIT Quizzing:} Gold in India Quiz at Inter-IIT Cult Meet; Bronze at InterIIT-IIM Nihilanth Quiz (IIMC/IIML), Silver at IITM (2026).
+  \item \textbf{National Awards:} 14th rank in Uttarakhand for NTSE Scholarship; All India Rank 1487 in KVPY SA (2021--22).
+\end{itemize}
 
-% ============================================================
+\vspace{-2pt}
+
+% ---------- Core Competencies ----------
 \section{Core Competencies}
 
 \noindent
-\textbf{Strategic Operations:} Founder's Office Execution, Venture Due Diligence, Market Sizing (TAM/SAM/SOM), Unit Economics Analysis, Cross-functional Leadership \\[2pt]
-\textbf{Financial Modeling:} DCF Valuation, M\&A Due Diligence, Financial Ratios, Sensitivity Analysis, VECM Macro Modeling \\[2pt]
-\textbf{Technical \& Analytics:} Python, SQL, Power BI, TypeScript, React, Advanced Excel, Figma, APIs
+\textbf{Strategic Operations:} Unit Economics, Sourcing \& Vendor Negotiations, TAM/SAM/SOM, Capital Efficiency, Venture Debt / NCDs / RBF \\[2pt]
+\textbf{Financial Modeling \& Analytics:} DCF Valuation, M\&A Due Diligence, SQL, Python, Power BI, DAX, Advanced Excel, Econometrics
 
 \end{document}

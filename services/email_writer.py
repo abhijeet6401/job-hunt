@@ -19,27 +19,34 @@ logger = logging.getLogger(__name__)
 GROQ_MODEL = "llama-3.3-70b-versatile"
 
 USER_CONTEXT = """
-You are writing cold outreach emails on behalf of Abhijeet Kumar, an Economics undergraduate at IIT Kharagpur
-with strong product management, data analytics, and operational execution experience.
+You are writing cold outreach emails on behalf of Abhijeet Kumar, an Economics undergraduate at IIT Kharagpur (Minor in Maths & Computing, Micro-Spl in AI, CGPA: 7.89/10)
+with proven track records across product management, startup strategy, venture capital, and data analytics.
 
 Key facts about Abhijeet:
-- Email: kumarabhiitkgp@gmail.com | Phone: +91 63989 85179 | GitHub: github.com/abhijeet6401
-- Product and Technology Intern at Aequitas Investment Consultancy ($650M AUM boutique fund):
-  * Built unified news & research platform with PERN + TypeScript and MiniLM deduplication, cutting analyst research time by 50%.
-  * Developed custom CRM for 1000+ HNI clients, replacing Salesforce and automating lead pipelines.
-  * Unified 4+ internal teams and decommissioned 5 legacy tools, boosting client response time by 30%.
-- Growth Analytics Intern at Frost & Sullivan:
-  * Built predictive time-series models and interactive Power BI dashboards with DAX & SQL for $2.3M+ sales data.
-  * Identified 8.0% return rate and demand seasonality across 3 market segments.
-- Winner, Product Management (General Championship, IIT Kharagpur):
-  * Designed full-stack insurance super-app for 10M+ users, driving INR 120 Cr premium growth with 4 product modules cutting claims cost 35%.
-- Runners-up, Indian Case Challenge (ICC Bikaji):
-  * Only undergraduate podium finisher among 2000+ global teams; evaluated M&A targets and boosted supply chain efficiency by 15% using ML demand forecasting.
-- Research Intern at Felix Advisory & Investment Analyst Intern at India Accelerator:
-  * Analyzed $1B+ venture funding patterns and benchmarked $130B addressable market for seed/pre-seed investments.
-- Departmental Representative, Career Development Centre (CDC), IIT Kharagpur:
-  * Core team of 56 managing campus placements and recruiter relations for 6000+ students.
-- Targeting: Product Manager / APM, Founder's Office / Chief of Staff, Data Analyst, and Operations roles.
+- Contact: kumarabhiitkgp@gmail.com | +91 63989 85179 | linkedin.com/in/abhijeetkgp | github.com/abhijeet6401
+- UN Millennium Fellow: Selected as one of 5,000 students globally for community social impact and leadership aligned with UN SDGs.
+- Snabbit (Product Management & Business Strategy Intern, Bengaluru):
+  * Scaled retention GOV from 20% to 50% via Blush Prive in-app membership pass; launched manicure & pedicure lifting AOV 2x to Rs 2,000.
+  * Saved Rs 50L/month by renegotiating vendor pricing (cutting product cost from 40% to 20% of GOV); negotiated Rs 2Cr production order.
+  * Managed 100+ SKUs & Rs 30L working capital cutting stock-outs 70%, sustaining 99% fulfillment across 250 daily orders.
+- Aequitas Investments (AI Product Management & Finance Strategy Intern, $1Bn AUM fund):
+  * Cut analyst research time by 50% unifying 10+ news sources into a PERN + TypeScript research platform with MiniLM deduplication.
+  * Replaced Salesforce with custom CRM serving 1,000+ HNI clients, automating lead tracking and cutting response time by 30%.
+- 3one4 Capital (Portfolio Management and Strategy Intern, Bengaluru):
+  * Developed venture debt / NCDs / RBF financing playbooks (9-22% cost) and bridge loan briefs helping founders extend runway up to 6 months.
+  * Supported 3 consumer & fintech startups (Seed-IPO) ex-CheQ on unit economics, LTV/CAC, and growth patterns.
+- Felix Advisory (Research Intern, Gurgaon):
+  * Drafted 3 investment reports analyzing $1B+ funding patterns across Smart Manufacturing, Fintech, and Sports Tech; mapped 6+ whitespace areas.
+- India Accelerator (Investment Analyst Intern, Gurgaon):
+  * Evaluated early-stage startups using TAM/SAM/SOM and unit economics; benchmarked 15+ competitors mapping $130B market in refurbished tech.
+- JobHunt Agent (AI Automation Self-Project):
+  * Built full-stack AI job discovery & tailoring assistant aggregating 100+ live listings via Tavily API and xAI LLM on FastAPI & Render.
+- Competitions & Leadership:
+  * Winner, Product Management (General Championship IIT Kharagpur): Designed insurance super-app for 10M+ users & Rs 120 Cr premium growth.
+  * Bronze, Data Analytics (FRAMMER AI General Championship): Built LangGraph multi-agent analytics platform with self-healing SQL pipeline.
+  * Runners-up, Indian Case Challenge (ICC Bikaji): Ranked 2nd globally among 2000+ teams in M&A case ($156 Cr valuation).
+  * Career Development Centre (CDC) Departmental Representative: Core team of 56 managing campus placements for 6000+ students.
+- Targeting: Product Manager / APM, Founder's Office / Chief of Staff, Venture Capital / Strategy, Data & Business Analyst roles.
 
 Email rules:
 - Maximum 150 words. Hard limit.
@@ -48,7 +55,7 @@ Email rules:
 - End with one clear ask (a 20-minute call, or a response if they're hiring).
 - Never use phrases like: "I am passionate about", "I am excited to", "I would love to",
   "I believe I would be a great fit", "Please find attached", or any generic opener.
-- Sound like a smart, proactive IITian builder who understands business metrics and technology, not like a generic cover letter.
+- Sound like a smart, proactive builder who understands metrics, technology, and business growth.
 """
 
 

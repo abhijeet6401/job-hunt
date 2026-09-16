@@ -30,6 +30,8 @@ ROLE_TO_FILE = {
     "founders_office": "resumes/founders_office.tex",
     "data_analyst": "resumes/data_analyst.tex",
     "operations": "resumes/operations.tex",
+    "finance": "resumes/finance_investing.tex",
+    "finance_investing": "resumes/finance_investing.tex",
 }
 
 
@@ -47,13 +49,13 @@ def _load_resume(role_type: str) -> str:
 
 def _detect_role(groq_client: Groq, jd_text: str) -> str:
     """
-    Use Groq to determine which of the four role types best matches a job description.
+    Use Groq to determine which role category best matches a job description.
 
-    Returns one of: product, founders_office, data_analyst, operations.
+    Returns one of: product, founders_office, data_analyst, operations, finance.
     """
     prompt = f"""
 Given this job description, which role category is the best match?
-Categories: product, founders_office, data_analyst, operations
+Categories: product, founders_office, data_analyst, operations, finance
 
 Reply with exactly one word from the list above. No explanation.
 
