@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 GROQ_MODEL = "llama-3.3-70b-versatile"
 
 USER_CONTEXT = """
-You are writing cold outreach emails on behalf of Abhijeet Kumar, an Economics undergraduate at IIT Kharagpur (Minor in Maths & Computing, Micro-Spl in AI, CGPA: 7.89/10)
+You are writing cold outreach emails on behalf of Abhijeet Kumar, an Economics undergraduate at IIT Kharagpur (Minor in Maths & Computing, Micro-Spl in AI, CGPA: 8.03/10)
 with proven track records across product management, startup strategy, venture capital, and data analytics.
 
 Key facts about Abhijeet:

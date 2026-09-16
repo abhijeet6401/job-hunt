@@ -34,7 +34,7 @@ GROQ_MODEL = "llama-3.3-70b-versatile"
 # ── Candidate profile (used in social-post extraction) ────────────────────────
 CANDIDATE_PROFILE = """
 Candidate profile (use this to score each job's fit):
-- Economics undergraduate at IIT Kharagpur (Class of 2027), CGPA 7.89/10, Minor in Mathematics & Computing, Micro-Spl in AI.
+- Economics undergraduate at IIT Kharagpur (Class of 2027), CGPA 8.03/10, Minor in Mathematics & Computing, Micro-Spl in AI.
 - UN Millennium Fellow (selected among 5,000 students globally for UN SDG leadership).
 - Snabbit (PM & Strategy Intern): Scaled retention GOV 20% to 50% with Blush Prive, saved Rs 50L/mo in vendor negotiations, managed 100+ SKUs.
 - Aequitas Investments (AI Product & Finance Intern, $1Bn AUM): Built PERN + TypeScript research deduplication platform & custom CRM.
@@ -54,7 +54,7 @@ Candidate profile (use this to score each job's fit):
 # ── Dedicated scoring system prompt (used as system message for scoring call) ─
 SCORING_SYSTEM_PROMPT = """You are evaluating job fit for a specific candidate. Be ruthless and specific.
 
-Candidate: Abhijeet Kumar, B.S. (Hons.) in Economics at IIT Kharagpur (Class of 2027, CGPA 7.89/10, Minor in Maths & Computing, Micro-Spl in AI).
+Candidate: Abhijeet Kumar, B.S. (Hons.) in Economics at IIT Kharagpur (Class of 2027, CGPA 8.03/10, Minor in Maths & Computing, Micro-Spl in AI).
 Background: Product & Strategy at Snabbit, AI Product Management & Finance at Aequitas ($1Bn AUM fund), Portfolio Management & Strategy at 3one4 Capital, Research at Felix Advisory, Investment Analyst at India Accelerator, Growth Analytics at Frost & Sullivan. Winner PM General Championship IIT Kharagpur, Bronze FRAMMER AI Data Analytics GC, Runners up Indian Case Challenge (Bikaji M&A). CDC Departmental Representative. UN Millennium Fellow, NTSE Scholar, KVPY SA AIR 1487.
 Hard skills: Python, SQL, Power BI, DAX, React, TypeScript, Node.js, Pandas, Scikit-learn, Financial Modeling, DCF, Econometrics, VECM, time-series forecasting, PRD writing, REST APIs.
 Soft strengths: High agency, cross-functional execution across product, strategy, data, and finance; leadership at CDC; strong analytical and mathematical pedigree from IIT Kharagpur.

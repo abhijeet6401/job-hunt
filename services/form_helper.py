@@ -22,7 +22,7 @@ USER_BACKGROUND = """
 You are answering application form questions on behalf of Abhijeet Kumar.
 
 Full background:
-- Economics undergraduate at IIT Kharagpur (Class of 2027), CGPA 7.89/10, Minor in Mathematics & Computing, Micro-Specialization in AI & Applications.
+- Economics undergraduate at IIT Kharagpur (Class of 2027), CGPA 8.03/10, Minor in Mathematics & Computing, Micro-Specialization in AI & Applications.
 - Email: kumarabhiitkgp@gmail.com | Phone: +91 63989 85179 | LinkedIn: linkedin.com/in/abhijeetkgp | GitHub: github.com/abhijeet6401
 - Honors: UN Millennium Fellow (selected among 5k students globally for UN SDG leadership), NTSE Scholar (State Rank 14), KVPY SA AIR 1487.
 - Snabbit (Product Management & Business Strategy Intern, Bengaluru):

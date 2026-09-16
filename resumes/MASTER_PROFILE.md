@@ -11,7 +11,7 @@
 ---
 
 ## Education
-- **2023 - 2027**: 4YRS B.S. (Hons.) in Economics, *Indian Institute of Technology (IIT) Kharagpur* — **7.89 / 10**
+- **2023 - 2027**: 4YRS B.S. (Hons.) in Economics, *Indian Institute of Technology (IIT) Kharagpur* — **8.03 / 10**
   - *Minor in Mathematics & Computing (M.Sc. 5Y)*
   - *Micro Specialization in Artificial Intelligence and Applications*
 - **2023**: CBSE Class 12th, *Bhartiyam International School, Rudrapur* — **97.00%**

@@ -83,7 +83,7 @@ def generate_all_resumes():
 \hline
 \textbf{Year} & \textbf{Degree/Exam} & \textbf{Institute} & \textbf{CGPA/Marks} \\
 \hline
-2027 & 4YRS B.S. (Hons.) in Economics & Indian Institute of Technology (IIT) Kharagpur & 7.89 / 10 \\
+2027 & 4YRS B.S. (Hons.) in Economics & Indian Institute of Technology (IIT) Kharagpur & 8.03 / 10 \\
 2023 & CBSE Class 12th & Bhartiyam International School, Rudrapur & 97.00\% \\
 2021 & CBSE Class 10th & Jaycees Public School, Rudrapur & 98.60\% \\
 \hline
@@ -313,7 +313,7 @@ def generate_all_resumes():
 % ---------- Header ----------
 \begin{center}
   {\LARGE \textbf{ABHIJEET KUMAR}} \quad | \quad \textbf{23HS10002} \\[3pt]
-  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 7.89 / 10) \\[2pt]
+  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 8.03 / 10) \\[2pt]
   \small \textbf{Minor:} Mathematics \& Computing \quad | \quad \textbf{Micro Spl.:} Artificial Intelligence and Applications \\[3pt]
   \small
   \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad | \quad
@@ -467,7 +467,7 @@ def generate_all_resumes():
 % ---------- Header ----------
 \begin{center}
   {\LARGE \textbf{ABHIJEET KUMAR}} \quad | \quad \textbf{23HS10002} \\[3pt]
-  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 7.89 / 10) \\[2pt]
+  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 8.03 / 10) \\[2pt]
   \small \textbf{Minor:} Mathematics \& Computing \quad | \quad \textbf{Micro Spl.:} Artificial Intelligence and Applications \\[3pt]
   \small
   \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad | \quad
@@ -619,7 +619,7 @@ def generate_all_resumes():
 % ---------- Header ----------
 \begin{center}
   {\LARGE \textbf{ABHIJEET KUMAR}} \quad | \quad \textbf{23HS10002} \\[3pt]
-  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 7.89 / 10) \\[2pt]
+  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 8.03 / 10) \\[2pt]
   \small \textbf{Minor:} Mathematics \& Computing \quad | \quad \textbf{Micro Spl.:} Artificial Intelligence and Applications \\[3pt]
   \small
   \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad | \quad
@@ -778,7 +778,7 @@ def generate_all_resumes():
 % ---------- Header ----------
 \begin{center}
   {\LARGE \textbf{ABHIJEET KUMAR}} \quad | \quad \textbf{23HS10002} \\[3pt]
-  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 7.89 / 10) \\[2pt]
+  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 8.03 / 10) \\[2pt]
   \small \textbf{Minor:} Mathematics \& Computing \quad | \quad \textbf{Micro Spl.:} Artificial Intelligence and Applications \\[3pt]
   \small
   \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad | \quad
@@ -916,7 +916,7 @@ def generate_all_resumes():
 % ---------- Header ----------
 \begin{center}
   {\LARGE \textbf{ABHIJEET KUMAR}} \quad | \quad \textbf{23HS10002} \\[3pt]
-  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 7.89 / 10) \\[2pt]
+  \textbf{B.S. (Hons.) in ECONOMICS} \quad | \quad \textbf{IIT Kharagpur} (CGPA: 8.03 / 10) \\[2pt]
   \small \textbf{Minor:} Mathematics \& Computing \quad | \quad \textbf{Micro Spl.:} Artificial Intelligence and Applications \\[3pt]
   \small
   \faPhone\ \href{tel:+916398985179}{+91 63989 85179} \quad | \quad
