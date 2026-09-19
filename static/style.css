@@ -575,8 +575,7 @@ body {
   border: 1px solid transparent;
 }
 .badge-linkedin  { background: var(--badge-linkedin);  color: #60a5fa; border-color: rgba(59,130,246,0.25); }
-.badge-wellfound { background: var(--badge-wellfound); color: #fb923c; border-color: rgba(249,115,22,0.25); }
-.badge-yc        { background: var(--badge-yc);        color: #f87171; border-color: rgba(220,38,38,0.25); }
+.badge-yc        { background: rgba(249, 115, 22, 0.15); color: #f97316; border-color: rgba(249, 115, 22, 0.35); font-weight: 700; }
 .badge-twitter   { background: var(--badge-twitter);   color: #94a3b8; border-color: rgba(148,163,184,0.2); }
 .badge-default   { background: var(--surface-2); color: var(--text-2); border-color: var(--border); }
 

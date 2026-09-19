@@ -1,0 +1,390 @@
+{
+  "total_registered": 11067,
+  "total_placed": 5183,
+  "placement_percentage": 46.8,
+  "total_companies": 902,
+  "ppo_count": 1741,
+  "non_ppo_count": 3442,
+  "highest_ctc_lpa": 244.0,
+  "highest_ctc_display": "₹2.44 Cr (244.0 LPA) (Optiver)",
+  "avg_ctc_lpa": 23.28,
+  "median_ctc_lpa": 19.0,
+  "avg_cgpa": 8.36,
+  "median_cgpa": 8.41,
+  "seasons_breakdown": {
+    "2025-26": 1018,
+    "2023-24": 1464,
+    "2022-23": 1337,
+    "2021-22": 1364
+  },
+  "missing_seasons": [
+    "2024-25"
+  ],
+  "season_notes": "Season 2024-25 dataset is currently pending / missing from CDC release. Available seasons are 2025-26, 2023-24, 2022-23, and 2021-22.",
+  "top_recruiters": [
+    {
+      "company": "EXL Service",
+      "hires": 140,
+      "max_ctc": "₹15.30 LPA"
+    },
+    {
+      "company": "Accenture",
+      "hires": 96,
+      "max_ctc": "₹77.24 LPA"
+    },
+    {
+      "company": "Honeywell",
+      "hires": 95,
+      "max_ctc": "₹19.50 LPA"
+    },
+    {
+      "company": "Texas Instruments",
+      "hires": 83,
+      "max_ctc": "₹43.23 LPA"
+    },
+    {
+      "company": "American Express",
+      "hires": 83,
+      "max_ctc": "₹28.74 LPA"
+    },
+    {
+      "company": "Qualcomm",
+      "hires": 82,
+      "max_ctc": "₹51.01 LPA"
+    },
+    {
+      "company": "Microsoft",
+      "hires": 64,
+      "max_ctc": "₹67.25 LPA"
+    },
+    {
+      "company": "Goldman Sachs",
+      "hires": 61,
+      "max_ctc": "₹50.00 LPA"
+    },
+    {
+      "company": "Google",
+      "hires": 59,
+      "max_ctc": "₹74.00 LPA"
+    },
+    {
+      "company": "Bajaj Auto",
+      "hires": 54,
+      "max_ctc": "₹21.74 LPA"
+    },
+    {
+      "company": "Amazon",
+      "hires": 53,
+      "max_ctc": "₹90.00 LPA"
+    },
+    {
+      "company": "Mastercard",
+      "hires": 50,
+      "max_ctc": "₹20.43 LPA"
+    },
+    {
+      "company": "Nvidia",
+      "hires": 47,
+      "max_ctc": "₹53.82 LPA"
+    },
+    {
+      "company": "Oracle",
+      "hires": 46,
+      "max_ctc": "₹35.63 LPA"
+    },
+    {
+      "company": "Navi",
+      "hires": 41,
+      "max_ctc": "₹41.00 LPA"
+    },
+    {
+      "company": "Axis Bank",
+      "hires": 41,
+      "max_ctc": "₹15.47 LPA"
+    },
+    {
+      "company": "Standard Chartered",
+      "hires": 40,
+      "max_ctc": "₹18.20 LPA"
+    },
+    {
+      "company": "Sprinklr",
+      "hires": 39,
+      "max_ctc": "₹30.00 LPA"
+    },
+    {
+      "company": "Vedanta",
+      "hires": 38,
+      "max_ctc": "₹21.50 LPA"
+    },
+    {
+      "company": "Tata Steel",
+      "hires": 37,
+      "max_ctc": "₹13.70 LPA"
+    }
+  ],
+  "top_ctc_companies": [
+    {
+      "company": "Optiver",
+      "max_ctc_lpa": 244.0,
+      "max_ctc_display": "₹2.44 Cr (244.0 LPA)",
+      "hires": 6
+    },
+    {
+      "company": "Glean",
+      "max_ctc_lpa": 169.78,
+      "max_ctc_display": "₹1.70 Cr (169.8 LPA)",
+      "hires": 9
+    },
+    {
+      "company": "NK Securities Research",
+      "max_ctc_lpa": 168.0,
+      "max_ctc_display": "₹1.68 Cr (168.0 LPA)",
+      "hires": 7
+    },
+    {
+      "company": "Landeed",
+      "max_ctc_lpa": 160.0,
+      "max_ctc_display": "₹1.60 Cr (160.0 LPA)",
+      "hires": 1
+    },
+    {
+      "company": "RISA LABS Inc",
+      "max_ctc_lpa": 151.2,
+      "max_ctc_display": "$180,000 USD (≈ ₹151.2 LPA)",
+      "hires": 1
+    },
+    {
+      "company": "Rubrik",
+      "max_ctc_lpa": 146.65,
+      "max_ctc_display": "₹1.47 Cr (146.7 LPA)",
+      "hires": 8
+    },
+    {
+      "company": "Quantbox Research",
+      "max_ctc_lpa": 120.0,
+      "max_ctc_display": "₹1.20 Cr (120.0 LPA)",
+      "hires": 4
+    },
+    {
+      "company": "Edelweiss Global Markets",
+      "max_ctc_lpa": 110.0,
+      "max_ctc_display": "₹1.10 Cr (110.0 LPA)",
+      "hires": 2
+    },
+    {
+      "company": "AlphaGrep Securities",
+      "max_ctc_lpa": 103.0,
+      "max_ctc_display": "₹1.03 Cr (103.0 LPA)",
+      "hires": 7
+    },
+    {
+      "company": "GigaML",
+      "max_ctc_lpa": 100.0,
+      "max_ctc_display": "₹1.00 Cr (100.0 LPA)",
+      "hires": 1
+    },
+    {
+      "company": "Golden Sparrow",
+      "max_ctc_lpa": 95.0,
+      "max_ctc_display": "₹95.00 LPA",
+      "hires": 1
+    },
+    {
+      "company": "Quadeye Securities",
+      "max_ctc_lpa": 93.0,
+      "max_ctc_display": "₹93.00 LPA",
+      "hires": 17
+    },
+    {
+      "company": "UiPath",
+      "max_ctc_lpa": 93.0,
+      "max_ctc_display": "₹93.00 LPA",
+      "hires": 4
+    },
+    {
+      "company": "Adobe",
+      "max_ctc_lpa": 92.24,
+      "max_ctc_display": "₹92.24 LPA",
+      "hires": 26
+    },
+    {
+      "company": "Amazon",
+      "max_ctc_lpa": 90.0,
+      "max_ctc_display": "₹90.00 LPA",
+      "hires": 53
+    },
+    {
+      "company": "Graviton Research Capital",
+      "max_ctc_lpa": 90.0,
+      "max_ctc_display": "₹90.00 LPA",
+      "hires": 15
+    },
+    {
+      "company": "DENSO",
+      "max_ctc_lpa": 84.97,
+      "max_ctc_display": "₹84.97 LPA",
+      "hires": 2
+    },
+    {
+      "company": "Naren Thappeta",
+      "max_ctc_lpa": 84.0,
+      "max_ctc_display": "₹84.00 LPA",
+      "hires": 1
+    },
+    {
+      "company": "Harness",
+      "max_ctc_lpa": 83.28,
+      "max_ctc_display": "₹83.28 LPA",
+      "hires": 3
+    },
+    {
+      "company": "Apt Portfolio",
+      "max_ctc_lpa": 80.0,
+      "max_ctc_display": "₹80.00 LPA",
+      "hires": 3
+    }
+  ],
+  "departments_placed": {
+    "EC": 626,
+    "CS": 619,
+    "ME": 570,
+    "EE": 513,
+    "CH": 339,
+    "IM": 310,
+    "MA": 269,
+    "CE": 238,
+    "MT": 209,
+    "AG": 187,
+    "MI": 154,
+    "AE": 139,
+    "GG": 138,
+    "NA": 129,
+    "HS": 122,
+    "BT": 101,
+    "AR": 93,
+    "": 67,
+    "PH": 57,
+    "IP": 50,
+    "CY": 48,
+    "ID": 32,
+    "AT": 23,
+    "MM": 23,
+    "MS": 23,
+    "CL": 20,
+    "RE": 19,
+    "GS": 18,
+    "AI": 15,
+    "WM": 10,
+    "CR": 6,
+    "ES": 5,
+    "RT": 5,
+    "RJ": 4,
+    "SE": 1,
+    "BS": 1
+  },
+  "sectors_placed": {
+    "IT/Software": 680,
+    "Core Engineering": 467,
+    "Others": 398,
+    "Finance": 323,
+    "Analytics": 233,
+    "Consulting": 173,
+    "Finance and Consulting": 157,
+    "IT / Software": 138,
+    "Core Engineering and Technology": 117,
+    "Manufacturing": 104,
+    "Analytics,Consulting": 65,
+    "Automobile": 55,
+    "IT/Software,Finance": 32,
+    "Investment Banking": 32,
+    "Ecommerce": 29,
+    "Teaching / education": 28,
+    "Professional Services": 23,
+    "IT/Software,Analytics": 21,
+    "Data Science/ AI/ ML": 20,
+    "E-Commerce": 20,
+    "IT/Software,Automobile,Construction,Manufacturing": 19,
+    "Health Care": 16,
+    "Core Engineering,IT/Software,Analytics,Consulting,Ecommerce,Management": 15,
+    "Construction": 14,
+    "Core Engineering,IT/Software": 13,
+    "IT/Software,Consulting": 13,
+    "IT/Software,Others": 11,
+    "Mining/Petrolium": 11,
+    "IT/Software,Analytics,Consulting,Professional Services": 11,
+    "IT/Software,Health Care": 11,
+    "IT/Software,Analytics,Consulting": 10,
+    "IT/Software,Finance,Investment Banking": 9,
+    "Core Engineering,Construction,Professional Services,Others": 8,
+    "IT/Software,Analytics,Consulting,Management": 8,
+    "Consulting,Professional Services": 8,
+    "Core Engineering,Geoscience,Mining/Petrolium": 7,
+    "Core Engineering,IT/Software,Telecommunication": 7,
+    "Core Engineering and Technology,Others": 6,
+    "Core Engineering,IT/Software,Analytics": 6,
+    "Edutech": 5,
+    "Core Engineering,IT/Software,Finance": 5,
+    "IT/Software,Finance,Analytics": 4,
+    "Core Engineering,Manufacturing": 4,
+    "IT/Software,Investment Banking": 4,
+    "Core Engineering,IT/Software,Finance,Automobile": 4,
+    "IT/Software,Automobile": 4,
+    "Analytics,IT / Software,Finance and Consulting": 3,
+    "Exploration": 3,
+    "IT/Software,Analytics,Health Care": 3,
+    "Core Engineering,Analytics,Consulting": 3,
+    "Irrigation & Agriculture": 3,
+    "NGO": 3,
+    "Core Engineering,Analytics,Management,Manufacturing": 3,
+    "IT/Software,Telecommunication,Teaching / education,Others": 3,
+    "IT / Software,Data Science/ AI/ ML": 2,
+    "Core Engineering,Mining/Petrolium": 2,
+    "Core Engineering,Exploration,Mining/Petrolium,Manufacturing": 2,
+    "Core Engineering,Others": 2,
+    "Finance,Others": 2,
+    "Exploration,Geoscience,Mining/Petrolium": 2,
+    "Oil and Gas / Energy": 1,
+    "HealthCare/Biomedical": 1,
+    "Finance,Professional Services": 1,
+    "Finance,Analytics,Consulting": 1,
+    "Analytics,Consulting,Irrigation & Agriculture,Others": 1,
+    "Irrigation & Agriculture,Others": 1,
+    "Core Engineering,IT/Software,Consulting": 1,
+    "Health Care,Manufacturing": 1,
+    "Management": 1,
+    "Telecommunication": 1,
+    "Ecommerce,Teaching / education,Professional Services": 1,
+    "IT/Software,Analytics,Telecommunication": 1,
+    "IT/Software,Analytics,Ecommerce": 1,
+    "IT/Software,Finance,Analytics,Management": 1,
+    "IT/Software,Professional Services": 1,
+    "Core Engineering,IT/Software,Telecommunication,Automobile,Ecommerce,Health Care": 1
+  },
+  "degrees_placed": {
+    "DUAL DEGREE": 1672,
+    "B.TECH": 1517,
+    "M.TECH": 1207,
+    "M.SC(5YR)": 362,
+    "4YRS B.S": 73,
+    "B.ARCH": 72,
+    "": 67,
+    "M.SC(2YR)": 55,
+    "LLB": 47,
+    "BS-MS(5YR)": 39,
+    "PHD": 30,
+    "MCP": 21,
+    "MS": 12,
+    "MSC M.TECH": 3,
+    "LLM": 3,
+    "BS M.TECH": 2,
+    "MMST": 1
+  },
+  "ctc_brackets": {
+    "> 70 LPA": 110,
+    "40 - 70 LPA": 394,
+    "25 - 40 LPA": 1158,
+    "15 - 25 LPA": 1815,
+    "< 15 LPA": 1592
+  }
+}

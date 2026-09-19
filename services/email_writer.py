@@ -7,6 +7,7 @@ Output: dict with 'draft_1' (direct tone) and 'draft_2' (warmer tone), both plai
 Saves drafts to Google Sheets Outreach tab.
 """
 
+import os
 import logging
 from datetime import date
 
@@ -16,7 +17,7 @@ from services.sheets import append_row
 
 logger = logging.getLogger(__name__)
 
-GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "groq/compound-mini")
 
 USER_CONTEXT = """
 You are writing cold outreach emails on behalf of Abhijeet Kumar, an Economics undergraduate at IIT Kharagpur (Minor in Maths & Computing, Micro-Spl in AI, CGPA: 8.03/10)

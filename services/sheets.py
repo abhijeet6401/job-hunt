@@ -42,12 +42,52 @@ TAB_HEADERS = {
 }
 
 
-def _get_service():
-    """Build and return an authenticated Google Sheets API service client."""
-    raw_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
-    if not raw_json:
-        raise ValueError("GOOGLE_SERVICE_ACCOUNT_JSON environment variable is not set")
+LOCAL_DB_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "local_sheets_db.json")
 
+
+def _is_sheets_enabled() -> bool:
+    """Return True if real Google Service Account credentials and Sheet ID are present."""
+    raw_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON", "").strip()
+    sheet_id = os.environ.get("GOOGLE_SHEETS_ID", "").strip()
+    if not raw_json or not sheet_id or "..." in raw_json:
+        return False
+    try:
+        data = json.loads(raw_json)
+        return bool(data.get("token_uri") and data.get("client_email"))
+    except Exception:
+        return False
+
+
+def _load_local_db() -> dict[str, list[list[Any]]]:
+    """Load local JSON storage fallback when Google Sheets is not configured."""
+    if os.path.exists(LOCAL_DB_FILE):
+        try:
+            with open(LOCAL_DB_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            logger.warning(f"Could not read local sheets DB: {e}")
+    db = {}
+    for tab, headers in TAB_HEADERS.items():
+        db[tab] = [headers]
+    return db
+
+
+def _save_local_db(db: dict[str, list[list[Any]]]):
+    """Persist local JSON storage fallback."""
+    try:
+        os.makedirs(os.path.dirname(LOCAL_DB_FILE), exist_ok=True)
+        with open(LOCAL_DB_FILE, "w", encoding="utf-8") as f:
+            json.dump(db, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        logger.error(f"Failed to write local sheets DB: {e}")
+
+
+def _get_service():
+    """Build and return an authenticated Google Sheets API service client if configured."""
+    if not _is_sheets_enabled():
+        return None
+
+    raw_json = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
     creds_dict = json.loads(raw_json)
     creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
     service = build("sheets", "v4", credentials=creds)
@@ -56,10 +96,7 @@ def _get_service():
 
 def _get_sheet_id() -> str:
     """Return the Google Sheets document ID from environment."""
-    sheet_id = os.environ.get("GOOGLE_SHEETS_ID")
-    if not sheet_id:
-        raise ValueError("GOOGLE_SHEETS_ID environment variable is not set")
-    return sheet_id
+    return os.environ.get("GOOGLE_SHEETS_ID", "")
 
 
 def _ensure_tab_exists(service, spreadsheet_id: str, tab_name: str):
@@ -68,6 +105,8 @@ def _ensure_tab_exists(service, spreadsheet_id: str, tab_name: str):
 
     Checks existing sheet titles and adds a new sheet + header row if missing.
     """
+    if not service or not spreadsheet_id:
+        return
     meta = service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
     existing = [s["properties"]["title"] for s in meta.get("sheets", [])]
 
@@ -105,48 +144,60 @@ def _retry(fn, retries: int = 3, delay: float = 2.0):
 
 def append_row(tab_name: str, row_data: list[Any]):
     """
-    Append a single row to the named tab in the configured Google Sheet.
-
-    Creates the tab with headers automatically if it does not exist.
-    row_data should match the column order defined in TAB_HEADERS[tab_name].
+    Append a single row to the named tab in the configured Google Sheet (or local DB fallback).
     """
-    service = _get_service()
-    sheet_id = _get_sheet_id()
+    if _is_sheets_enabled():
+        try:
+            service = _get_service()
+            sheet_id = _get_sheet_id()
+            _ensure_tab_exists(service, sheet_id, tab_name)
 
-    _ensure_tab_exists(service, sheet_id, tab_name)
+            def _do_append():
+                service.spreadsheets().values().append(
+                    spreadsheetId=sheet_id,
+                    range=f"{tab_name}!A1",
+                    valueInputOption="RAW",
+                    insertDataOption="INSERT_ROWS",
+                    body={"values": [row_data]},
+                ).execute()
 
-    def _do_append():
-        service.spreadsheets().values().append(
-            spreadsheetId=sheet_id,
-            range=f"{tab_name}!A1",
-            valueInputOption="RAW",
-            insertDataOption="INSERT_ROWS",
-            body={"values": [row_data]},
-        ).execute()
+            _retry(_do_append)
+            return
+        except Exception as e:
+            logger.warning(f"Google Sheets append failed, saving to local DB instead: {e}")
 
-    _retry(_do_append)
+    # Local fallback
+    db = _load_local_db()
+    if tab_name not in db:
+        db[tab_name] = [TAB_HEADERS.get(tab_name, [])]
+    db[tab_name].append(row_data)
+    _save_local_db(db)
 
 
 def read_all_rows(tab_name: str) -> list[list[Any]]:
     """
-    Read all rows from the named tab.
-
-    Returns a list of lists (rows). First row is headers.
-    Returns an empty list if the tab does not exist or has no data.
+    Read all rows from the named tab (Google Sheets or local DB fallback).
     """
-    service = _get_service()
-    sheet_id = _get_sheet_id()
+    if _is_sheets_enabled():
+        try:
+            service = _get_service()
+            sheet_id = _get_sheet_id()
+            _ensure_tab_exists(service, sheet_id, tab_name)
 
-    _ensure_tab_exists(service, sheet_id, tab_name)
+            def _do_read():
+                result = service.spreadsheets().values().get(
+                    spreadsheetId=sheet_id,
+                    range=f"{tab_name}!A1:Z1000",
+                ).execute()
+                return result.get("values", [])
 
-    def _do_read():
-        result = service.spreadsheets().values().get(
-            spreadsheetId=sheet_id,
-            range=f"{tab_name}!A1:Z1000",
-        ).execute()
-        return result.get("values", [])
+            return _retry(_do_read) or []
+        except Exception as e:
+            logger.warning(f"Google Sheets read failed, falling back to local DB: {e}")
 
-    return _retry(_do_read) or []
+    # Local fallback
+    db = _load_local_db()
+    return db.get(tab_name, [TAB_HEADERS.get(tab_name, [])])
 
 
 def get_job_urls() -> set:
@@ -246,75 +297,96 @@ def read_jobs() -> dict:
 def clear_tab(tab_name: str):
     """
     Delete all data rows from the named tab, keeping the header row intact.
-
-    Clears the entire sheet then re-writes the header row so the tab is ready
-    for fresh data without needing to be recreated.
     """
-    service  = _get_service()
-    sheet_id = _get_sheet_id()
+    if _is_sheets_enabled():
+        try:
+            service  = _get_service()
+            sheet_id = _get_sheet_id()
+            _ensure_tab_exists(service, sheet_id, tab_name)
 
-    _ensure_tab_exists(service, sheet_id, tab_name)
+            def _do_clear():
+                service.spreadsheets().values().clear(
+                    spreadsheetId=sheet_id,
+                    range=f"{tab_name}!A1:Z10000",
+                ).execute()
+                headers = TAB_HEADERS.get(tab_name, [])
+                if headers:
+                    service.spreadsheets().values().update(
+                        spreadsheetId=sheet_id,
+                        range=f"{tab_name}!A1",
+                        valueInputOption="RAW",
+                        body={"values": [headers]},
+                    ).execute()
 
-    def _do_clear():
-        service.spreadsheets().values().clear(
-            spreadsheetId=sheet_id,
-            range=f"{tab_name}!A1:Z10000",
-        ).execute()
-        headers = TAB_HEADERS.get(tab_name, [])
-        if headers:
-            service.spreadsheets().values().update(
-                spreadsheetId=sheet_id,
-                range=f"{tab_name}!A1",
-                valueInputOption="RAW",
-                body={"values": [headers]},
-            ).execute()
+            _retry(_do_clear)
+        except Exception as e:
+            logger.warning(f"Google Sheets clear failed, clearing local DB instead: {e}")
 
-    _retry(_do_clear)
+    # Clear in local DB
+    db = _load_local_db()
+    headers = TAB_HEADERS.get(tab_name, [])
+    db[tab_name] = [headers] if headers else []
+    _save_local_db(db)
 
 
 def update_job_status_by_url(url: str, new_status: str) -> bool:
     """
     Find the Jobs-tab row whose URL column matches and set its Status column.
-
-    Returns True if a row was found and updated, False if the URL is not in the sheet.
-    Used by the swipe deck: right-swipe → "Shortlisted", left-swipe → "Rejected".
     """
     if not url:
         return False
 
-    service  = _get_service()
-    sheet_id = _get_sheet_id()
+    updated_online = False
+    if _is_sheets_enabled():
+        try:
+            service  = _get_service()
+            sheet_id = _get_sheet_id()
+            _ensure_tab_exists(service, sheet_id, "Jobs")
 
-    _ensure_tab_exists(service, sheet_id, "Jobs")
+            def _do_read():
+                result = service.spreadsheets().values().get(
+                    spreadsheetId=sheet_id,
+                    range="Jobs!H1:H10000",
+                ).execute()
+                return result.get("values", [])
 
-    def _do_read():
-        result = service.spreadsheets().values().get(
-            spreadsheetId=sheet_id,
-            range="Jobs!H1:H10000",
-        ).execute()
-        return result.get("values", [])
+            url_rows = _retry(_do_read) or []
 
-    url_rows = _retry(_do_read) or []
+            target_row = None
+            for i, row in enumerate(url_rows):
+                if row and row[0] == url:
+                    target_row = i + 1  # 1-indexed sheet row
+                    break
 
-    target_row = None
-    for i, row in enumerate(url_rows):
-        if row and row[0] == url:
-            target_row = i + 1  # 1-indexed sheet row
+            if target_row is not None:
+                def _do_update():
+                    service.spreadsheets().values().update(
+                        spreadsheetId=sheet_id,
+                        range=f"Jobs!L{target_row}",
+                        valueInputOption="RAW",
+                        body={"values": [[new_status]]},
+                    ).execute()
+
+                _retry(_do_update)
+                updated_online = True
+        except Exception as e:
+            logger.warning(f"Google Sheets update status failed: {e}")
+
+    # Always update in local DB too
+    db = _load_local_db()
+    jobs_rows = db.get("Jobs", [])
+    updated_local = False
+    for row in jobs_rows[1:]:
+        if len(row) > 7 and row[7] == url:
+            while len(row) < 14:
+                row.append("")
+            row[11] = new_status
+            updated_local = True
             break
+    if updated_local:
+        _save_local_db(db)
 
-    if target_row is None:
-        return False
-
-    def _do_update():
-        service.spreadsheets().values().update(
-            spreadsheetId=sheet_id,
-            range=f"Jobs!L{target_row}",
-            valueInputOption="RAW",
-            body={"values": [[new_status]]},
-        ).execute()
-
-    _retry(_do_update)
-    return True
+    return updated_online or updated_local
 
 
 def get_rejected_urls() -> set:
@@ -341,16 +413,32 @@ def update_row_status(tab_name: str, row_index: int, new_status: str):
     if not headers:
         raise ValueError(f"Unknown tab: {tab_name}")
 
-    status_col_index = len(headers)
-    col_letter = chr(ord("A") + status_col_index - 1)
-    cell_range = f"{tab_name}!{col_letter}{row_index}"
+    if _is_sheets_enabled():
+        try:
+            service = _get_service()
+            sheet_id = _get_sheet_id()
+            status_col_index = len(headers)
+            col_letter = chr(ord("A") + status_col_index - 1)
+            cell_range = f"{tab_name}!{col_letter}{row_index}"
 
-    def _do_update():
-        service.spreadsheets().values().update(
-            spreadsheetId=sheet_id,
-            range=cell_range,
-            valueInputOption="RAW",
-            body={"values": [[new_status]]},
-        ).execute()
+            def _do_update():
+                service.spreadsheets().values().update(
+                    spreadsheetId=sheet_id,
+                    range=cell_range,
+                    valueInputOption="RAW",
+                    body={"values": [[new_status]]},
+                ).execute()
 
-    _retry(_do_update)
+            _retry(_do_update)
+        except Exception as e:
+            logger.warning(f"Google Sheets update_row_status failed: {e}")
+
+    # Local fallback
+    db = _load_local_db()
+    rows = db.get(tab_name, [])
+    if row_index - 1 < len(rows):
+        target = rows[row_index - 1]
+        while len(target) < len(headers):
+            target.append("")
+        target[-1] = new_status
+        _save_local_db(db)

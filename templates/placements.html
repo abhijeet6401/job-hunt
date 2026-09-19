@@ -1,0 +1,2391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IIT Kharagpur Placement Hub & Senior Network | CDC Records</title>
+  <meta name="description" content="Multi-season central repository of students placed from IIT Kharagpur with company details, CTC analytics, job descriptions, and 1-click senior outreach contacts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-main: #090d16;
+      --bg-surface: #0f172a;
+      --bg-card: rgba(30, 41, 59, 0.65);
+      --bg-card-hover: rgba(51, 65, 85, 0.75);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      
+      --accent-primary: #38bdf8;
+      --accent-primary-glow: rgba(56, 189, 248, 0.25);
+      --accent-hft: #f59e0b;
+      --accent-hft-glow: rgba(245, 158, 11, 0.3);
+      --accent-high: #a855f7;
+      --accent-green: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-indigo: #6366f1;
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+      
+      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.15);
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.5;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+
+    /* Top Navigation */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(9, 13, 22, 0.85);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.75rem 1.5rem;
+    }
+
+    .nav-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, #0284c7, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      box-shadow: 0 0 15px var(--accent-primary-glow);
+    }
+
+    .brand-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--accent-primary);
+      font-weight: 500;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      border-color: #38bdf8;
+      color: #fff;
+      box-shadow: 0 0 15px var(--accent-primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0369a1, #0284c7);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-hft {
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      border-color: #fbbf24;
+      color: #000;
+      box-shadow: 0 0 15px var(--accent-hft-glow);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #059669, #10b981);
+      border-color: #34d399;
+      color: #fff;
+    }
+
+    .btn-sm {
+      padding: 0.35rem 0.7rem;
+      font-size: 0.75rem;
+    }
+
+    /* Main Container */
+    .app-layout {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8));
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .hero-text h1 {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+      background: linear-gradient(to right, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-text p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 750px;
+    }
+
+    .hero-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .badge-gold {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+    }
+
+    .badge-green {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: #34d399;
+    }
+
+    .badge-purple {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: rgba(168, 85, 247, 0.4);
+      color: #c084fc;
+    }
+
+    .badge-blue {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+    }
+
+    /* Season Switcher Bar */
+    .season-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+    }
+
+    .season-pill {
+      font-family: var(--font-heading);
+      font-size: 0.825rem;
+      font-weight: 600;
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-full);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .season-pill:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .season-pill.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.25));
+      border-color: var(--accent-primary);
+      color: #fff;
+      box-shadow: 0 0 12px var(--accent-primary-glow);
+    }
+
+    /* Metric Counters */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.25rem;
+      backdrop-filter: blur(12px);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .metric-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .metric-title {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .metric-value {
+      font-family: var(--font-heading);
+      font-size: 1.7rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 0.25rem;
+    }
+
+    .metric-sub {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .val-gold { color: #fbbf24; text-shadow: 0 0 12px var(--accent-hft-glow); }
+    .val-blue { color: #38bdf8; text-shadow: 0 0 12px var(--accent-primary-glow); }
+    .val-green { color: #34d399; }
+    .val-purple { color: #c084fc; }
+
+    /* Tab Navigation */
+    .tab-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 0.6rem 1.1rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tab-btn.active {
+      color: #fff;
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.35);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+    }
+
+    .tab-badge {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
+    }
+
+    /* Filter Toolbar */
+    .filter-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 0.65rem 1rem 0.65rem 2.5rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text-main);
+      font-size: 0.875rem;
+      font-family: var(--font-body);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .input-field:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 12px var(--accent-primary-glow);
+    }
+
+    .select-field {
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text-main);
+      font-size: 0.875rem;
+      outline: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .select-field:focus {
+      border-color: var(--accent-primary);
+    }
+
+    .filter-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-pill:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+    }
+
+    .filter-pill.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--accent-primary);
+      color: #fff;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .item-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(8px);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .item-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .company-logo-pill {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      color: var(--accent-primary);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.15rem;
+      line-height: 1.25;
+      color: #fff;
+    }
+
+    .card-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .ctc-badge-pill {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+    }
+
+    .ctc-ultra {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+    }
+
+    .ctc-high {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      color: #c084fc;
+    }
+
+    .ctc-mid {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+    }
+
+    .ctc-std {
+      background: rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: #cbd5e1;
+    }
+
+    .card-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+      margin: 0.75rem 0;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+    }
+
+    .stat-label { color: var(--text-dim); }
+    .stat-val { font-weight: 600; color: var(--text-main); font-family: var(--font-mono); }
+
+    .branches-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0.75rem 0;
+    }
+
+    .dept-tag {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.15rem 0.45rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Senior Specific Card Styles */
+    .senior-header {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .senior-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .senior-roll {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-primary);
+    }
+
+    .senior-company-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.85rem;
+      margin: 0.65rem 0;
+    }
+
+    .senior-company-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .senior-role-name {
+      font-size: 0.8rem;
+      color: var(--accent-primary);
+    }
+
+    .outreach-btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn-wa {
+      background: rgba(37, 211, 102, 0.15);
+      border-color: rgba(37, 211, 102, 0.4);
+      color: #25d366;
+    }
+
+    .btn-wa:hover {
+      background: rgba(37, 211, 102, 0.3);
+      border-color: #25d366;
+    }
+
+    .btn-email {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+    }
+
+    .btn-email:hover {
+      background: rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-linkedin {
+      background: rgba(10, 102, 194, 0.15);
+      border-color: rgba(10, 102, 194, 0.4);
+      color: #60a5fa;
+    }
+
+    /* Status badge selector */
+    .status-select {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    /* Modal / Drawer */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hover);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: sticky;
+      top: 0;
+      background: var(--bg-surface);
+      z-index: 10;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      line-height: 1;
+      border-radius: var(--radius-sm);
+    }
+
+    .modal-close:hover {
+      color: #fff;
+    }
+
+    .jd-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-height: 250px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    /* Matcher tool styles */
+    .matcher-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .matcher-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      align-items: flex-end;
+    }
+
+    .matcher-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .matcher-tier-box {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      padding: 1.25rem;
+    }
+
+    .tier-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    /* Prep Checklist Accordion */
+    .prep-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .prep-header {
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.02);
+      font-weight: 600;
+    }
+
+    .prep-header:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .prep-content {
+      padding: 1.25rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .prep-list li {
+      margin-bottom: 0.5rem;
+      margin-left: 1.25rem;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Pagination */
+    .pagination-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 2rem 0;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-dim);
+      grid-column: 1 / -1;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+      .app-layout { padding: 1rem; }
+      .hero-content { flex-direction: column; align-items: flex-start; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .search-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="nav-container">
+      <a href="/placements" class="brand">
+        <div class="brand-icon">🎓</div>
+        <div>
+          <div class="brand-title">IIT Kharagpur Placement Hub</div>
+          <div class="brand-subtitle">Multi-Season CDC Senior & Recruiter Intelligence</div>
+        </div>
+      </a>
+      
+      <div class="nav-actions">
+        <a href="/" class="btn btn-sm" title="Go to JobHunt off-campus assistant">
+          ⚡ Startup JobHunt
+        </a>
+        <button id="openUploadModalBtn" class="btn btn-sm btn-success" title="Upload and merge an additional CSV">
+          ➕ Upload & Merge CSV
+        </button>
+        <button id="downloadCsvBtn" class="btn btn-sm btn-primary" title="Export clean placed students dataset">
+          📥 Master CSV
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-layout">
+    
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>IIT KGP Placement & Senior Outreach Network</h1>
+          <p>
+            Curated central repository of <strong id="heroTotalPlaced">5,183 placed seniors</strong> across <strong id="heroTotalCompanies">902 companies</strong> spanning 4 seasons (2025-26, 2023-24, 2022-23, 2021-22).
+            Look up exact CTC packages, role job descriptions, department cutoffs, and connect with seniors directly via WhatsApp and Email for interview guidance.
+          </p>
+          <div class="hero-tags">
+            <span class="badge badge-gold" id="heroTagHighest">🏆 Highest: ₹2.44 Cr (Optiver)</span>
+            <span class="badge badge-blue" id="heroTagMedian">📈 Median CTC: ₹19.00 LPA</span>
+            <span class="badge badge-green" id="heroTagTotal">⚡ Multi-Season Directory: 5,183 Seniors</span>
+            <span class="badge badge-purple" id="heroTagCgpa">🎯 Average Placed CGPA: 8.36</span>
+          </div>
+        </div>
+        
+        <div>
+          <button id="heroMatcherBtn" class="btn btn-hft">
+            🎯 Check My Shortlist Odds
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Season Filter Bar -->
+    <div class="season-bar">
+      <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 700; margin-left: 0.25rem;">SEASON:</span>
+      <button class="season-pill active" data-season="all">
+        🌐 All Seasons <span class="tab-badge" id="badgeSeasonAll">5,183</span>
+      </button>
+      <button class="season-pill" data-season="2025-26">
+        🎓 2025-26 Season (Latest) <span class="tab-badge" id="badgeSeason25">1,018</span>
+      </button>
+      <button class="season-pill" data-season="2023-24">
+        📜 2023-24 Season <span class="tab-badge" id="badgeSeason23">1,464</span>
+      </button>
+      <button class="season-pill" data-season="2022-23">
+        📜 2022-23 Season <span class="tab-badge" id="badgeSeason22">1,337</span>
+      </button>
+      <button class="season-pill" data-season="2021-22">
+        📜 2021-22 Season <span class="tab-badge" id="badgeSeason21">1,364</span>
+      </button>
+      <span class="season-pill-missing" style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.75rem; padding:0.35rem 0.75rem; border-radius:9999px; background:rgba(234,179,8,0.1); border:1px dashed rgba(234,179,8,0.4); color:#eab308;" title="CDC has not released / published records for 2024-25 season">
+        ⚠️ 2024-25 Season: Missing / Pending CDC Upload
+      </span>
+    </div>
+
+    <!-- Top Metrics Row -->
+    <section class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-title">Placed Seniors <span>🎓</span></div>
+        <div class="metric-value val-blue" id="mPlacedCount">5,183</div>
+        <div class="metric-sub" id="mPlacedSub">Out of 11,067 candidates</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">Recruiters <span>🏢</span></div>
+        <div class="metric-value val-purple" id="mCompanyCount">953</div>
+        <div class="metric-sub">Across 4 Seasons</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">Highest CTC <span>💰</span></div>
+        <div class="metric-value val-gold" id="mHighestCtc">₹2.44 Cr</div>
+        <div class="metric-sub">Optiver Graduate Trader</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">Median Package <span>📊</span></div>
+        <div class="metric-value val-green" id="mMedianCtc">₹19.0 LPA</div>
+        <div class="metric-sub" id="mAvgCtcSub">Average: ₹23.28 LPA</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-title">Placement Type <span>⚡</span></div>
+        <div class="metric-value" id="mPpoCount">PPO + Drive</div>
+        <div class="metric-sub" id="mPpoSub">1,741 PPOs & 3,442 Day Offers</div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="tab-nav" role="tablist">
+      <button class="tab-btn active" data-tab="companies" role="tab">
+        🏢 Companies & JDs <span class="tab-badge" id="badgeCompanyCount">953</span>
+      </button>
+      <button class="tab-btn" data-tab="seniors" role="tab">
+        🎓 Seniors Directory & Contacts <span class="tab-badge" id="badgeSeniorCount">5,183</span>
+      </button>
+      <button class="tab-btn" data-tab="matcher" role="tab">
+        🎯 "Can I Crack It?" Matcher
+      </button>
+      <button class="tab-btn" data-tab="analytics" role="tab">
+        📊 CTC & Branch Analytics
+      </button>
+      <button class="tab-btn" data-tab="prep" role="tab">
+        💡 Interview Questions & Senior Guide
+      </button>
+      <button class="tab-btn" data-tab="batch" role="tab">
+        👥 Full Batch (11,067)
+      </button>
+    </nav>
+
+    <!-- TAB 1: Companies & JDs Explorer -->
+    <section id="tab-companies" class="tab-view">
+      <div class="filter-panel">
+        <div class="search-row">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="companySearchInput" class="input-field" placeholder="Search company (e.g. Google, Optiver, Texas Instruments, BlackRock)..." />
+          </div>
+
+          <select id="companySectorSelect" class="select-field">
+            <option value="all">All Sectors</option>
+            <option value="Finance and Consulting">Finance & Consulting</option>
+            <option value="IT / Software">IT / Software</option>
+            <option value="Core Engineering">Core Engineering</option>
+            <option value="Analytics">Analytics</option>
+            <option value="Data Science/ AI/ ML">Data Science / AI / ML</option>
+            <option value="E-Commerce">E-Commerce</option>
+          </select>
+
+          <select id="companyDeptSelect" class="select-field">
+            <option value="all">Hired From All Branches</option>
+            <option value="CS">Computer Science (CS)</option>
+            <option value="EC">Electronics & ECE (EC)</option>
+            <option value="EE">Electrical (EE)</option>
+            <option value="ME">Mechanical (ME)</option>
+            <option value="CH">Chemical (CH)</option>
+            <option value="MA">Maths & Computing (MA)</option>
+            <option value="IM">Industrial & Systems (IM)</option>
+            <option value="AE">Aerospace (AE)</option>
+            <option value="CE">Civil (CE)</option>
+            <option value="MT">Metallurgical (MT)</option>
+            <option value="NA">Ocean & Naval (NA)</option>
+            <option value="HS">Economics (HS)</option>
+            <option value="BT">Biotechnology (BT)</option>
+            <option value="GG">Geology & Geophysics (GG)</option>
+          </select>
+
+          <select id="companySortSelect" class="select-field">
+            <option value="hires">Sort: Most Hires</option>
+            <option value="ctc">Sort: Highest CTC</option>
+            <option value="name">Sort: Company Name</option>
+            <option value="cgpa">Sort: Highest CGPA</option>
+          </select>
+        </div>
+
+        <div class="filter-pills-row">
+          <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 600;">CTC TIER:</span>
+          <button class="filter-pill active" data-tier="all">All Tiers</button>
+          <button class="filter-pill" data-tier="hft">🏆 Ultra HFT (> 70 LPA)</button>
+          <button class="filter-pill" data-tier="high">🟣 High (40 - 70 LPA)</button>
+          <button class="filter-pill" data-tier="mid">🔵 Mid (20 - 40 LPA)</button>
+          <button class="filter-pill" data-tier="standard">Standard (< 20 LPA)</button>
+        </div>
+      </div>
+
+      <div class="cards-grid" id="companiesGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- TAB 2: Seniors Contact Directory -->
+    <section id="tab-seniors" class="tab-view" style="display: none;">
+      <div class="filter-panel">
+        <div class="search-row">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="seniorSearchInput" class="input-field" placeholder="Search by senior name, roll number, company, role, or email..." />
+          </div>
+
+          <select id="seniorDeptSelect" class="select-field">
+            <option value="all">All Departments</option>
+            <option value="CS">CS - Computer Science</option>
+            <option value="EC">EC - Electronics</option>
+            <option value="EE">EE - Electrical</option>
+            <option value="ME">ME - Mechanical</option>
+            <option value="CH">CH - Chemical</option>
+            <option value="MA">MA - Maths & Computing</option>
+            <option value="IM">IM - Industrial</option>
+            <option value="AE">AE - Aerospace</option>
+            <option value="CE">CE - Civil</option>
+            <option value="MT">MT - Metallurgy</option>
+            <option value="NA">NA - Ocean & Naval</option>
+            <option value="HS">HS - Economics</option>
+            <option value="BT">BT - Biotechnology</option>
+            <option value="GG">GG - Geology & Geophysics</option>
+          </select>
+
+          <select id="seniorDegreeSelect" class="select-field">
+            <option value="all">All Degrees</option>
+            <option value="B.TECH">B.Tech (4Y)</option>
+            <option value="DUAL DEGREE">Dual Degree (5Y)</option>
+            <option value="M.TECH">M.Tech (2Y)</option>
+            <option value="BS-MS">BS-MS (5Y)</option>
+            <option value="4YRS B.S">4Yrs B.S</option>
+            <option value="PHD">PhD</option>
+          </select>
+
+          <select id="seniorTypeSelect" class="select-field">
+            <option value="all">All Placement Types</option>
+            <option value="PPO">PPO Only</option>
+            <option value="NON-PPO">CDC Placement Drive</option>
+          </select>
+
+          <select id="seniorSortSelect" class="select-field">
+            <option value="ctc_desc">Sort: Highest CTC</option>
+            <option value="cgpa_desc">Sort: Highest CGPA</option>
+            <option value="name_asc">Sort: Senior Name</option>
+            <option value="company_asc">Sort: Company Name</option>
+          </select>
+        </div>
+
+        <div class="filter-pills-row">
+          <span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 600;">OUTREACH STATUS:</span>
+          <button class="filter-pill active" data-status="all">All Seniors</button>
+          <button class="filter-pill" data-status="Not Contacted">⏳ Not Contacted</button>
+          <button class="filter-pill" data-status="Contacted">💬 Contacted</button>
+          <button class="filter-pill" data-status="Scheduled">📅 Call Scheduled</button>
+          <button class="filter-pill" data-status="Mentored">⭐ Got Guidance / Referral</button>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <div id="seniorsCountMsg" style="font-size: 0.85rem; color: var(--text-muted);">Showing seniors...</div>
+        <button id="exportSeniorsCsvBtn" class="btn btn-sm">📥 Export Filtered Seniors (CSV)</button>
+      </div>
+
+      <div class="cards-grid" id="seniorsGrid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <div class="pagination-bar" id="seniorsPagination"></div>
+    </section>
+
+    <!-- TAB 3: "Can I Crack It?" Matcher -->
+    <section id="tab-matcher" class="tab-view" style="display: none;">
+      <div class="matcher-card">
+        <h2 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 0.5rem;">
+          🎯 CDC Shortlist Odds Simulator
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Enter your current CGPA and Department to simulate historical shortlisting trends and find safe, target, and reach companies where seniors with your profile were hired.
+        </p>
+
+        <div class="matcher-form">
+          <div>
+            <label style="display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.35rem; font-weight: 600;">YOUR CGPA</label>
+            <input type="number" id="matcherCgpaInput" class="input-field" step="0.01" min="5.0" max="10.0" value="8.03" style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700;" />
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.35rem; font-weight: 600;">YOUR DEPARTMENT</label>
+            <select id="matcherDeptInput" class="select-field" style="width: 100%;">
+              <option value="CE" selected>CE - Civil Engineering</option>
+              <option value="CS">CS - Computer Science</option>
+              <option value="EC">EC - Electronics & Electrical Comm</option>
+              <option value="EE">EE - Electrical Engineering</option>
+              <option value="ME">ME - Mechanical Engineering</option>
+              <option value="CH">CH - Chemical Engineering</option>
+              <option value="MA">MA - Mathematics & Computing</option>
+              <option value="IM">IM - Industrial & Systems</option>
+              <option value="AE">AE - Aerospace Engineering</option>
+              <option value="MT">MT - Metallurgical & Materials</option>
+              <option value="NA">NA - Ocean & Naval Architecture</option>
+              <option value="HS">HS - Economics</option>
+              <option value="BT">BT - Biotechnology</option>
+              <option value="GG">GG - Geology & Geophysics</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.35rem; font-weight: 600;">PREFERRED SECTOR</label>
+            <select id="matcherSectorInput" class="select-field" style="width: 100%;">
+              <option value="all" selected>All Sectors</option>
+              <option value="Finance and Consulting">Finance & Consulting</option>
+              <option value="IT / Software">IT / Software</option>
+              <option value="Core Engineering">Core Engineering</option>
+              <option value="Analytics">Analytics</option>
+              <option value="Data Science/ AI/ ML">Data Science & AI</option>
+            </select>
+          </div>
+
+          <div>
+            <button id="runMatcherBtn" class="btn btn-primary" style="width: 100%; justify-content: center;">
+              ⚡ Analyze Shortlist Odds
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="matcher-columns">
+        <!-- Safety -->
+        <div class="matcher-tier-box" style="border-top: 4px solid #10b981;">
+          <div class="tier-header">
+            <div>
+              <h3 style="font-family: var(--font-heading); color: #34d399;">🟢 High Probability / Safety</h3>
+              <p style="font-size: 0.75rem; color: var(--text-dim);">Hired seniors with CGPA ≤ your CGPA</p>
+            </div>
+            <span class="badge badge-green" id="matcherSafetyBadge">0</span>
+          </div>
+          <div id="matcherSafetyList" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+        </div>
+
+        <!-- Target -->
+        <div class="matcher-tier-box" style="border-top: 4px solid #38bdf8;">
+          <div class="tier-header">
+            <div>
+              <h3 style="font-family: var(--font-heading); color: #38bdf8;">🟡 Competitive / Target</h3>
+              <p style="font-size: 0.75rem; color: var(--text-dim);">Median hired CGPA matches your profile</p>
+            </div>
+            <span class="badge badge-blue" id="matcherTargetBadge">0</span>
+          </div>
+          <div id="matcherTargetList" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+        </div>
+
+        <!-- Reach -->
+        <div class="matcher-tier-box" style="border-top: 4px solid #a855f7;">
+          <div class="tier-header">
+            <div>
+              <h3 style="font-family: var(--font-heading); color: #c084fc;">🟣 Dream / Reach (Tier 1)</h3>
+              <p style="font-size: 0.75rem; color: var(--text-dim);">Top CTC (>45 LPA) or selective cutoffs</p>
+            </div>
+            <span class="badge badge-purple" id="matcherReachBadge">0</span>
+          </div>
+          <div id="matcherReachList" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Placement Analytics -->
+    <section id="tab-analytics" class="tab-view" style="display: none;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem;">
+        
+        <!-- CTC Brackets -->
+        <div class="item-card">
+          <div class="card-title">💰 CTC Bracket Breakdown</div>
+          <div class="card-subtitle">Distribution of packages among placed candidates</div>
+          <div style="margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;" id="analyticsCtcBars"></div>
+        </div>
+
+        <!-- Top Recruiters -->
+        <div class="item-card">
+          <div class="card-title">🏆 Top Hiring Recruiters</div>
+          <div class="card-subtitle">Companies that hired the most students</div>
+          <div style="margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem;" id="analyticsTopRecruiters"></div>
+        </div>
+
+        <!-- Department Breakdown -->
+        <div class="item-card">
+          <div class="card-title">📚 Department Hiring Counts</div>
+          <div class="card-subtitle">Number of students placed per branch</div>
+          <div style="margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem;" id="analyticsDeptBars"></div>
+        </div>
+
+        <!-- Sector Breakdown -->
+        <div class="item-card">
+          <div class="card-title">🌐 Industry Sector Shares</div>
+          <div class="card-subtitle">Finance, Tech, Core, and Consulting distribution</div>
+          <div style="margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem;" id="analyticsSectorBars"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 5: Interview Prep & Senior Guide -->
+    <section id="tab-prep" class="tab-view" style="display: none;">
+      <div class="hero-banner" style="margin-bottom: 1.5rem; padding: 1.5rem;">
+        <h2 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 0.35rem;">
+          💡 Senior Outreach & Interview Question Playbook
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.875rem;">
+          When speaking to a placed senior, you want to ask actionable, specific questions that reveal shortlisting criteria, OA difficulty, technical round focus areas, and culture fit.
+        </p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        
+        <div class="prep-card">
+          <div class="prep-header" onclick="togglePrep(this)">
+            <span>📞 Top 8 Essential Questions to Ask Placed Seniors on a Call</span>
+            <span>▼</span>
+          </div>
+          <div class="prep-content">
+            <ul class="prep-list">
+              <li><strong>1. Online Assessment (OA) Pattern:</strong> What was the platform (HackerEarth, Mettl, CodeSignal)? How many questions, what topics (Trees, DP, Graphs, SQL), and what was the cutoff score to get an interview call?</li>
+              <li><strong>2. Resume Shortlisting Criteria:</strong> Did the company filter purely by CGPA, branch, or prior internships? What was the minimum CGPA that got shortlisted?</li>
+              <li><strong>3. Round-by-Round Breakdown:</strong> How many technical rounds were conducted on placement day? Were they 30 mins or 1 hour? Did they ask live coding, system design, or CV projects?</li>
+              <li><strong>4. Resume Project Grilling:</strong> How deeply did the interviewers probe into ML/software projects? Did they check math foundations, edge cases, or deployment?</li>
+              <li><strong>5. HR & Cultural Fitment:</strong> What questions did the HR/Director ask in the final round? Any specific questions regarding relocation, bond, or why this company?</li>
+              <li><strong>6. PPO vs CDC Drive Dynamics:</strong> If they got PPO, how was their intern performance evaluated? If CDC drive, what helped them stand out on Day 1?</li>
+              <li><strong>7. CTC Breakdown & Work Life:</strong> What is the real in-hand/base salary vs joining bonus/RSUs? What is the team culture and typical working hours?</li>
+              <li><strong>8. Recommended Preparation Resources:</strong> What specific LeetCode lists, sheet (Striver SDE / NeetCode), or guesstimate mock resources do they recommend?</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="prep-card">
+          <div class="prep-header" onclick="togglePrep(this)">
+            <span>💻 Software Development (SDE) Preparation Roadmap</span>
+            <span>▼</span>
+          </div>
+          <div class="prep-content">
+            <ul class="prep-list">
+              <li><strong>Data Structures & Algorithms (DSA):</strong> Master Striver's SDE Sheet. Focus on Arrays, Two Pointers, Sliding Window, Trees, Graphs (BFS/DFS, Dijkstra), Dynamic Programming.</li>
+              <li><strong>Core Computer Science:</strong> Operating Systems (Concurrency, Deadlocks, Paging), DBMS (SQL queries, Normalization, Indexing), Computer Networks (TCP/IP, HTTP, DNS).</li>
+              <li><strong>Low-Level & High-Level Design:</strong> OOP concepts (SOLID principles, Design Patterns), basic microservices, caching (Redis), databases (SQL vs NoSQL).</li>
+              <li><strong>High CTC Target Companies:</strong> Google, Microsoft, Databricks, Amazon, Glean, Rippling, Nutanix, Rubrik, Cohesity, Salesforce.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="prep-card">
+          <div class="prep-header" onclick="togglePrep(this)">
+            <span>⚡ Quantitative Research & HFT Trading Roadmap</span>
+            <span>▼</span>
+          </div>
+          <div class="prep-content">
+            <ul class="prep-list">
+              <li><strong>Mathematics & Probability:</strong> Conditional probability, Bayes' theorem, Markov chains, Martingales, Expected values, Combinatorics. Books: "Heard on the Street", "A Practical Guide to Quantitative Finance Interviews" (Xinfeng Zhou).</li>
+              <li><strong>Puzzles & Brain Teasers:</strong> 50 Challenging Problems in Probability (Frederick Mosteller), Ted-Ed riddles, Brainstellar puzzles.</li>
+              <li><strong>Low Latency C++:</strong> C++ memory model, pointers, move semantics, cache locality, multi-threading, network sockets.</li>
+              <li><strong>Top Recruiter Companies:</strong> Optiver (₹2.44 Cr), Quadeye (₹93L), Graviton (₹90L), NK Securities (₹1.68 Cr), AlphaGrep (₹73L), Trexquant (₹55L).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="prep-card">
+          <div class="prep-header" onclick="togglePrep(this)">
+            <span>📊 Analytics, Data Science & Management Consulting Roadmap</span>
+            <span>▼</span>
+          </div>
+          <div class="prep-content">
+            <ul class="prep-list">
+              <li><strong>Consulting Cases & Guesstimates:</strong> Profitability frameworks, Market Entry, Pricing, M&A. Practice with Case in Point and Victor Cheng frameworks.</li>
+              <li><strong>SQL & Data Analysis:</strong> Advanced window functions (`ROW_NUMBER`, `DENSE_RANK`, `LEAD/LAG`), self-joins, aggregations, cohort analysis.</li>
+              <li><strong>Machine Learning:</strong> Linear/Logistic regression, Decision Trees, XGBoost, Random Forest, Evaluation metrics (Precision, Recall, F1, ROC-AUC), Transformers & GenAI basics.</li>
+              <li><strong>Top Companies:</strong> BCG, Bain, McKinsey, L.E.K. Consulting, American Express, Capital One, EXL Service, Axtria, Mastercard, Navi, BlackRock.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 6: Full Batch Directory (6,004) -->
+    <section id="tab-batch" class="tab-view" style="display: none;">
+      <div class="filter-panel">
+        <div class="search-row">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="batchSearchInput" class="input-field" placeholder="Search across all registered candidates (Name, Roll, Dept)..." />
+          </div>
+          <select id="batchDeptSelect" class="select-field">
+            <option value="all">All Departments</option>
+            <option value="CS">CS</option><option value="EC">EC</option><option value="EE">EE</option><option value="ME">ME</option><option value="CH">CH</option><option value="MA">MA</option><option value="IM">IM</option><option value="AE">AE</option><option value="CE">CE</option><option value="MT">MT</option><option value="NA">NA</option><option value="HS">HS</option><option value="BT">BT</option><option value="GG">GG</option>
+          </select>
+          <select id="batchStatusSelect" class="select-field">
+            <option value="all">All Status</option>
+            <option value="placed">Placed Only</option>
+            <option value="unplaced">Unplaced / Seeking</option>
+          </select>
+        </div>
+      </div>
+      <div id="batchTableWrap" style="overflow-x: auto; background: var(--bg-card); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--border-subtle); color: var(--text-dim); background: rgba(0, 0, 0, 0.2);">
+              <th style="padding: 0.75rem 1rem;">ROLL NO</th>
+              <th style="padding: 0.75rem 1rem;">NAME</th>
+              <th style="padding: 0.75rem 1rem;">DEPT</th>
+              <th style="padding: 0.75rem 1rem;">SEASON</th>
+              <th style="padding: 0.75rem 1rem;">DEGREE</th>
+              <th style="padding: 0.75rem 1rem;">CGPA</th>
+              <th style="padding: 0.75rem 1rem;">STATUS</th>
+              <th style="padding: 0.75rem 1rem;">EMAIL</th>
+              <th style="padding: 0.75rem 1rem;">PHONE</th>
+            </tr>
+          </thead>
+          <tbody id="batchTableBody"></tbody>
+        </table>
+      </div>
+      <div class="pagination-bar" id="batchPagination"></div>
+    </section>
+
+  </main>
+
+  <!-- Company Detail Modal -->
+  <div class="modal-overlay" id="companyModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+            <h2 id="mCompName" style="font-family: var(--font-heading); font-size: 1.5rem; color: #fff;"></h2>
+            <span id="mCompSectorBadge" class="badge badge-blue"></span>
+          </div>
+          <div id="mCompHiresSummary" style="font-size: 0.85rem; color: var(--text-muted);"></div>
+        </div>
+        <button class="modal-close" onclick="closeCompanyModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- CTC Highlight Box -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; background: rgba(0, 0, 0, 0.25); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;">Max Package</div>
+            <div id="mCompMaxCtc" style="font-size: 1.25rem; font-weight: 700; color: #fbbf24; font-family: var(--font-mono);"></div>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;">Median Package</div>
+            <div id="mCompMedianCtc" style="font-size: 1.25rem; font-weight: 700; color: #38bdf8; font-family: var(--font-mono);"></div>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;">Placed CGPA Range</div>
+            <div id="mCompCgpaRange" style="font-size: 1.1rem; font-weight: 600; color: var(--text-main); font-family: var(--font-mono);"></div>
+          </div>
+        </div>
+
+        <!-- Job Description / Roles -->
+        <div>
+          <h4 style="font-family: var(--font-heading); font-size: 1rem; margin-bottom: 0.5rem; color: #fff;">
+            📄 Job Description & Role Overviews
+          </h4>
+          <div id="mCompJdBox" class="jd-box">No detailed job description uploaded for this role.</div>
+        </div>
+
+        <!-- Hired Departments Breakdown -->
+        <div>
+          <h4 style="font-family: var(--font-heading); font-size: 1rem; margin-bottom: 0.5rem; color: #fff;">
+            🎓 Eligible / Hired Branches
+          </h4>
+          <div id="mCompDeptsBox" style="display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
+        </div>
+
+        <!-- Seniors Placed Here -->
+        <div>
+          <h4 style="font-family: var(--font-heading); font-size: 1rem; margin-bottom: 0.5rem; color: #fff; display: flex; justify-content: space-between;">
+            <span>👥 Seniors Placed at this Company</span>
+            <span id="mCompSeniorsCount" style="font-size: 0.8rem; color: var(--text-muted);"></span>
+          </h4>
+          <div id="mCompSeniorsList" style="display: flex; flex-direction: column; gap: 0.75rem; max-height: 320px; overflow-y: auto;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upload & Merge CSV Modal -->
+  <div class="modal-overlay" id="uploadModal">
+    <div class="modal-container" style="max-width: 540px;">
+      <div class="modal-header">
+        <div>
+          <h3 style="font-family: var(--font-heading); font-size: 1.25rem; color: #fff;">➕ Upload & Merge CSV</h3>
+          <p style="font-size: 0.75rem; color: var(--text-muted);">Add new placement batches, previous years, or supplementary CDC lists</p>
+        </div>
+        <button class="modal-close" onclick="closeUploadModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="uploadCsvForm">
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.35rem; font-weight: 600;">SELECT CSV FILE</label>
+            <input type="file" id="csvFileInput" accept=".csv" required class="input-field" style="padding-left: 1rem;" />
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.35rem; font-weight: 600;">SEASON / BATCH LABEL</label>
+            <input type="text" id="seasonLabelInput" class="input-field" placeholder="e.g. 2025-26, Phase-2, Internships" style="padding-left: 1rem;" required value="2025-26" />
+          </div>
+
+          <div id="uploadStatusMsg" style="font-size: 0.8rem; margin-bottom: 1rem; display: none;"></div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+            <button type="button" class="btn btn-sm" onclick="closeUploadModal()">Cancel</button>
+            <button type="submit" id="submitUploadBtn" class="btn btn-sm btn-primary">
+              ⚡ Process & Merge
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global State
+    let allCompanies = [];
+    let allSeniors = [];
+    let analyticsData = {};
+    let fullBatch = [];
+    let seniorNotes = {};
+    
+    let currentSeason = 'all';
+    let currentTab = 'companies';
+    let seniorPage = 1;
+    let batchPage = 1;
+    const PAGE_SIZE = 48;
+
+    // Load Data
+    async function init() {
+      try {
+        await reloadData();
+        loadNotes();
+        runMatcher();
+      } catch (err) {
+        console.error('Error loading placement data:', err);
+      }
+    }
+
+    async function reloadData() {
+      // Load Analytics
+      const aRes = await fetch('/api/placements/analytics');
+      if (aRes.ok) {
+        analyticsData = await aRes.json();
+        renderAnalytics();
+      }
+
+      // Load Companies
+      const cRes = await fetch(`/api/placements/companies?season=${currentSeason}`);
+      if (cRes.ok) {
+        const data = await cRes.json();
+        allCompanies = data.companies || [];
+        renderCompanies();
+      }
+
+      // Load Seniors
+      const sRes = await fetch(`/api/placements/students?limit=0&season=${currentSeason}`);
+      if (sRes.ok) {
+        const data = await sRes.json();
+        allSeniors = data.students || [];
+        renderSeniors();
+      }
+    }
+
+    function loadNotes() {
+      try {
+        const local = localStorage.getItem('kgp_senior_notes');
+        if (local) {
+          seniorNotes = JSON.parse(local);
+        }
+      } catch(e) {}
+
+      fetch('/api/placements/notes').then(r => r.json()).then(d => {
+        if (d.ok && d.notes) {
+          seniorNotes = { ...seniorNotes, ...d.notes };
+          renderSeniors();
+        }
+      }).catch(e => {});
+    }
+
+    function saveNote(rollno, status, noteText) {
+      if (!seniorNotes[rollno]) seniorNotes[rollno] = {};
+      seniorNotes[rollno].status = status;
+      if (noteText !== undefined) seniorNotes[rollno].note = noteText;
+      seniorNotes[rollno].updated_at = new Date().toISOString();
+
+      try {
+        localStorage.setItem('kgp_senior_notes', JSON.stringify(seniorNotes));
+      } catch(e) {}
+
+      fetch('/api/placements/notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rollno, status, note: seniorNotes[rollno].note })
+      }).catch(e => {});
+    }
+
+    // Dynamic Season Switcher
+    function renderSeasonPills() {
+      const bar = document.querySelector('.season-bar');
+      if (!bar || !analyticsData.seasons_breakdown) return;
+      const breakdown = analyticsData.seasons_breakdown;
+      const total = analyticsData.total_placed || 5183;
+
+      let html = `<span style="font-size: 0.75rem; color: var(--text-dim); font-weight: 700; margin-left: 0.25rem;">SEASON:</span>`;
+      html += `
+        <button class="season-pill ${currentSeason === 'all' ? 'active' : ''}" data-season="all">
+          🌐 All Seasons <span class="tab-badge" id="badgeSeasonAll">${total.toLocaleString()}</span>
+        </button>
+      `;
+
+      Object.entries(breakdown).forEach(([sName, count]) => {
+        const isLatest = sName === '2025-26';
+        const icon = isLatest ? '🎓' : '📜';
+        const label = isLatest ? `${sName} Season (Latest)` : `${sName} Season`;
+        html += `
+          <button class="season-pill ${currentSeason === sName ? 'active' : ''}" data-season="${sName}">
+            ${icon} ${label} <span class="tab-badge">${count.toLocaleString()}</span>
+          </button>
+        `;
+      });
+
+      if (analyticsData.missing_seasons && analyticsData.missing_seasons.length) {
+        html += `
+          <span class="season-pill-missing" style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.75rem; padding:0.35rem 0.75rem; border-radius:9999px; background:rgba(234,179,8,0.1); border:1px dashed rgba(234,179,8,0.4); color:#eab308; cursor:help;" title="${analyticsData.season_notes || '2024-25 data missing'}">
+            ⚠️ 2024-25 Season: Missing / Pending CDC Upload
+          </span>
+        `;
+      }
+
+      bar.innerHTML = html;
+
+      bar.querySelectorAll('.season-pill[data-season]').forEach(pill => {
+        pill.addEventListener('click', async () => {
+          bar.querySelectorAll('.season-pill[data-season]').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          currentSeason = pill.getAttribute('data-season');
+          seniorPage = 1;
+          await reloadData();
+        });
+      });
+    }
+
+    // Tabs Switcher
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const tab = btn.getAttribute('data-tab');
+        currentTab = tab;
+        document.querySelectorAll('.tab-view').forEach(v => v.style.display = 'none');
+        document.getElementById(`tab-${tab}`).style.display = 'block';
+
+        if (tab === 'batch' && fullBatch.length === 0) {
+          loadFullBatch();
+        }
+      });
+    });
+
+    document.getElementById('heroMatcherBtn').addEventListener('click', () => {
+      document.querySelector('[data-tab="matcher"]').click();
+    });
+
+    // ─── RENDER COMPANIES ───────────────────────────────────────────────────
+    function renderCompanies() {
+      const q = document.getElementById('companySearchInput').value.toLowerCase().trim();
+      const sector = document.getElementById('companySectorSelect').value;
+      const dept = document.getElementById('companyDeptSelect').value;
+      const sort = document.getElementById('companySortSelect').value;
+      const activeTierBtn = document.querySelector('.filter-pill.active[data-tier]');
+      const tier = activeTierBtn ? activeTierBtn.getAttribute('data-tier') : 'all';
+
+      let filtered = allCompanies.filter(c => {
+        if (q) {
+          const matchQ = c.name.toLowerCase().includes(q) ||
+            c.sectors.some(s => s.toLowerCase().includes(q)) ||
+            c.designations.some(d => d.toLowerCase().includes(q));
+          if (!matchQ) return false;
+        }
+        if (sector !== 'all' && !c.sectors.some(s => s.toLowerCase().includes(sector.toLowerCase()))) {
+          return false;
+        }
+        if (dept !== 'all' && (!c.departments || !c.departments[dept])) {
+          return false;
+        }
+        if (tier !== 'all') {
+          const ctc = c.max_ctc_lpa || 0;
+          if (tier === 'hft' && ctc < 70) return false;
+          if (tier === 'high' && (ctc < 40 || ctc >= 70)) return false;
+          if (tier === 'mid' && (ctc < 20 || ctc >= 40)) return false;
+          if (tier === 'standard' && ctc >= 20) return false;
+        }
+        return true;
+      });
+
+      // Sort
+      if (sort === 'ctc') {
+        filtered.sort((a, b) => (b.max_ctc_lpa || 0) - (a.max_ctc_lpa || 0));
+      } else if (sort === 'name') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (sort === 'cgpa') {
+        filtered.sort((a, b) => (b.avg_cgpa || 0) - (a.avg_cgpa || 0));
+      } else {
+        filtered.sort((a, b) => (b.total_hires || 0) - (a.total_hires || 0));
+      }
+
+      document.getElementById('badgeCompanyCount').innerText = filtered.length;
+      const grid = document.getElementById('companiesGrid');
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <h3>No companies match your filters</h3>
+            <p>Try searching another branch or relaxing your CTC filter.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(c => {
+        const ctc = c.max_ctc_lpa || 0;
+        let ctcClass = 'ctc-std';
+        if (ctc >= 70) ctcClass = 'ctc-ultra';
+        else if (ctc >= 40) ctcClass = 'ctc-high';
+        else if (ctc >= 20) ctcClass = 'ctc-mid';
+
+        const deptsArr = Object.entries(c.departments || {}).slice(0, 4);
+        const deptsBadges = deptsArr.map(([d, cnt]) => `<span class="dept-tag">${d}: ${cnt}</span>`).join('');
+
+        const seasonsArr = Object.keys(c.seasons || {});
+        const seasonsBadges = seasonsArr.map(s => `<span class="badge badge-purple" style="font-size:0.65rem;">${s}</span>`).join(' ');
+
+        const rolesList = c.designations.slice(0, 2).map(r => `<span style="font-size:0.75rem; color: var(--accent-primary);">${escapeHtml(r)}</span>`).join(' • ');
+
+        return `
+          <div class="item-card">
+            <div>
+              <div class="card-header-row">
+                <div style="display: flex; gap: 0.75rem; align-items: center;">
+                  <div class="company-logo-pill">${escapeHtml(c.name.substring(0, 2).toUpperCase())}</div>
+                  <div>
+                    <div class="card-title">${escapeHtml(c.name)}</div>
+                    <div class="card-subtitle">${escapeHtml(c.sectors[0] || 'Technology')}</div>
+                  </div>
+                </div>
+                <div class="ctc-badge-pill ${ctcClass}">${escapeHtml(c.max_ctc_display)}</div>
+              </div>
+
+              <div class="card-stats-grid">
+                <div><span class="stat-label">Total Hires:</span> <span class="stat-val">${c.total_hires}</span></div>
+                <div><span class="stat-label">PPO / Drive:</span> <span class="stat-val">${c.ppo_count}/${c.non_ppo_count}</span></div>
+                <div><span class="stat-label">Median CTC:</span> <span class="stat-val">₹${c.median_ctc_lpa ? c.median_ctc_lpa.toFixed(1) : '-'} LPA</span></div>
+                <div><span class="stat-label">Cutoff CGPA:</span> <span class="stat-val">${c.min_cgpa ? c.min_cgpa.toFixed(2) : '-'}</span></div>
+              </div>
+
+              <div style="margin: 0.5rem 0;">
+                <div style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.25rem;">ROLES:</div>
+                <div>${rolesList || '<span style="font-size:0.75rem; color: var(--text-dim);">General Hiring</span>'}</div>
+              </div>
+
+              <div style="margin-top: 0.5rem;">
+                <div style="font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.25rem;">TOP BRANCHES & SEASONS:</div>
+                <div class="branches-list">
+                  ${deptsBadges || '<span style="font-size:0.75rem; color: var(--text-dim);">All Branches</span>'}
+                  ${seasonsBadges}
+                </div>
+              </div>
+            </div>
+
+            <div class="card-actions">
+              <button class="btn btn-sm btn-primary" style="flex: 1;" onclick="openCompanyModal('${encodeURIComponent(c.name)}')">
+                👥 View Seniors (${c.total_hires}) & JD
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Company Filter Listeners
+    document.getElementById('companySearchInput').addEventListener('input', renderCompanies);
+    document.getElementById('companySectorSelect').addEventListener('change', renderCompanies);
+    document.getElementById('companyDeptSelect').addEventListener('change', renderCompanies);
+    document.getElementById('companySortSelect').addEventListener('change', renderCompanies);
+
+    document.querySelectorAll('.filter-pill[data-tier]').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill[data-tier]').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        renderCompanies();
+      });
+    });
+
+    // ─── RENDER SENIORS ─────────────────────────────────────────────────────
+    function renderSeniors() {
+      const q = document.getElementById('seniorSearchInput').value.toLowerCase().trim();
+      const dept = document.getElementById('seniorDeptSelect').value;
+      const degree = document.getElementById('seniorDegreeSelect').value;
+      const type = document.getElementById('seniorTypeSelect').value;
+      const sort = document.getElementById('seniorSortSelect').value;
+      const activeStatusBtn = document.querySelector('.filter-pill.active[data-status]');
+      const statusFilter = activeStatusBtn ? activeStatusBtn.getAttribute('data-status') : 'all';
+
+      let filtered = allSeniors.filter(s => {
+        if (q) {
+          const matchQ = s.name.toLowerCase().includes(q) ||
+            s.rollno.toLowerCase().includes(q) ||
+            s.company.toLowerCase().includes(q) ||
+            s.designation.toLowerCase().includes(q) ||
+            s.dept.toLowerCase().includes(q);
+          if (!matchQ) return false;
+        }
+        if (dept !== 'all' && s.dept.toUpperCase() !== dept.toUpperCase()) return false;
+        if (degree !== 'all' && !s.degree.toUpperCase().includes(degree.toUpperCase())) return false;
+        if (type !== 'all' && s.placement_type.toUpperCase() !== type.toUpperCase()) return false;
+
+        if (statusFilter !== 'all') {
+          const st = (seniorNotes[s.rollno] && seniorNotes[s.rollno].status) || 'Not Contacted';
+          if (st !== statusFilter) return false;
+        }
+
+        return true;
+      });
+
+      // Sorting
+      if (sort === 'ctc_desc') {
+        filtered.sort((a, b) => (b.ctc_lpa || 0) - (a.ctc_lpa || 0));
+      } else if (sort === 'cgpa_desc') {
+        filtered.sort((a, b) => (b.cgpa || 0) - (a.cgpa || 0));
+      } else if (sort === 'name_asc') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (sort === 'company_asc') {
+        filtered.sort((a, b) => a.company.localeCompare(b.company));
+      }
+
+      document.getElementById('badgeSeniorCount').innerText = filtered.length;
+      document.getElementById('seniorsCountMsg').innerText = `Showing ${filtered.length} seniors placed from IIT Kharagpur`;
+
+      const grid = document.getElementById('seniorsGrid');
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🎓</div>
+            <h3>No seniors found</h3>
+            <p>Try clearing filters or searching another department.</p>
+          </div>
+        `;
+        document.getElementById('seniorsPagination').innerHTML = '';
+        return;
+      }
+
+      // Pagination
+      const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+      if (seniorPage > totalPages) seniorPage = 1;
+      const start = (seniorPage - 1) * PAGE_SIZE;
+      const pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+      grid.innerHTML = pageItems.map(s => {
+        const ctc = s.ctc_lpa || 0;
+        let ctcClass = 'ctc-std';
+        if (ctc >= 70) ctcClass = 'ctc-ultra';
+        else if (ctc >= 40) ctcClass = 'ctc-high';
+        else if (ctc >= 20) ctcClass = 'ctc-mid';
+
+        const noteInfo = seniorNotes[s.rollno] || { status: 'Not Contacted', note: '' };
+
+        return `
+          <div class="item-card">
+            <div>
+              <div class="card-header-row">
+                <div class="senior-header">
+                  <div class="senior-avatar">${escapeHtml(s.name.substring(0, 2).toUpperCase())}</div>
+                  <div>
+                    <div class="card-title" style="font-size: 1.05rem;">${escapeHtml(s.name)}</div>
+                    <div class="senior-roll">${s.rollno} • ${s.dept} (${s.degree})</div>
+                  </div>
+                </div>
+                <div class="ctc-badge-pill ${ctcClass}">${escapeHtml(s.ctc_display)}</div>
+              </div>
+
+              <div class="senior-company-box">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div class="senior-company-name">${escapeHtml(s.company)}</div>
+                  <div style="display:flex; gap:0.25rem;">
+                    <span class="badge badge-purple" style="font-size:0.65rem;">${s.season || '2025-26'}</span>
+                    <span class="badge ${s.placement_type === 'PPO' ? 'badge-green' : 'badge-blue'}">${s.placement_type}</span>
+                  </div>
+                </div>
+                <div class="senior-role-name">${escapeHtml(s.designation)}</div>
+              </div>
+
+              <div class="card-stats-grid">
+                <div><span class="stat-label">CGPA:</span> <span class="stat-val" style="color:#38bdf8;">${s.cgpa ? s.cgpa.toFixed(2) : '-'}</span></div>
+                <div><span class="stat-label">Slot:</span> <span class="stat-val">${escapeHtml(s.slot_display || 'CDC Drive')}</span></div>
+              </div>
+            </div>
+
+            <div>
+              <!-- 1-Click Outreach Buttons -->
+              <div class="outreach-btn-group">
+                ${s.whatsapp_link ? `
+                  <a href="${s.whatsapp_link}" target="_blank" rel="noopener" class="btn btn-sm btn-wa" title="Open WhatsApp chat with pre-written outreach message">
+                    💬 WhatsApp
+                  </a>
+                ` : `<span class="btn btn-sm" style="opacity:0.4; cursor:not-allowed;">No Phone</span>`}
+
+                ${s.email_link ? `
+                  <a href="${s.email_link}" class="btn btn-sm btn-email" title="Draft guidance email to senior">
+                    ✉️ Email
+                  </a>
+                ` : `<span class="btn btn-sm" style="opacity:0.4;">No Email</span>`}
+
+                ${s.phone ? `
+                  <a href="tel:${s.phone}" class="btn btn-sm" title="Call ${s.phone}">
+                    📞 Call
+                  </a>
+                ` : ''}
+
+                <a href="${s.linkedin_search_link}" target="_blank" rel="noopener" class="btn btn-sm btn-linkedin" title="Search on LinkedIn">
+                  🔗 LinkedIn
+                </a>
+              </div>
+
+              <!-- Outreach Tracker Status -->
+              <div style="margin-top: 0.65rem;">
+                <select class="status-select" onchange="onStatusChange('${s.rollno}', this.value)">
+                  <option value="Not Contacted" ${noteInfo.status === 'Not Contacted' ? 'selected' : ''}>⏳ Status: Not Contacted</option>
+                  <option value="Contacted" ${noteInfo.status === 'Contacted' ? 'selected' : ''}>💬 Status: Message Sent</option>
+                  <option value="Scheduled" ${noteInfo.status === 'Scheduled' ? 'selected' : ''}>📅 Status: Call Scheduled</option>
+                  <option value="Mentored" ${noteInfo.status === 'Mentored' ? 'selected' : ''}>⭐ Status: Got Tips / Referral</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      renderPagination(totalPages, seniorPage, 'seniorsPagination', p => {
+        seniorPage = p;
+        renderSeniors();
+        window.scrollTo({ top: 300, behavior: 'smooth' });
+      });
+    }
+
+    function onStatusChange(rollno, val) {
+      saveNote(rollno, val);
+    }
+
+    // Senior Filter Listeners
+    document.getElementById('seniorSearchInput').addEventListener('input', () => { seniorPage = 1; renderSeniors(); });
+    document.getElementById('seniorDeptSelect').addEventListener('change', () => { seniorPage = 1; renderSeniors(); });
+    document.getElementById('seniorDegreeSelect').addEventListener('change', () => { seniorPage = 1; renderSeniors(); });
+    document.getElementById('seniorTypeSelect').addEventListener('change', () => { seniorPage = 1; renderSeniors(); });
+    document.getElementById('seniorSortSelect').addEventListener('change', () => { seniorPage = 1; renderSeniors(); });
+
+    document.querySelectorAll('.filter-pill[data-status]').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.filter-pill[data-status]').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        seniorPage = 1;
+        renderSeniors();
+      });
+    });
+
+    // ─── CAN I CRACK IT? MATCHER ─────────────────────────────────────────────
+    async function runMatcher() {
+      const cgpa = parseFloat(document.getElementById('matcherCgpaInput').value) || 8.03;
+      const dept = document.getElementById('matcherDeptInput').value;
+      const sector = document.getElementById('matcherSectorInput').value;
+
+      try {
+        const res = await fetch(`/api/placements/matcher?cgpa=${cgpa}&dept=${dept}&sector=${sector}`);
+        if (!res.ok) return;
+        const data = await res.json();
+
+        document.getElementById('matcherSafetyBadge').innerText = data.safety_count;
+        document.getElementById('matcherTargetBadge').innerText = data.target_count;
+        document.getElementById('matcherReachBadge').innerText = data.reach_count;
+
+        renderMatcherColumn('matcherSafetyList', data.safety, '#10b981');
+        renderMatcherColumn('matcherTargetList', data.target, '#38bdf8');
+        renderMatcherColumn('matcherReachList', data.reach, '#a855f7');
+
+      } catch (err) {
+        console.error('Matcher error:', err);
+      }
+    }
+
+    function renderMatcherColumn(containerId, list, color) {
+      const el = document.getElementById(containerId);
+      if (!list || list.length === 0) {
+        el.innerHTML = '<div style="color: var(--text-dim); font-size: 0.8rem; padding: 1rem 0;">No matching recruiters in this bracket for this department.</div>';
+        return;
+      }
+
+      el.innerHTML = list.slice(0, 10).map(c => `
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: var(--transition);" onclick="openCompanyModal('${encodeURIComponent(c.name)}')">
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem; color: #fff;">${escapeHtml(c.name)}</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${c.total_hires} hired • Min CGPA: ${c.min_cgpa.toFixed(2)}</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: ${color};">${escapeHtml(c.max_ctc_display)}</div>
+            <div style="font-size: 0.7rem; color: var(--text-dim);">Avg: ${c.avg_cgpa.toFixed(2)} CGPA</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('runMatcherBtn').addEventListener('click', runMatcher);
+
+    // ─── ANALYTICS ──────────────────────────────────────────────────────────
+    function renderAnalytics() {
+      if (!analyticsData || !analyticsData.ctc_brackets) return;
+
+      document.getElementById('heroTotalPlaced').innerText = `${analyticsData.total_placed.toLocaleString()} placed seniors`;
+      document.getElementById('heroTotalCompanies').innerText = `${analyticsData.total_companies} companies`;
+      document.getElementById('mPlacedCount').innerText = analyticsData.total_placed.toLocaleString();
+      document.getElementById('mCompanyCount').innerText = analyticsData.total_companies;
+      document.getElementById('mHighestCtc').innerText = analyticsData.highest_ctc_display || '₹2.44 Cr';
+      document.getElementById('mMedianCtc').innerText = `₹${analyticsData.median_ctc_lpa ? analyticsData.median_ctc_lpa.toFixed(1) : '20.4'} LPA`;
+
+      if (document.getElementById('heroTagHighest')) {
+        document.getElementById('heroTagHighest').innerText = `🏆 Highest: ${analyticsData.highest_ctc_display || '₹2.44 Cr (Optiver)'}`;
+      }
+      if (document.getElementById('heroTagMedian')) {
+        document.getElementById('heroTagMedian').innerText = `📈 Median CTC: ₹${analyticsData.median_ctc_lpa ? analyticsData.median_ctc_lpa.toFixed(1) : '20.4'} LPA`;
+      }
+      if (document.getElementById('heroTagTotal')) {
+        document.getElementById('heroTagTotal').innerText = `⚡ Multi-Season Directory: ${analyticsData.total_placed.toLocaleString()} Seniors`;
+      }
+      if (document.getElementById('heroTagCgpa')) {
+        document.getElementById('heroTagCgpa').innerText = `🎯 Average Placed CGPA: ${analyticsData.avg_cgpa ? analyticsData.avg_cgpa.toFixed(2) : '8.33'}`;
+      }
+
+      // Dynamically render Season pills
+      renderSeasonPills();
+
+      // CTC Brackets
+      const ctcContainer = document.getElementById('analyticsCtcBars');
+      const brackets = Object.entries(analyticsData.ctc_brackets);
+      const maxCtcCount = Math.max(...brackets.map(b => b[1]));
+
+      ctcContainer.innerHTML = brackets.map(([name, count]) => {
+        const pct = Math.round((count / (analyticsData.total_placed || 2482)) * 100);
+        const barWidth = Math.round((count / maxCtcCount) * 100);
+        return `
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.25rem;">
+              <span style="font-weight: 600;">${name}</span>
+              <span style="color: #38bdf8; font-family: var(--font-mono);">${count} offers (${pct}%)</span>
+            </div>
+            <div style="height: 8px; background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-full); overflow: hidden;">
+              <div style="height: 100%; width: ${barWidth}%; background: linear-gradient(90deg, #0284c7, #38bdf8); border-radius: var(--radius-full);"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Top Recruiters
+      const recContainer = document.getElementById('analyticsTopRecruiters');
+      recContainer.innerHTML = (analyticsData.top_recruiters || []).slice(0, 10).map((r, i) => `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem;">
+          <div><strong>#${i+1} ${escapeHtml(r.company)}</strong></div>
+          <div style="font-family: var(--font-mono); color: #34d399;">${r.hires} Hires (${r.max_ctc})</div>
+        </div>
+      `).join('');
+
+      // Department Breakdown
+      const deptContainer = document.getElementById('analyticsDeptBars');
+      const topDepts = Object.entries(analyticsData.departments_placed || {}).slice(0, 8);
+      deptContainer.innerHTML = topDepts.map(([d, cnt]) => `
+        <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem;">
+          <span class="dept-tag" style="font-weight: 700;">${d}</span>
+          <span style="font-family: var(--font-mono); color: #c084fc;">${cnt} Placed</span>
+        </div>
+      `).join('');
+
+      // Sector Breakdown
+      const secContainer = document.getElementById('analyticsSectorBars');
+      const topSecs = Object.entries(analyticsData.sectors_placed || {}).slice(0, 6);
+      secContainer.innerHTML = topSecs.map(([s, cnt]) => `
+        <div style="display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.85rem;">
+          <span>${escapeHtml(s)}</span>
+          <span style="font-family: var(--font-mono); color: #fbbf24;">${cnt} Hires</span>
+        </div>
+      `).join('');
+    }
+
+    // ─── FULL BATCH DIRECTORY ────────────────────────────────────────────────
+    async function loadFullBatch() {
+      try {
+        const res = await fetch('/api/placements/all-candidates?limit=250');
+        if (res.ok) {
+          const data = await res.json();
+          fullBatch = data.candidates || [];
+          renderBatchTable();
+        }
+      } catch(e) {}
+    }
+
+    function renderBatchTable() {
+      const q = document.getElementById('batchSearchInput').value.toLowerCase().trim();
+      const dept = document.getElementById('batchDeptSelect').value;
+      const status = document.getElementById('batchStatusSelect').value;
+
+      let filtered = fullBatch.filter(c => {
+        if (q && !c.name.toLowerCase().includes(q) && !c.rollno.toLowerCase().includes(q) && !c.dept.toLowerCase().includes(q)) return false;
+        if (dept !== 'all' && c.dept.toUpperCase() !== dept.toUpperCase()) return false;
+        if (status === 'placed' && !c.is_placed) return false;
+        if (status === 'unplaced' && c.is_placed) return false;
+        return true;
+      });
+
+      const body = document.getElementById('batchTableBody');
+      const pageItems = filtered.slice((batchPage - 1) * PAGE_SIZE, batchPage * PAGE_SIZE);
+
+      body.innerHTML = pageItems.map(c => `
+        <tr style="border-bottom: 1px solid var(--border-subtle);">
+          <td style="padding: 0.65rem 1rem; font-family: var(--font-mono); color: var(--accent-primary);">${c.rollno}</td>
+          <td style="padding: 0.65rem 1rem; font-weight: 600;">${escapeHtml(c.name)}</td>
+          <td style="padding: 0.65rem 1rem;"><span class="dept-tag">${c.dept}</span></td>
+          <td style="padding: 0.65rem 1rem;"><span class="badge badge-purple" style="font-size:0.65rem;">${c.season || '2025-26'}</span></td>
+          <td style="padding: 0.65rem 1rem; color: var(--text-dim); font-size: 0.75rem;">${c.degree}</td>
+          <td style="padding: 0.65rem 1rem; font-family: var(--font-mono);">${c.cgpa ? c.cgpa.toFixed(2) : '-'}</td>
+          <td style="padding: 0.65rem 1rem;">
+            ${c.is_placed ? '<span class="badge badge-green">Placed</span>' : '<span class="badge" style="color:var(--text-dim);">Registered</span>'}
+          </td>
+          <td style="padding: 0.65rem 1rem; font-size: 0.75rem; color: var(--text-muted);">${c.email || '-'}</td>
+          <td style="padding: 0.65rem 1rem; font-family: var(--font-mono); font-size: 0.75rem;">${c.phone || '-'}</td>
+        </tr>
+      `).join('');
+
+      renderPagination(Math.ceil(filtered.length / PAGE_SIZE), batchPage, 'batchPagination', p => {
+        batchPage = p;
+        renderBatchTable();
+      });
+    }
+
+    document.getElementById('batchSearchInput')?.addEventListener('input', () => { batchPage = 1; renderBatchTable(); });
+    document.getElementById('batchDeptSelect')?.addEventListener('change', () => { batchPage = 1; renderBatchTable(); });
+    document.getElementById('batchStatusSelect')?.addEventListener('change', () => { batchPage = 1; renderBatchTable(); });
+
+    // ─── MODAL CONTROLS ─────────────────────────────────────────────────────
+    function openCompanyModal(encodedName) {
+      const name = decodeURIComponent(encodedName);
+      const company = allCompanies.find(c => c.name === name);
+      if (!company) return;
+
+      document.getElementById('mCompName').innerText = company.name;
+      document.getElementById('mCompSectorBadge').innerText = company.sectors[0] || 'Technology';
+      document.getElementById('mCompHiresSummary').innerText = `${company.total_hires} seniors placed (${company.ppo_count} PPOs, ${company.non_ppo_count} CDC Day offers)`;
+      
+      document.getElementById('mCompMaxCtc').innerText = company.max_ctc_display;
+      document.getElementById('mCompMedianCtc').innerText = company.median_ctc_lpa ? `₹${company.median_ctc_lpa.toFixed(1)} LPA` : '-';
+      document.getElementById('mCompCgpaRange').innerText = `${company.min_cgpa ? company.min_cgpa.toFixed(2) : '-'} to ${company.max_cgpa ? company.max_cgpa.toFixed(2) : '-'}`;
+
+      // JDs
+      const jdBox = document.getElementById('mCompJdBox');
+      if (company.job_descriptions && company.job_descriptions.length > 0) {
+        jdBox.innerText = company.job_descriptions.join('\n\n---\n\n');
+      } else {
+        jdBox.innerText = `Roles offered: ${company.designations.join(', ')}.\n\nIndustry: ${company.sectors.join(', ')}.\n\nNo extended job description was embedded in CDC portal record. We recommend contacting the placed seniors listed below for specific round-by-round syllabus and online assessment pattern.`;
+      }
+
+      // Depts
+      const deptsBox = document.getElementById('mCompDeptsBox');
+      deptsBox.innerHTML = Object.entries(company.departments || {}).map(([d, cnt]) => `
+        <span class="badge badge-blue">${d}: ${cnt} student${cnt > 1 ? 's' : ''}</span>
+      `).join('');
+
+      // Seniors List
+      const seniorsList = document.getElementById('mCompSeniorsList');
+      document.getElementById('mCompSeniorsCount').innerText = `${company.students.length} students`;
+
+      seniorsList.innerHTML = company.students.map(s => `
+        <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-weight: 700; color: #fff; font-size: 0.95rem;">${escapeHtml(s.name)} <span class="badge badge-purple" style="font-size:0.65rem; margin-left:0.25rem;">${s.season || '2025-26'}</span></div>
+            <div style="font-size: 0.75rem; color: var(--text-dim);">${s.rollno} • ${s.dept} (${s.degree}) • CGPA: ${s.cgpa ? s.cgpa.toFixed(2) : '-'}</div>
+            <div style="font-size: 0.8rem; color: var(--accent-primary); margin-top: 0.15rem;">${escapeHtml(s.designation)}</div>
+          </div>
+          <div style="display: flex; gap: 0.4rem;">
+            ${s.whatsapp_link ? `<a href="${s.whatsapp_link}" target="_blank" rel="noopener" class="btn btn-sm btn-wa">💬 WhatsApp</a>` : ''}
+            ${s.email_link ? `<a href="${s.email_link}" class="btn btn-sm btn-email">✉️ Email</a>` : ''}
+            ${s.linkedin_link ? `<a href="${s.linkedin_link}" target="_blank" rel="noopener" class="btn btn-sm btn-linkedin">🔗</a>` : ''}
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('companyModal').classList.add('active');
+    }
+
+    function closeCompanyModal() {
+      document.getElementById('companyModal').classList.remove('active');
+    }
+
+    document.getElementById('companyModal').addEventListener('click', (e) => {
+      if (e.target.id === 'companyModal') closeCompanyModal();
+    });
+
+    // ─── UPLOAD CSV MODAL ───────────────────────────────────────────────────
+    document.getElementById('openUploadModalBtn').addEventListener('click', () => {
+      document.getElementById('uploadModal').classList.add('active');
+      document.getElementById('uploadStatusMsg').style.display = 'none';
+    });
+
+    function closeUploadModal() {
+      document.getElementById('uploadModal').classList.remove('active');
+    }
+
+    document.getElementById('uploadCsvForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fileInput = document.getElementById('csvFileInput');
+      const seasonInput = document.getElementById('seasonLabelInput');
+      const statusMsg = document.getElementById('uploadStatusMsg');
+      const submitBtn = document.getElementById('submitUploadBtn');
+
+      if (!fileInput.files || fileInput.files.length === 0) return;
+
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+      formData.append('season', seasonInput.value.trim() || 'Custom-Batch');
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner"></span> Ingesting...';
+      statusMsg.style.display = 'block';
+      statusMsg.style.color = '#38bdf8';
+      statusMsg.innerText = 'Uploading, parsing columns, standardizing companies, and updating database...';
+
+      try {
+        const res = await fetch('/api/placements/upload', {
+          method: 'POST',
+          body: formData,
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          statusMsg.style.color = '#34d399';
+          statusMsg.innerText = `✅ ${data.message}! Refreshing dashboard...`;
+          setTimeout(async () => {
+            closeUploadModal();
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '⚡ Process & Merge';
+            await reloadData();
+          }, 1200);
+        } else {
+          statusMsg.style.color = '#f43f5e';
+          statusMsg.innerText = `❌ Error: ${data.error || 'Failed to upload CSV'}`;
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '⚡ Process & Merge';
+        }
+      } catch(err) {
+        statusMsg.style.color = '#f43f5e';
+        statusMsg.innerText = `❌ Upload failed: ${err.message}`;
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '⚡ Process & Merge';
+      }
+    });
+
+    // ─── HELPERS ────────────────────────────────────────────────────────────
+    function togglePrep(headerEl) {
+      const content = headerEl.nextElementSibling;
+      const isVisible = content.style.display !== 'none';
+      content.style.display = isVisible ? 'none' : 'block';
+      headerEl.querySelector('span:last-child').innerText = isVisible ? '▼' : '▲';
+    }
+
+    function renderPagination(totalPages, currentPage, containerId, onPageChange) {
+      const container = document.getElementById(containerId);
+      if (!container || totalPages <= 1) {
+        if (container) container.innerHTML = '';
+        return;
+      }
+
+      let html = '';
+      if (currentPage > 1) {
+        html += `<button class="btn btn-sm" onclick="(${onPageChange})(${currentPage - 1})">← Prev</button>`;
+      }
+      html += `<span style="font-size: 0.8rem; color: var(--text-muted);">Page ${currentPage} of ${totalPages}</span>`;
+      if (currentPage < totalPages) {
+        html += `<button class="btn btn-sm" onclick="(${onPageChange})(${currentPage + 1})">Next →</button>`;
+      }
+      container.innerHTML = html;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[m]);
+    }
+
+    // CSV Download
+    document.getElementById('downloadCsvBtn').addEventListener('click', () => {
+      window.open('/data/cdc_placements_raw.csv', '_blank');
+    });
+
+    document.getElementById('exportSeniorsCsvBtn').addEventListener('click', () => {
+      if (!allSeniors || allSeniors.length === 0) return;
+      
+      const headers = ['Name', 'Rollno', 'Dept', 'Degree', 'Season', 'CGPA', 'Company', 'Designation', 'CTC_Display', 'CTC_LPA', 'Placement_Type', 'Email', 'Phone'];
+      const csvRows = [headers.join(',')];
+
+      allSeniors.forEach(s => {
+        const row = [
+          `"${(s.name || '').replace(/"/g, '""')}"`,
+          `"${s.rollno || ''}"`,
+          `"${s.dept || ''}"`,
+          `"${s.degree || ''}"`,
+          `"${s.season || '2025-26'}"`,
+          s.cgpa || '',
+          `"${(s.company || '').replace(/"/g, '""')}"`,
+          `"${(s.designation || '').replace(/"/g, '""')}"`,
+          `"${(s.ctc_display || '').replace(/"/g, '""')}"`,
+          s.ctc_lpa || '',
+          `"${s.placement_type || ''}"`,
+          `"${s.email || ''}"`,
+          `"${s.phone || ''}"`
+        ];
+        csvRows.push(row.join(','));
+      });
+
+      const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `iitkgp_placed_seniors_master_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Start
+    init();
+  </script>
+</body>
+</html>

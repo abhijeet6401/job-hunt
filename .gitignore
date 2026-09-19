@@ -16,4 +16,9 @@ venv/
 *.fdb_latexmk
 *.synctex.gz
 .DS_Store
-.env
+scratch/
+all_blocks*.json
+scratch_notion.json
+all_extracted_startups.json
+clean_all_startups.json
+weeks_summary.json

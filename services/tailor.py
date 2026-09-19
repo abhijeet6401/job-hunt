@@ -12,6 +12,7 @@ Rules:
 """
 
 import os
+import re
 import json
 import logging
 from datetime import date
@@ -23,7 +24,7 @@ from services.sheets import append_row
 
 logger = logging.getLogger(__name__)
 
-GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "groq/compound-mini")
 
 ROLE_TO_FILE = {
     "product": "resumes/product.tex",
@@ -31,18 +32,13 @@ ROLE_TO_FILE = {
     "data_analyst": "resumes/data_analyst.tex",
     "operations": "resumes/operations.tex",
     "finance": "resumes/finance_investing.tex",
-    "finance_investing": "resumes/finance_investing.tex",
 }
 
 
 def _load_resume(role_type: str) -> str:
-    """Load the base LaTeX resume file for a given role type."""
-    path = ROLE_TO_FILE.get(role_type)
-    if not path or not os.path.exists(path):
-        raise FileNotFoundError(
-            f"Resume file not found for role '{role_type}'. "
-            f"Expected at: {path}. Add your LaTeX resume content to this file."
-        )
+    path = ROLE_TO_FILE.get(role_type, ROLE_TO_FILE["product"])
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"Resume template not found: {path}")
     with open(path, "r", encoding="utf-8") as f:
         return f.read()
 
@@ -109,52 +105,67 @@ def _rewrite_bullets(groq_client: Groq, latex_source: str, keywords: list[str], 
 
     Returns (modified_latex_string, diff_list) where diff_list is a list of
     {'before': str, 'after': str} dicts for display in the UI.
-
-    Strict rules enforced via prompt:
-    - Only rephrase, never fabricate.
-    - Preserve all numbers, company names, and measurable outcomes.
-    - Only touch \\item lines.
     """
+    import re
     keywords_str = ", ".join(keywords)
 
-    prompt = f"""
-You are tailoring a LaTeX resume to better match a specific job description.
+    bullets = re.findall(r'\\achieve\{(.*?)\}', latex_source, flags=re.DOTALL)
+    if not bullets:
+        bullets = re.findall(r'\\item\s+(.*?)(?=\\item|\\end|\Z)', latex_source, flags=re.DOTALL)
 
-STRICT RULES:
-1. Identify the 3 \\item bullet points in the LaTeX that are MOST RELEVANT to this job.
-2. Rewrite ONLY those 3 bullets to emphasize the keywords listed below.
-3. NEVER add skills, tools, or experience not already present.
-4. NEVER remove or change any numbers, percentages, revenue figures, or named achievements.
-5. NEVER change \\item lines that are not one of your chosen 3.
-6. Keep LaTeX formatting identical — only change the text content inside \\item.
+    bullets_clean = [b.strip() for b in bullets if b.strip()]
+    numbered_bullets = "\n".join([f"{i+1}. {b}" for i, b in enumerate(bullets_clean)])
 
+    prompt = f"""You are tailoring resume bullets to match a job description.
 Keywords to emphasize: {keywords_str}
 
-Return a JSON object with:
-- "modified_latex": the complete LaTeX source with exactly 3 \\item lines changed
-- "diff": array of 3 objects, each with "before" and "after" keys (plain text, no LaTeX commands)
-
-Job description summary:
+Job Description:
 {jd_text[:1500]}
 
-LaTeX resume:
-{latex_source}
+Candidate's Current Bullets:
+{numbered_bullets}
+
+Select the 3 most relevant bullets. Rewrite them to emphasize the keywords.
+STRICT RULES:
+1. NEVER fabricate experience, tools, or skills not already present.
+2. NEVER change any numbers, percentages, revenue figures, or named achievements.
+3. Keep LaTeX formatting intact (e.g. \\%, \\&, \\$).
+4. Ensure the tailored bullets are rich, completely filled with context, action verbs, and quantifiable outcomes. Do NOT shorten, skip, or summarize.
+5. Return a valid JSON object with key 'diff': a list of exactly 3 objects, each with:
+   - "before": the exact text of the chosen original bullet
+   - "after": the tailored version of the bullet
 """
 
-    response = groq_client.chat.completions.create(
-        model=GROQ_MODEL,
-        messages=[{"role": "user", "content": prompt}],
-        max_tokens=2000,
-        temperature=0.2,
-    )
-    raw = response.choices[0].message.content.strip()
-
     try:
-        start = raw.find("{")
-        end = raw.rfind("}") + 1
-        parsed = json.loads(raw[start:end])
-        modified_latex = parsed.get("modified_latex", latex_source)
-        diff = parsed.get("diff", [])
+        response = groq_client.chat.completions.create(
+            model=GROQ_MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            max_tokens=1000,
+            temperature=0.2,
+        )
+        raw = response.choices[0].message.content.strip()
+        data = json.loads(raw)
+        diff = data.get("diff", [])
+        if not isinstance(diff, list):
+            diff = []
+
+        from services.pdf_compiler import sanitize_unicode
+
+        modified_latex = latex_source
+        for item in diff:
+            before = item.get("before", "").strip()
+            after = sanitize_unicode(item.get("after", "").strip())
+            item["after"] = after
+            if not before or not after:
+                continue
+            if before in modified_latex:
+                modified_latex = modified_latex.replace(before, after, 1)
+            else:
+                for b in bullets_clean:
+                    if b[:35] in before or before[:35] in b:
+                        modified_latex = modified_latex.replace(b, after, 1)
+                        break
         return modified_latex, diff
     except Exception as e:
         logger.error(f"Failed to parse Groq rewrite response: {e}")
@@ -202,11 +213,17 @@ def tailor_resume(
     logger.info(f"Extracted keywords: {keywords}")
 
     modified_latex, diff = _rewrite_bullets(groq_client, latex_source, keywords, jd_text)
-    pdf_bytes = compile_latex(modified_latex)
+    try:
+        pdf_bytes = compile_latex(modified_latex)
+    except Exception as e:
+        logger.warning(f"Error compiling PDF: {e}")
+        pdf_bytes = compile_latex(latex_source)
 
     jd_summary = _summarize_jd(groq_client, jd_text)
     today = str(date.today())
-    pdf_filename = f"{today}_{company_name.replace(' ', '_')}_{role_type}.pdf"
+    safe_company = re.sub(r'[^a-zA-Z0-9_-]', '_', company_name) or "Company"
+    pdf_filename = f"{today}_{safe_company}_{role_type}.pdf"
+    tex_filename = f"{today}_{safe_company}_{role_type}.tex"
 
     # Summarise what the AI actually changed for the "Key Changes Made" column
     key_changes = "; ".join([
@@ -236,4 +253,5 @@ def tailor_resume(
         "role_type": role_type,
         "keywords": keywords,
         "pdf_filename": pdf_filename,
+        "tex_filename": tex_filename,
     }

@@ -7,6 +7,7 @@ Output: dict with 'answer' (plain text, ready to paste) and 'word_count'.
 Answers are specific, reference real projects and real metrics, and avoid generic filler phrases.
 """
 
+import os
 import logging
 from datetime import date
 
@@ -16,7 +17,7 @@ from services.sheets import append_row
 
 logger = logging.getLogger(__name__)
 
-GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "groq/compound-mini")
 
 USER_BACKGROUND = """
 You are answering application form questions on behalf of Abhijeet Kumar.

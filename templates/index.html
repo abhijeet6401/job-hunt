@@ -122,6 +122,16 @@
         </svg>
         Form Helper
       </button>
+
+      <span class="nav-section-label" style="margin-top:0.75rem;">IIT KGP CDC</span>
+      <a href="/placements" class="nav-item" style="text-decoration:none; color: #38bdf8; font-weight:600;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+        Seniors Network & CTC
+        <span class="nav-badge" style="display:inline-block; background:rgba(56,189,248,0.2); color:#38bdf8;">5,183</span>
+      </a>
     </nav>
 
     <div class="sidebar-footer">
@@ -191,6 +201,13 @@
       </svg>
       Form
     </button>
+    <a href="/placements" class="mobile-nav-item" style="text-decoration:none; color:inherit;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+      </svg>
+      Placements
+    </a>
   </nav>
 
   <!-- ── Main Content ─────────────────────────────────── -->
@@ -201,6 +218,25 @@
       <div class="panel-heading">
         <h1 class="panel-title">Find Jobs</h1>
         <p class="panel-desc">Discover startup roles across Wellfound, LinkedIn, WorkAtAStartup, YC + scan LinkedIn/X for founder hiring posts.</p>
+      </div>
+
+      <!-- CDC Placement Hub Banner -->
+      <div style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.7)); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 14px; padding: 1rem 1.35rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);">
+        <div style="display: flex; align-items: center; gap: 0.9rem;">
+          <div style="width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, #0284c7, #8b5cf6); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 0 15px rgba(56, 189, 248, 0.3); flex-shrink: 0;">🎓</div>
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem; color: #fff; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+              IIT KGP Placement Hub & Senior Network
+              <span style="font-size: 0.65rem; background: rgba(56, 189, 248, 0.2); color: #38bdf8; padding: 0.15rem 0.5rem; border-radius: 9999px; border: 1px solid rgba(56, 189, 248, 0.4); font-weight: 700;">5,183 PLACED SENIORS</span>
+            </div>
+            <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.2rem;">
+              902 recruiters across 4 seasons (2025–26, 2023–24, 2022–23, 2021–22; 24-25 pending), exact CTC packages up to ₹2.44 Cr (Optiver), JDs, and 1-click WhatsApp/Email outreach for interview tips.
+            </div>
+          </div>
+        </div>
+        <a href="/placements" class="btn btn-primary" style="text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 0.5rem 1.1rem; white-space: nowrap;">
+          Explore Placements →
+        </a>
       </div>
 
       <!-- Last Updated bar -->
@@ -301,6 +337,7 @@
       <div id="source-toggle-wrap" class="hidden">
         <div class="source-toggle">
           <button class="source-btn active" data-source="all" onclick="applySourceFilter('all')">All</button>
+          <button class="source-btn" data-source="yc" onclick="applySourceFilter('yc')" style="border-color:rgba(249,115,22,0.4);color:#f97316;font-weight:600;">⚡ YC Startups</button>
           <button class="source-btn" data-source="boards" onclick="applySourceFilter('boards')">Job Boards</button>
           <button class="source-btn" data-source="social" onclick="applySourceFilter('social')">Social Posts</button>
         </div>
@@ -310,6 +347,7 @@
       <div id="filter-bar" class="filter-bar hidden">
         <button class="filter-btn" data-filter="all" onclick="applyFilter('all')">All Time</button>
         <button class="filter-btn active" data-filter="fresh" onclick="applyFilter('fresh')">This Week</button>
+        <button class="filter-btn" data-filter="yc" onclick="applyFilter('yc')" style="border-color:rgba(249,115,22,0.4);color:#f97316;font-weight:600;">⚡ YC Only</button>
         <button class="filter-btn" data-filter="remote" onclick="applyFilter('remote')">Remote Only</button>
         <button class="filter-btn" data-filter="bangalore" onclick="applyFilter('bangalore')">Bangalore</button>
         <button class="filter-btn" data-filter="high" onclick="applyFilter('high')">High Match (70+)</button>
@@ -464,14 +502,30 @@
         <div class="result-section">
           <div class="result-section-header">
             <span class="result-section-title">Bullet Changes</span>
-            <button class="btn btn-primary btn-sm" id="download-pdf-btn">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              Download PDF
-            </button>
+            <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+              <button class="btn btn-secondary btn-sm" id="copy-latex-btn" title="Copy modified LaTeX code to clipboard">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy LaTeX
+              </button>
+              <button class="btn btn-secondary btn-sm" id="download-tex-btn" title="Download raw LaTeX (.tex) file">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Download .tex
+              </button>
+              <button class="btn btn-primary btn-sm" id="download-pdf-btn" title="Download compiled PDF resume">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Download PDF
+              </button>
+            </div>
           </div>
           <div id="diff-container"></div>
         </div>
@@ -640,6 +694,8 @@
    STATE
 ═══════════════════════════════════════════════════════ */
 let currentPdfFilename = null;
+let currentTexFilename = null;
+let currentLatexSource = '';
 window._lastJobs        = [];
 window._lastSocialPosts = [];
 
@@ -955,9 +1011,22 @@ function applySourceFilter(source) {
   });
   const boards = document.getElementById('job-board-section');
   const social = document.getElementById('social-inline-section');
-  if (source === 'all')    { boards.style.display = ''; social.style.display = ''; }
-  if (source === 'boards') { boards.style.display = ''; social.style.display = 'none'; }
-  if (source === 'social') { boards.style.display = 'none'; social.style.display = ''; }
+  if (source === 'all') {
+    boards.style.display = '';
+    social.style.display = '';
+    applyFilter(window._activeFilter === 'yc' ? 'fresh' : (window._activeFilter || 'fresh'));
+  } else if (source === 'yc') {
+    boards.style.display = '';
+    social.style.display = '';
+    applyFilter('yc');
+  } else if (source === 'boards') {
+    boards.style.display = '';
+    social.style.display = 'none';
+    if (window._activeFilter === 'yc') applyFilter('fresh');
+  } else if (source === 'social') {
+    boards.style.display = 'none';
+    social.style.display = '';
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -989,6 +1058,8 @@ function applyFilter(filter) {
     const score    = parseInt(card.dataset.score  || '0', 10);
     const posted   = card.dataset.posted || 'Unknown';
     const url      = card.dataset.url    || '';
+    const src      = (card.dataset.source || '').toLowerCase();
+    const isYc     = card.dataset.isYc === '1' || src.includes('yc') || src.includes('workatastartup') || src.includes('y combinator');
     const isLow    = card.classList.contains('low-match');
 
     // Low-match cards are always hidden unless the user explicitly showed them
@@ -998,7 +1069,8 @@ function applyFilter(filter) {
     }
 
     let show = true;
-    if (filter === 'fresh')        show = _isFresh(posted);
+    if (filter === 'fresh')             show = _isFresh(posted);
+    else if (filter === 'yc')          show = isYc;
     else if (filter === 'remote')       show = loc.includes('remote') || loc.includes('wfh') || loc.includes('work from home');
     else if (filter === 'bangalore')    show = loc.includes('bangalore') || loc.includes('bengaluru');
     else if (filter === 'high')         show = score >= 70;
@@ -1072,8 +1144,9 @@ function renderJobs(jobs, container, noResultsEl, isRefresh) {
     const url     = job.url || '';
     const applied = isApplied(url);
     const lowMatch = score > 0 && score < 30;
+    const isYc = job.is_yc || (job.source || '').toLowerCase().includes('yc') || (job.source || '').toLowerCase().includes('workatastartup');
     return `
-    <div class="job-card${lowMatch ? ' low-match' : ''}" data-score="${score}" data-location="${esc(loc)}" data-posted="${esc(posted)}" data-url="${esc(url)}">
+    <div class="job-card${lowMatch ? ' low-match' : ''}" data-score="${score}" data-location="${esc(loc)}" data-posted="${esc(posted)}" data-url="${esc(url)}" data-source="${esc((job.source||'').toLowerCase())}" data-is-yc="${isYc ? '1' : '0'}">
       <div class="job-top">
         <div>
           <h3 class="job-company">${esc(job.company)}</h3>
@@ -1081,7 +1154,7 @@ function renderJobs(jobs, container, noResultsEl, isRefresh) {
           ${posted !== 'Unknown' ? `<p class="job-date">${esc(posted)}</p>` : ''}
         </div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-          <span class="badge ${sourceBadgeClass(job.source)}">${esc(job.source || 'Web')}</span>
+          ${isYc ? `<span class="badge badge-yc" style="background:rgba(249,115,22,0.15);color:#f97316;border-color:rgba(249,115,22,0.3);font-weight:700;">⚡ Y Combinator</span>` : `<span class="badge ${sourceBadgeClass(job.source)}">${esc(job.source || 'Web')}</span>`}
           ${score ? `<span class="score-badge ${scoreBadgeClass(score)}">${score}</span>` : ''}
           ${job.status && job.status !== 'New' ? `<span class="status-pill status-${esc(job.status.toLowerCase())}">${esc(job.status)}</span>` : ''}
           ${job.score_reason ? `<p class="score-reason">${esc(job.score_reason)}</p>` : ''}
@@ -1194,13 +1267,13 @@ function _socialCardHTML(post, i, suffix) {
         <div class="social-poster-row">
           <span class="social-poster-name">${esc(post.poster_name || 'Unknown')}</span>
           <span class="social-poster-role">${esc(post.poster_role || 'Unknown')}</span>
-          ${isFounder ? '<span class="founder-badge">Founder</span>' : ''}
+          ${post.is_yc ? '<span class="founder-badge" style="background:rgba(249,115,22,0.15);color:#f97316;border-color:rgba(249,115,22,0.3);font-weight:700;">⚡ YC Founder</span>' : (isFounder ? '<span class="founder-badge">Founder</span>' : '')}
         </div>
         <p class="job-role" style="margin-top:0.3rem">${esc(post.company || 'Unknown')} · hiring <strong>${esc(post.role_hiring || '?')}</strong></p>
         ${posted !== 'Unknown' ? `<p class="job-date">${esc(posted)}</p>` : ''}
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
-        <span class="badge ${sourceBadgeClass(post.source)}">${esc(post.source || 'Social')}</span>
+        ${post.is_yc ? '<span class="badge badge-yc" style="background:rgba(249,115,22,0.15);color:#f97316;border-color:rgba(249,115,22,0.3);font-weight:700;">⚡ YC</span>' : `<span class="badge ${sourceBadgeClass(post.source)}">${esc(post.source || 'Social')}</span>`}
         ${score ? `<span class="score-badge ${scoreBadgeClass(score)}" title="${esc(post.score_reason || '')}">${score}</span>` : ''}
       </div>
     </div>
@@ -1320,6 +1393,8 @@ document.getElementById('tailor-btn')?.addEventListener('click', async () => {
     if (data.error) { showError('tailor-error', data.error); return; }
 
     currentPdfFilename = data.pdf_filename;
+    currentTexFilename = data.tex_filename || data.pdf_filename.replace('.pdf', '.tex');
+    currentLatexSource = data.latex || '';
 
     const kwEl = document.getElementById('tailor-keywords');
     kwEl.innerHTML = (data.keywords || []).map(k => `<span class="keyword-chip">${esc(k)}</span>`).join('');
@@ -1350,9 +1425,84 @@ document.getElementById('tailor-btn')?.addEventListener('click', async () => {
   }
 });
 
-document.getElementById('download-pdf-btn')?.addEventListener('click', () => {
-  if (!currentPdfFilename) return;
-  window.location.href = `/api/tailor/pdf/${encodeURIComponent(currentPdfFilename)}`;
+document.getElementById('download-pdf-btn')?.addEventListener('click', async () => {
+  if (!currentPdfFilename) {
+    showToast('Generate a tailored resume first.');
+    return;
+  }
+  const btn = document.getElementById('download-pdf-btn');
+  const originalHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<div class="spinner" style="width:12px;height:12px;border-width:2px;"></div> Downloading...`;
+  try {
+    const res = await fetch(`/api/tailor/pdf/${encodeURIComponent(currentPdfFilename)}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      showToast(err.error || 'Failed to download PDF. Try downloading .tex instead.');
+      return;
+    }
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = currentPdfFilename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    showToast('PDF downloaded successfully!');
+  } catch (err) {
+    showToast('Download error: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalHtml;
+  }
+});
+
+document.getElementById('download-tex-btn')?.addEventListener('click', async () => {
+  if (!currentTexFilename) {
+    showToast('Generate a tailored resume first.');
+    return;
+  }
+  const btn = document.getElementById('download-tex-btn');
+  const originalHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<div class="spinner" style="width:12px;height:12px;border-width:2px;"></div> Downloading...`;
+  try {
+    const res = await fetch(`/api/tailor/tex/${encodeURIComponent(currentTexFilename)}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      showToast(err.error || 'Failed to download LaTeX file.');
+      return;
+    }
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = currentTexFilename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    showToast('.tex file downloaded!');
+  } catch (err) {
+    showToast('Download error: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalHtml;
+  }
+});
+
+document.getElementById('copy-latex-btn')?.addEventListener('click', () => {
+  if (!currentLatexSource) {
+    showToast('No LaTeX source available to copy.');
+    return;
+  }
+  navigator.clipboard.writeText(currentLatexSource).then(() => {
+    showToast('LaTeX copied to clipboard! Ready to paste into Overleaf.');
+  }).catch(err => {
+    showToast('Copy failed: ' + err.message);
+  });
 });
 
 /* ═══════════════════════════════════════════════════════

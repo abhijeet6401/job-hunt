@@ -12,6 +12,7 @@ Output is a structured dict the frontend renders inside the card:
   fit_note:         one sentence on why this is / isn't a fit for the candidate.
 """
 
+import os
 import json
 import logging
 
@@ -20,7 +21,7 @@ from tavily import TavilyClient
 
 logger = logging.getLogger(__name__)
 
-GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_MODEL = os.environ.get("GROQ_MODEL", "groq/compound-mini")
 
 _EMPTY = {
     "company_snapshot": {
@@ -119,29 +120,35 @@ Return ONLY a JSON object with exactly these keys:
 
 Use only facts present in the text above. Empty string / empty array when unknown."""
 
-    try:
-        response = groq_client.chat.completions.create(
-            model=GROQ_MODEL,
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=1200,
-            temperature=0.1,
-        )
-        raw   = response.choices[0].message.content.strip()
-        start = raw.find("{")
-        end   = raw.rfind("}") + 1
-        if start == -1 or end == 0:
+    for attempt in range(3):
+        try:
+            response = groq_client.chat.completions.create(
+                model=GROQ_MODEL,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=800,
+                temperature=0.1,
+            )
+            raw   = response.choices[0].message.content.strip()
+            start = raw.find("{")
+            end   = raw.rfind("}") + 1
+            if start == -1 or end == 0:
+                return dict(_EMPTY)
+            data = json.loads(raw[start:end])
+            out  = dict(_EMPTY)
+            snap = data.get("company_snapshot", {}) or {}
+            dig  = data.get("jd_digest", {}) or {}
+            out["company_snapshot"] = {k: str(snap.get(k, "") or "") for k in out["company_snapshot"]}
+            out["jd_digest"] = {
+                k: [str(x) for x in (dig.get(k) or [])][:4]
+                for k in out["jd_digest"]
+            }
+            out["fit_note"] = str(data.get("fit_note", "") or "")
+            return out
+        except Exception as e:
+            if "429" in str(e) and attempt < 2:
+                import time
+                time.sleep(3.0 * (attempt + 1))
+                continue
+            logger.error(f"Groq enrichment failed for '{company}': {e}")
             return dict(_EMPTY)
-        data = json.loads(raw[start:end])
-        out  = dict(_EMPTY)
-        snap = data.get("company_snapshot", {}) or {}
-        dig  = data.get("jd_digest", {}) or {}
-        out["company_snapshot"] = {k: str(snap.get(k, "") or "") for k in out["company_snapshot"]}
-        out["jd_digest"] = {
-            k: [str(x) for x in (dig.get(k) or [])][:4]
-            for k in out["jd_digest"]
-        }
-        out["fit_note"] = str(data.get("fit_note", "") or "")
-        return out
-    except Exception as e:
-        logger.error(f"Groq enrichment failed for '{company}': {e}")
-        return dict(_EMPTY)
+    return dict(_EMPTY)
