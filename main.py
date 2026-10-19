@@ -102,9 +102,12 @@ def _require_auth(session_token: Optional[str]) -> bool:
 
 @app.middleware("http")
 async def protect_workspace(request: Request, call_next):
-    protected = request.url.path.startswith(("/api/", "/data/"))
+    placement_page = request.url.path.rstrip("/") == "/placements"
+    protected = placement_page or request.url.path.startswith(("/api/", "/data/"))
     if protected and not _is_authenticated(request.cookies.get(SESSION_COOKIE_NAME)):
-        return JSONResponse({"error": "Sign in to continue."}, status_code=401)
+        if placement_page:
+            return Response(status_code=303, headers={"Location": "/", "Cache-Control": "no-store"})
+        return JSONResponse({"error": "Sign in to continue."}, status_code=401, headers={"Cache-Control": "no-store"})
     if request.method not in ("GET", "HEAD", "OPTIONS"):
         origin = request.headers.get("origin")
         expected = str(request.base_url).rstrip("/")
