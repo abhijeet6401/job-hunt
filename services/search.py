@@ -24,7 +24,7 @@ import json
 import logging
 from datetime import date
 
-from groq import Groq
+from services.llm import LLMClient as Groq
 from tavily import TavilyClient
 
 from services.sheets import append_row
@@ -206,7 +206,7 @@ def _run_tavily_query(
             "search_depth": search_depth,
         }
         if days is not None:
-            kwargs["days"] = days
+            kwargs["time_range"] = "month" if days > 7 else "week"
         response = client.search(**kwargs)
         return response.get("results", [])
     except Exception as e:
@@ -233,11 +233,11 @@ def _company_deduplicate(jobs: list[dict]) -> list[dict]:
     Normalises company name to lowercase+stripped for comparison so minor
     variations ("Razorpay" vs "razorpay Inc") collapse into one entry.
     """
-    best: dict[str, dict] = {}
+    # Distinct roles at the same company are distinct opportunities.
+    best = {}
     for job in jobs:
-        key   = job.get("company", "unknown").lower().strip()
-        score = job.get("match_score", 0)
-        if key not in best or score > best[key].get("match_score", 0):
+        key = job.get("url", "").split("?")[0].rstrip("/") or (job.get("company", "").lower(), job.get("role", "").lower())
+        if key not in best or job.get("match_score", 0) > best[key].get("match_score", 0):
             best[key] = job
     return list(best.values())
 
@@ -358,6 +358,8 @@ Search results:
                 logger.info(f"Filtered closed job: {j.get('company')} — {j.get('role')}")
                 continue
             url = j.get("url", "")
+            if url not in {r.get("url") for r in filtered_results}:
+                continue
             role = j.get("role", "")
             summary = j.get("summary", "")
             company = j.get("company", "")
@@ -724,12 +726,12 @@ async def search_jobs(
 
     # Run YC queries (days=None so active WorkAtAStartup & YC listings are never dropped)
     yc_tasks = [
-        loop.run_in_executor(None, _run_tavily_query, tavily_client, q, 5, "advanced", None)
+        loop.run_in_executor(None, _run_tavily_query, tavily_client, q, min(20, max(1, int(os.getenv("SEARCH_RESULTS_PER_QUERY", "10")))), "advanced", None)
         for q in yc_queries
     ]
     # Run Tier 1 queries (days=14 for fresh startup board listings)
     tier1_tasks = [
-        loop.run_in_executor(None, _run_tavily_query, tavily_client, q, 5, "advanced", 14)
+        loop.run_in_executor(None, _run_tavily_query, tavily_client, q, min(20, max(1, int(os.getenv("SEARCH_RESULTS_PER_QUERY", "10")))), "advanced", 14)
         for q in tier1_queries
     ]
 
@@ -778,7 +780,7 @@ async def search_jobs(
         )
 
     tier2_raw_nested = await asyncio.gather(*[
-        loop.run_in_executor(None, _run_tavily_query, tavily_client, q, 5, "basic", 14)
+        loop.run_in_executor(None, _run_tavily_query, tavily_client, q, min(20, max(1, int(os.getenv("SEARCH_RESULTS_PER_QUERY", "10")))), "basic", 14)
         for q in tier2_queries
     ])
     tier2_raw = [r for batch in tier2_raw_nested for r in batch]
@@ -892,7 +894,7 @@ async def search_social_posts(
         )
 
     raw_nested = await asyncio.gather(*[
-        loop.run_in_executor(None, _run_tavily_query, tavily_client, q, 5, "advanced", 14)
+        loop.run_in_executor(None, _run_tavily_query, tavily_client, q, min(20, max(1, int(os.getenv("SEARCH_RESULTS_PER_QUERY", "10")))), "advanced", 14)
         for q in social_queries
     ])
 

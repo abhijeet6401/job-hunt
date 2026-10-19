@@ -10,6 +10,8 @@ Authentication uses GOOGLE_SERVICE_ACCOUNT_JSON env var (full JSON string).
 import os
 import json
 import time
+import threading
+import tempfile
 import logging
 from typing import Any
 
@@ -42,7 +44,8 @@ TAB_HEADERS = {
 }
 
 
-LOCAL_DB_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "local_sheets_db.json")
+LOCAL_DB_FILE = os.path.join(os.environ.get("JOBHUNT_DATA_DIR", "storage"), "local_sheets_db.json")
+_local_lock = threading.RLock()
 
 
 def _is_sheets_enabled() -> bool:
@@ -60,9 +63,11 @@ def _is_sheets_enabled() -> bool:
 
 def _load_local_db() -> dict[str, list[list[Any]]]:
     """Load local JSON storage fallback when Google Sheets is not configured."""
-    if os.path.exists(LOCAL_DB_FILE):
+    legacy = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "local_sheets_db.json")
+    source = LOCAL_DB_FILE if os.path.exists(LOCAL_DB_FILE) else legacy
+    if os.path.exists(source):
         try:
-            with open(LOCAL_DB_FILE, "r", encoding="utf-8") as f:
+            with open(source, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception as e:
             logger.warning(f"Could not read local sheets DB: {e}")
@@ -76,10 +81,20 @@ def _save_local_db(db: dict[str, list[list[Any]]]):
     """Persist local JSON storage fallback."""
     try:
         os.makedirs(os.path.dirname(LOCAL_DB_FILE), exist_ok=True)
-        with open(LOCAL_DB_FILE, "w", encoding="utf-8") as f:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=os.path.dirname(LOCAL_DB_FILE), delete=False) as f:
             json.dump(db, f, indent=2, ensure_ascii=False)
+            temporary_path = f.name
+        try:
+            os.replace(temporary_path, LOCAL_DB_FILE)
+        except PermissionError:
+            # Some Windows hosts block replacement while scanners hold the file.
+            # Callers serialize local mutations; use the same lock for fallback.
+            with _local_lock, open(LOCAL_DB_FILE, "w", encoding="utf-8") as target:
+                json.dump(db, target, indent=2, ensure_ascii=False)
+            os.unlink(temporary_path)
     except Exception as e:
         logger.error(f"Failed to write local sheets DB: {e}")
+        raise RuntimeError("Local tracking could not be saved. Check server disk permissions.") from e
 
 
 def _get_service():
@@ -167,11 +182,12 @@ def append_row(tab_name: str, row_data: list[Any]):
             logger.warning(f"Google Sheets append failed, saving to local DB instead: {e}")
 
     # Local fallback
-    db = _load_local_db()
-    if tab_name not in db:
-        db[tab_name] = [TAB_HEADERS.get(tab_name, [])]
-    db[tab_name].append(row_data)
-    _save_local_db(db)
+    with _local_lock:
+        db = _load_local_db()
+        if tab_name not in db:
+            db[tab_name] = [TAB_HEADERS.get(tab_name, [])]
+        db[tab_name].append(row_data)
+        _save_local_db(db)
 
 
 def read_all_rows(tab_name: str) -> list[list[Any]]:
@@ -372,20 +388,20 @@ def update_job_status_by_url(url: str, new_status: str) -> bool:
         except Exception as e:
             logger.warning(f"Google Sheets update status failed: {e}")
 
-    # Always update in local DB too
-    db = _load_local_db()
-    jobs_rows = db.get("Jobs", [])
-    updated_local = False
-    for row in jobs_rows[1:]:
-        if len(row) > 7 and row[7] == url:
-            while len(row) < 14:
-                row.append("")
-            row[11] = new_status
-            updated_local = True
-            break
-    if updated_local:
-        _save_local_db(db)
-
+    with _local_lock:
+        # Always update in local DB too
+        db = _load_local_db()
+        jobs_rows = db.get("Jobs", [])
+        updated_local = False
+        for row in jobs_rows[1:]:
+            if len(row) > 7 and row[7] == url:
+                while len(row) < 14:
+                    row.append("")
+                row[11] = new_status
+                updated_local = True
+                break
+        if updated_local:
+            _save_local_db(db)
     return updated_online or updated_local
 
 

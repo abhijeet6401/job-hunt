@@ -16,7 +16,7 @@ import os
 import json
 import logging
 
-from groq import Groq
+from services.llm import LLMClient as Groq
 from tavily import TavilyClient
 
 logger = logging.getLogger(__name__)
@@ -88,9 +88,10 @@ def enrich_job(
 
     prompt = f"""You are enriching a job card for a candidate deciding whether to apply.
 
-Candidate: 22-year-old technical founder (built an AI platform with 300 paying users),
-targeting PM / APM / Founder's Office / Data Analyst / Ops roles at seed-Series B startups,
-0 years formal full-time experience, based in Bangalore, open to remote.
+Candidate: Economics undergraduate at IIT Kharagpur with product, strategy,
+and analytics internship experience. Targeting PM / APM / Founder's Office /
+Data Analyst / Operations roles. Do not infer seniority, age, or achievements
+not supplied by the candidate's resume.
 
 Job: {role or "Unknown role"} at {company or "Unknown company"}
 
@@ -143,6 +144,7 @@ Use only facts present in the text above. Empty string / empty array when unknow
                 for k in out["jd_digest"]
             }
             out["fit_note"] = str(data.get("fit_note", "") or "")
+            out["jd_text"] = jd_text[:30000]
             return out
         except Exception as e:
             if "429" in str(e) and attempt < 2:

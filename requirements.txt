@@ -10,3 +10,6 @@ python-dotenv
 httpx
 python-multipart
 jinja2
+reportlab
+pymupdf
+playwright

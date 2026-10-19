@@ -15,6 +15,10 @@ load_dotenv()
 
 import asyncio
 import hashlib
+import hmac
+import time
+import secrets
+from pathlib import Path
 import json
 import logging
 import re
@@ -69,19 +73,25 @@ def _hash_password(password: str) -> str:
 
 
 def _get_expected_hash() -> str:
-    """Return the hash of the configured PASSWORD env var, defaulting to 'kgp2026' if unset."""
-    raw = os.environ.get("PASSWORD", "kgp2026")
-    return _hash_password(raw)
+    raw = os.environ.get("PASSWORD", "")
+    return _hash_password(raw) if raw else ""
+
+
+def _session_token() -> str:
+    payload = f"{int(time.time())}.{secrets.token_hex(16)}"
+    signature = hmac.new(os.environ["PASSWORD"].encode(), payload.encode(), hashlib.sha256).hexdigest()
+    return payload + "." + signature
 
 
 def _is_authenticated(session_token: Optional[str]) -> bool:
-    """Return True if the session token matches the hashed configured password."""
-    if not session_token:
+    if not session_token or not os.getenv("PASSWORD"):
         return False
     try:
-        expected = _get_expected_hash()
-        return session_token == expected
-    except Exception:
+        timestamp, nonce, signature = session_token.split(".")
+        age = time.time() - int(timestamp)
+        expected = hmac.new(os.environ["PASSWORD"].encode(), f"{timestamp}.{nonce}".encode(), hashlib.sha256).hexdigest()
+        return 0 <= age <= SESSION_DURATION_SECONDS and hmac.compare_digest(signature, expected)
+    except (ValueError, TypeError):
         return False
 
 
@@ -90,23 +100,54 @@ def _require_auth(session_token: Optional[str]) -> bool:
     return _is_authenticated(session_token)
 
 
+@app.middleware("http")
+async def protect_workspace(request: Request, call_next):
+    protected = request.url.path.startswith(("/api/", "/data/"))
+    if protected and not _is_authenticated(request.cookies.get(SESSION_COOKIE_NAME)):
+        return JSONResponse({"error": "Sign in to continue."}, status_code=401)
+    if request.method not in ("GET", "HEAD", "OPTIONS"):
+        origin = request.headers.get("origin")
+        expected = str(request.base_url).rstrip("/")
+        configured = os.getenv("PUBLIC_ORIGIN", "").rstrip("/")
+        render_origin = os.getenv("RENDER_EXTERNAL_URL", "").rstrip("/")
+        if origin and origin.rstrip("/") not in (expected, configured, render_origin):
+            return JSONResponse({"error": "Cross-origin requests are not allowed."}, status_code=403)
+    response = await call_next(request)
+    if protected or request.url.path == "/":
+        response.headers["Cache-Control"] = "no-store"
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    return response
+
+
 # ─── Auth routes ─────────────────────────────────────────────────────────────
 
 @app.post("/auth/login")
-async def login(password: str = Form(...)):
+async def login(request: Request, password: str = Form(...)):
     """
     Validate the submitted password.
 
     On success, sets a session cookie containing the hashed password.
     On failure, returns 401 with an error message.
     """
-    if _hash_password(password) == _get_expected_hash():
+    client = request.client.host if request.client else "unknown"
+    attempts = getattr(app.state, "login_attempts", {})
+    now = time.time()
+    attempts = {key: [t for t in values if now-t < 300] for key, values in attempts.items() if any(now-t < 300 for t in values)}
+    if len(attempts.get(client, [])) >= 10:
+        return JSONResponse({"error": "Too many login attempts. Wait five minutes."}, status_code=429)
+    attempts.setdefault(client, []).append(now)
+    app.state.login_attempts = attempts
+    if not os.getenv("PASSWORD"):
+        return JSONResponse({"error": "Set PASSWORD in the server environment before signing in."}, status_code=503)
+    if os.getenv("PASSWORD") and hmac.compare_digest(_hash_password(password), _get_expected_hash()):
+        app.state.login_attempts.pop(client, None)
         response = JSONResponse({"ok": True})
         response.set_cookie(
             key=SESSION_COOKIE_NAME,
-            value=_get_expected_hash(),
+            value=_session_token(),
             max_age=SESSION_DURATION_SECONDS,
             httponly=True,
+            secure=os.getenv("RENDER", "").lower() == "true" or os.getenv("COOKIE_SECURE", "").lower() == "true",
             samesite="lax",
         )
         return response
@@ -133,7 +174,7 @@ async def index(request: Request, jh_session: Optional[str] = Cookie(default=Non
     """
     return templates.TemplateResponse(
         request,
-        "index.html",
+        "workspace.html",
         context={"authenticated": bool(_is_authenticated(jh_session))},
     )
 
@@ -160,6 +201,11 @@ async def api_search(
             yield "data: {\"type\": \"error\", \"message\": \"Unauthorized\"}\n\n"
         return StreamingResponse(_unauthorized(), media_type="text/event-stream")
 
+    from services.llm import configuration
+    if role not in ("all", "product", "founders_office", "data_analyst", "operations", "finance"):
+        return JSONResponse({"error": "Choose a valid search track."}, status_code=400)
+    if not configuration()["configured"] or not os.getenv("TAVILY_API_KEY") or search_jobs is None:
+        return JSONResponse({"error": "Configure the AI and Tavily connections before searching."}, status_code=503)
     groq_api_key = os.environ.get("GROQ_API_KEY", "")
     tavily_api_key = os.environ.get("TAVILY_API_KEY", "")
 
@@ -226,7 +272,7 @@ async def api_search(
 
         await search_task
 
-    return StreamingResponse(_stream(), media_type="text/event-stream")
+    return StreamingResponse(_stream(), media_type="text/event-stream", headers={"Cache-Control":"no-cache", "X-Accel-Buffering":"no"})
 
 
 # ─── Resume Tailoring ────────────────────────────────────────────────────────
@@ -257,7 +303,7 @@ async def api_tailor(
     groq_api_key = os.environ.get("GROQ_API_KEY", "")
 
     try:
-        result = tailor_resume(
+        result = await asyncio.to_thread(tailor_resume,
             jd_text=jd_text,
             role_type=role_type,
             company_name=company_name,
@@ -302,28 +348,12 @@ async def download_pdf(
     pdf_bytes = pending.get(filename)
 
     if not pdf_bytes:
-        # Fallback: re-compile the base template for the role
-        try:
-            from services.pdf_compiler import compile_latex
-            role = "product"
-            for r in ["product", "founders_office", "data_analyst", "operations", "finance"]:
-                if r in filename.lower():
-                    role = r
-                    break
-            tex_path = f"resumes/{role}.tex"
-            if os.path.exists(tex_path):
-                with open(tex_path, "r", encoding="utf-8") as f:
-                    pdf_bytes = compile_latex(f.read())
-        except Exception as e:
-            logger.error(f"Fallback PDF compilation failed: {e}")
-
-    if not pdf_bytes:
         return JSONResponse({"error": "PDF could not be generated. Please re-generate the resume."}, status_code=404)
 
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
-        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+        headers={"Content-Disposition": f'attachment; filename="{Path(filename).name.replace(chr(34), chr(95))}"'},
     )
 
 
@@ -340,23 +370,12 @@ async def download_tex(
     tex_content = pending.get(filename)
 
     if not tex_content:
-        role = "product"
-        for r in ["product", "founders_office", "data_analyst", "operations", "finance"]:
-            if r in filename.lower():
-                role = r
-                break
-        tex_path = f"resumes/{role}.tex"
-        if os.path.exists(tex_path):
-            with open(tex_path, "r", encoding="utf-8") as f:
-                tex_content = f.read()
-
-    if not tex_content:
         return JSONResponse({"error": "LaTeX file not found."}, status_code=404)
 
     return Response(
         content=tex_content,
         media_type="text/plain; charset=utf-8",
-        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+        headers={"Content-Disposition": f'attachment; filename="{Path(filename).name.replace(chr(34), chr(95))}"'},
     )
 
 
@@ -385,7 +404,7 @@ async def api_email(
     groq_api_key = os.environ.get("GROQ_API_KEY", "")
 
     try:
-        result = write_emails(
+        result = await asyncio.to_thread(write_emails,
             company_name=company_name,
             role=role,
             contact_name=contact_name,
@@ -424,7 +443,7 @@ async def api_form(
     groq_api_key = os.environ.get("GROQ_API_KEY", "")
 
     try:
-        result = generate_form_answer(
+        result = await asyncio.to_thread(generate_form_answer,
             question=question,
             role_context=role_context,
             company_name=company_name,
@@ -975,10 +994,12 @@ async def api_upload_placement_csv(
     """
     try:
         clean_season = re.sub(r"[^a-zA-Z0-9_\-]", "", season.strip()) or "Custom-Batch"
-        safe_filename = f"uploaded_{clean_season}_{file.filename}"
+        safe_filename = f"uploaded_{clean_season}_{os.path.basename((file.filename or 'upload.csv').replace(chr(92), '/'))}"
         dest_path = os.path.join(DATA_FOLDER, safe_filename)
 
-        contents = await file.read()
+        contents = await file.read(10 * 1024 * 1024 + 1)
+        if len(contents) > 10 * 1024 * 1024:
+            return JSONResponse({"error": "Upload must be under 10 MB."}, status_code=413)
         with open(dest_path, "wb") as f:
             f.write(contents)
 
@@ -1007,3 +1028,8 @@ async def api_upload_placement_csv(
 async def health():
     """Basic health check endpoint for Render."""
     return {"status": "ok"}
+
+
+# Expanded workspace APIs reuse the same authentication boundary.
+from services.workspace import register
+register(app)
