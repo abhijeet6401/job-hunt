@@ -11,7 +11,7 @@ import os
 import logging
 from datetime import date
 
-from groq import Groq
+from services.llm import LLMClient as Groq
 
 from services.sheets import append_row
 

@@ -17,7 +17,7 @@ import json
 import logging
 from datetime import date
 
-from groq import Groq
+from services.llm import LLMClient as Groq
 
 from services.pdf_compiler import compile_latex
 from services.sheets import append_row
@@ -33,6 +33,23 @@ ROLE_TO_FILE = {
     "operations": "resumes/operations.tex",
     "finance": "resumes/finance_investing.tex",
 }
+
+def _resume_bullets(source: str) -> list[str]:
+    """Read custom achieve macros without truncating nested formatting braces."""
+    bullets=[]
+    for match in re.finditer(r'\\achieve\{',source):
+        start=match.end();depth=1;position=start
+        while position<len(source) and depth:
+            char=source[position]
+            if position==0 or source[position-1]!='\\':
+                if char=='{':depth+=1
+                elif char=='}':depth-=1
+            position+=1
+        if depth==0:
+            bullets.append(source[start:position-1].strip())
+    if not bullets:
+        bullets=[b.strip() for b in re.findall(r'\\item\s+(.*?)(?=\\item|\\end|\Z)',source,flags=re.DOTALL) if b.strip()]
+    return bullets
 
 
 def _load_resume(role_type: str) -> str:
@@ -109,11 +126,7 @@ def _rewrite_bullets(groq_client: Groq, latex_source: str, keywords: list[str], 
     import re
     keywords_str = ", ".join(keywords)
 
-    bullets = re.findall(r'\\achieve\{(.*?)\}', latex_source, flags=re.DOTALL)
-    if not bullets:
-        bullets = re.findall(r'\\item\s+(.*?)(?=\\item|\\end|\Z)', latex_source, flags=re.DOTALL)
-
-    bullets_clean = [b.strip() for b in bullets if b.strip()]
+    bullets_clean = _resume_bullets(latex_source)
     numbered_bullets = "\n".join([f"{i+1}. {b}" for i, b in enumerate(bullets_clean)])
 
     prompt = f"""You are tailoring resume bullets to match a job description.
@@ -159,13 +172,21 @@ STRICT RULES:
             item["after"] = after
             if not before or not after:
                 continue
+            # Reject unknown source text, changed numbers, and executable LaTeX.
+            if before not in bullets_clean or before not in modified_latex:
+                item["after"] = before
+                item["rejected"] = "Source bullet was not found; no replacement made."
+                continue
+            if sorted(re.findall(r"\d+(?:[.,]\d+)*", before)) != sorted(re.findall(r"\d+(?:[.,]\d+)*", after)):
+                item["after"] = before
+                item["rejected"] = "Numeric facts changed; original kept."
+                continue
+            if re.search(r"\\(?:input|include|openout|write|read|catcode|usepackage|immediate|documentclass|special)\b", after, re.I):
+                item["after"] = before
+                item["rejected"] = "Unsafe LaTeX; original kept."
+                continue
             if before in modified_latex:
                 modified_latex = modified_latex.replace(before, after, 1)
-            else:
-                for b in bullets_clean:
-                    if b[:35] in before or before[:35] in b:
-                        modified_latex = modified_latex.replace(b, after, 1)
-                        break
         return modified_latex, diff
     except Exception as e:
         logger.error(f"Failed to parse Groq rewrite response: {e}")
@@ -213,11 +234,7 @@ def tailor_resume(
     logger.info(f"Extracted keywords: {keywords}")
 
     modified_latex, diff = _rewrite_bullets(groq_client, latex_source, keywords, jd_text)
-    try:
-        pdf_bytes = compile_latex(modified_latex)
-    except Exception as e:
-        logger.warning(f"Error compiling PDF: {e}")
-        pdf_bytes = compile_latex(latex_source)
+    pdf_bytes = compile_latex(modified_latex)
 
     jd_summary = _summarize_jd(groq_client, jd_text)
     today = str(date.today())

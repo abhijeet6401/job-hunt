@@ -402,8 +402,10 @@ def compile_latex(latex_source: str) -> bytes:
             compile_cmd = [
                 "pdflatex",
                 "-interaction=nonstopmode",
+                "-no-shell-escape",
+                "-halt-on-error",
                 "-output-directory", tmpdir,
-                tex_path,
+                "resume.tex",
             ]
 
             result = subprocess.run(
@@ -412,6 +414,7 @@ def compile_latex(latex_source: str) -> bytes:
                 text=True,
                 timeout=30,
                 cwd=tmpdir,
+                env={**os.environ, "openin_any": "p", "openout_any": "p"},
             )
             if result.returncode == 0 and os.path.exists(pdf_path):
                 with open(pdf_path, "rb") as f:

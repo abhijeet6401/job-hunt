@@ -7,6 +7,16 @@ services:
         sync: false
       - key: GROQ_API_KEY
         sync: false
+      - key: XAI_API_KEY
+        sync: false
+      - key: LLM_PROVIDER
+        value: xai
+      - key: XAI_MODEL
+        value: grok-4.7
+      - key: ENABLE_APPLICATION_AGENT
+        value: "false"
+      - key: COOKIE_SECURE
+        value: "true"
       - key: TAVILY_API_KEY
         sync: false
       - key: GOOGLE_SHEETS_ID

@@ -1,4 +1,10 @@
 .env
+.env.*
+!.env.example
+storage/
+.pytest_cache/
+test-results/
+.browsers/
 __pycache__/
 *.pyc
 *.pyo

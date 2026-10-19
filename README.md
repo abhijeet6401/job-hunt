@@ -1,5 +1,11 @@
 # JobHunt Agent
 
+## New workspace
+
+The redesigned app adds a dashboard, filtered job discovery, an application studio (resume + cover letter + outreach + diff), a drag-and-drop pipeline, candidate profile, connection status, and an optional Lever/Greenhouse browser application agent. **See [UPGRADE.md](UPGRADE.md) for setup, verification, deployment, and the exact automation limits.**
+
+xAI is supported through its Responses API (`LLM_PROVIDER=xai`, `XAI_API_KEY`, `XAI_MODEL`). Groq remains available with `LLM_PROVIDER=groq`. Documents and metadata use server storage, so configure a persistent disk before relying on them across redeploys. Applied counts reflect explicit tracked status changes or confirmed portal receipts; document generation alone is never counted as a submission.
+
 A deployed AI-powered job discovery, resume tailoring, and cold outreach assistant. It finds relevant job openings across Wellfound, LinkedIn, and YC startups, tailors your LaTeX resume to specific JDs using Groq, compiles a PDF, and drafts personalized cold emails — all from a password-protected web UI accessible from any device.
 
 ---
