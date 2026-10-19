@@ -33,13 +33,13 @@ async def cleanup():
             if item and item.get('status') == 'Ready to submit':
                 store.put('agent', {**item, 'status': 'Expired', 'message': 'Browser session expired. Prepare again.'}, key)
 
-async def prepare(url, profile, resume_id, company, role):
+async def prepare(url, profile, resume_id, company, role, cover_letter=''):
     validate_url(url)
     if os.getenv('ENABLE_APPLICATION_AGENT', '').lower() != 'true':
         raise ValueError('Application agent is disabled. Enable it in the server environment after installing Chromium.')
     await cleanup()
-    if len(SESSIONS) >= 3:
-        raise ValueError('Three applications are already prepared. Submit or cancel one first.')
+    if SESSIONS:
+        raise ValueError('An application is already prepared. Submit or cancel it before preparing another.')
     path, _ = store.artifact_path(resume_id)
     if path.suffix != '.pdf':
         raise ValueError('Choose a generated PDF resume.')
@@ -69,7 +69,8 @@ async def prepare(url, profile, resume_id, company, role):
             await apply.first.click()
         names = profile['name'].split(' ', 1)
         mappings = [(r'^Full name|^Name$', profile['name']), (r'^First name', names[0]), (r'^Last name', names[-1]),
-                    (r'^Email', profile['email']), (r'^Phone', profile['phone']), (r'LinkedIn', profile.get('linkedin','')), (r'Portfolio|Website', profile.get('website',''))]
+                    (r'^Email', profile['email']), (r'^Phone', profile['phone']), (r'LinkedIn', profile.get('linkedin','')), (r'Portfolio|Website', profile.get('website','')),
+                    (r'Cover letter', cover_letter)]
         filled = []
         for label, value in mappings:
             if not value:

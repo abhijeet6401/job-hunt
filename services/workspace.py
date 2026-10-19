@@ -147,7 +147,7 @@ def register(app):
             raise HTTPException(404,'Generate and review an application pack first.')
         try:
             async with agent.PREPARATION_LOCK:
-                item=await agent.prepare(pack['url'],store.get('profile','owner') or {},pack['resume_id'],pack['company'],pack['role'])
+                item=await agent.prepare(pack['url'],store.get('profile','owner') or {},pack['resume_id'],pack['company'],pack['role'],pack.get('cover_letter',''))
             return {'ok':True,'application':item}
         except ValueError as exc:
             raise HTTPException(400,str(exc))
