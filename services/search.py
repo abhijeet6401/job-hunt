@@ -757,8 +757,22 @@ async def search_jobs(
     tier1_jobs.sort(key=lambda j: (j.get("is_yc", False), j.get("match_score", 0)), reverse=True)
     tier1_urls = {j.get("url", "") for j in tier1_jobs}
 
-    # Stream tier-1 + YC results immediately
     tier1_new = [j for j in tier1_jobs if j.get("url", "") not in known]
+    # Persist streamed findings before exposing them to the browser. A refresh
+    # can disconnect the search while later enrichment is still running.
+    streamed_saved_urls = set()
+    today = str(date.today())
+    for job in tier1_new:
+        append_row("Jobs", [
+            today, job.get("date_posted", "Unknown"), job.get("company", ""),
+            job.get("role", ""), job.get("salary", "Not mentioned"),
+            job.get("location", ""), job.get("source", ""), job.get("url", ""),
+            job.get("recruiter_email", ""), job.get("summary", ""), role,
+            "New", "Job Board", job.get("match_score", 50),
+        ])
+        streamed_saved_urls.add(job.get("url", ""))
+
+    # Stream tier-1 + YC results immediately
     if progress_callback and tier1_new:
         await progress_callback(json.dumps({
             "type": "tier1_result",
@@ -833,6 +847,8 @@ async def search_jobs(
 
     today = str(date.today())
     for job in new_jobs:
+        if job.get("url", "") in streamed_saved_urls:
+            continue
         try:
             append_row("Jobs", [
                 today,
