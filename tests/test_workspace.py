@@ -18,7 +18,7 @@ from services.application_agent import validate_url
 def client(tmp_path,monkeypatch):
     monkeypatch.setenv('JOBHUNT_DATA_DIR',str(tmp_path))
     monkeypatch.setenv('PASSWORD','workspace-test-password')
-    for key in ('GOOGLE_SERVICE_ACCOUNT_JSON','XAI_API_KEY','GROQ_API_KEY','TAVILY_API_KEY'):
+    for key in ('GOOGLE_SERVICE_ACCOUNT_JSON','XAI_API_KEY','GROQ_API_KEY','NVIDIA_API_KEY','TAVILY_API_KEY'):
         monkeypatch.delenv(key,raising=False)
     from services import sheets
     monkeypatch.setattr(sheets,'LOCAL_DB_FILE',str(tmp_path/'sheets.json'))

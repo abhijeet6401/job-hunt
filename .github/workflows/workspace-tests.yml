@@ -16,5 +16,5 @@ jobs:
           python-version: '3.11'
           cache: pip
       - run: pip install -r requirements.txt pytest
-      - run: python -m pytest tests/test_workspace.py -q
+      - run: python -m pytest tests/test_workspace.py tests/test_llm.py -q
       - run: node --check static/workspace.js

@@ -56,6 +56,25 @@ uvicorn main:app --reload
 
 ---
 
+## NVIDIA-hosted AI (free development endpoint)
+
+The AI provider can use NVIDIA's hosted NIM chat API. No GPU or model container is needed on Render.
+Set these values in the Render service's Environment settings:
+
+- `LLM_PROVIDER=nvidia`
+- `NVIDIA_API_KEY` — your private NVIDIA Developer API key; never commit it.
+- `NVIDIA_MODEL=nvidia/nemotron-3.5-lightning-30b-a3b` — or another accessible hosted chat model.
+
+Obtain a key at https://build.nvidia.com/settings/api-keys. Hosted model availability and free
+development limits can change; confirm the model's Free Endpoint status in NVIDIA's catalog.
+The adapter does not fall back to xAI or Groq when NVIDIA fails. Existing xAI and Groq
+configurations remain available by selecting their provider explicitly.
+
+The Connections screen reports the provider, model, and whether a key is configured; it does
+not prove the key is valid or that live inference has succeeded. NVIDIA errors report safe
+setup or rate-limit guidance without returning raw provider responses. Tavily and Google
+Sheets require their own credentials. Save the environment settings and deploy to apply them.
+
 ## Adding Your Resume
 
 Replace the placeholder content in each file under `resumes/`:
